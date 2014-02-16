@@ -1,0 +1,54 @@
+{
+  "name": "feathers-swagger",
+  "version": "0.1.0",
+  "description": "Add documentation to your Featherjs services and feed them to Swagger UI. ",
+  "homepage": "https://github.com/Glavin001/feathers-swagger",
+  "keywords": [
+    "feathers-plugin",
+    "feathers"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/Glavin001/feathers-swagger/blob/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Glavin001/feathers-swagger.git"
+  },
+  "author": {
+    "name": "Glavin Wiechert",
+    "email": "",
+    "url": "https://github.com/Glavin001"
+  },
+  "contributors": [ ],
+  "bugs": {
+    "url": "https://github.com/Glavin001/feathers-swagger/issues"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "grunt-cli": "~0.1.7",
+    "grunt": "~0.4.1",
+    "grunt-release": "~0.5.1",
+    "grunt-contrib-jshint": "~0.x",
+    "grunt-simple-mocha": "~0.4.0",
+    "grunt-contrib-watch": "~0.5.3"
+  },
+  "peerDependencies": {
+    "feathers": "~0.3.0"
+  }
+}
