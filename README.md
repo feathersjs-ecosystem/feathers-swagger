@@ -2,6 +2,8 @@
 
 > Add documentation to your Featherjs services and feed them to Swagger UI. 
 
+![screenshot](example/screenshot_1.png);
+
 ## Getting Started
 
 To install feathers-swagger from [npm](https://www.npmjs.org/), run:
