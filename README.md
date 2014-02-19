@@ -15,16 +15,38 @@ Finally, to use the plugin in your Feathers app:
 ```javascript
 // Require
 var feathers = require('feathers');
-var plugin = require('feathers-swagger');
+var feathersSwagger = require('feathers-swagger');
 // Setup
 var app = feathers();
-// Use Plugin
-app.configure(plugin({ /* configuration */ }));
+// Use Feathers Swagger Plugin
+app.configure(feathersSwagger({ /* configuration */ }));
+// Add your services
+```
+
+## Example
+
+See the [example directory](https://github.com/Glavin001/feathers-swagger/tree/master/docs).
+
+To run the example, clone this repository and run the following:
+
+```bash
+npm install
+bower install
+```
+
+```bash
+grunt develop
 ```
 
 ## Documentation
 
-See the [docs](docs/).
+See the [docs directory](https://github.com/Glavin001/feathers-swagger/tree/master/docs).
+
+## Contributing
+
+```bash
+grunt develop
+```
 
 ## Author
 
