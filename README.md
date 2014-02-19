@@ -2,7 +2,7 @@
 
 > Add documentation to your Featherjs services and feed them to Swagger UI. 
 
-![screenshot](example/screenshot_1.png)
+![screenshot](https://github.com/Glavin001/feathers-swagger/raw/master/example/screenshot_1.png)
 
 ## Getting Started
 
