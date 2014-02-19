@@ -25,24 +25,26 @@ app.configure(feathersSwagger({ /* configuration */ }));
 
 ## Example
 
-See the [example directory](https://github.com/Glavin001/feathers-swagger/tree/master/docs).
+See the [example directory](https://github.com/Glavin001/feathers-swagger/tree/master/example).
 
-To run the example, clone this repository and run the following:
-
-```bash
-npm install
-bower install
-```
-
-```bash
-grunt develop
-```
+To run the example, see the [Contributing instructions below](https://github.com/Glavin001/feathers-swagger/#contributing).
 
 ## Documentation
 
 See the [docs directory](https://github.com/Glavin001/feathers-swagger/tree/master/docs).
 
 ## Contributing
+
+Clone this repository and run the following:
+
+### Install Dependencies
+
+```bash
+npm install
+bower install
+```
+
+### Run for Development
 
 ```bash
 grunt develop
