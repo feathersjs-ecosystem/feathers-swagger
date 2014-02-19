@@ -2,7 +2,7 @@
 
 > Add documentation to your Featherjs services and feed them to Swagger UI. 
 
-![screenshot](example/screenshot_1.png);
+![screenshot](example/screenshot_1.png)
 
 ## Getting Started
 
@@ -58,6 +58,6 @@ grunt develop
 
 ## License
 
-Copyright (c) 2014 Glavin Wiechert
+Copyright (c) 2014 [Glavin Wiechert](https://github.com/Glavin001)
 
 Licensed under the [MIT license](LICENSE).
