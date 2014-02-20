@@ -1,8 +1,11 @@
 # feathers-swagger [![Build Status](https://travis-ci.org/Glavin001/feathers-swagger.png?branch=master)](https://travis-ci.org/Glavin001/feathers-swagger)
 
+[![NPM](https://nodei.co/npm/feathers-swagger.png?downloads=true&stars=true)](https://nodei.co/npm/feathers-swagger/)
+
+
 > Add documentation to your Featherjs services and feed them to Swagger UI. 
 
-![screenshot](https://github.com/Glavin001/feathers-swagger/raw/master/example/screenshot_1.png)
+**Please see the [example](https://github.com/Glavin001/feathers-swagger#example) below.**
 
 ## Getting Started
 
@@ -20,16 +23,73 @@ var feathers = require('feathers');
 var feathersSwagger = require('feathers-swagger');
 // Setup
 var app = feathers();
+
+/* ===== Important: Feathers-Swagger part below ===== */
 // Use Feathers Swagger Plugin
 app.configure(feathersSwagger({ /* configuration */ }));
+
 // Add your services
+app.use('/examples', {
+    find: function(params, callback) {
+        callback([]);
+    }
+    docs: {
+        description: "Operations about examples.",
+        find: {
+            type: 'Example',
+            parameters: [{
+                name: 'name',
+                description: 'Filter Examples by name.',
+                required: false,
+                type: 'string',
+                paramType: 'form'
+            }],
+            errorResponses: [
+                {
+                    code: 500,
+                    reason: 'Example error.'
+                }
+            ]
+        },
+        models: {
+            Example: {
+                id: 'Example',
+                description: 'This is an Example model.',
+                required: ['name'],
+                properties: {
+                    name: { 
+                        type: 'string',
+                        description: 'This is the example name.'
+                    },
+                    anotherProperty: {
+                        type:'string',
+                        description: 'This is the example description.'
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Finally, start your server.
+app.listen(3000, function(){
+    console.log('Feathers server listening on port '+port+'.');
+});
 ```
+
+To view, go to [the Swagger UI demo at http://swagger.wordnik.com/](http://swagger.wordnik.com/) 
+and change the base url from `http://petstore.swagger.wordnik.com/api/api-docs`
+to `http://localhost:3000/api/docs`
 
 ## Example
 
-See the [example directory](https://github.com/Glavin001/feathers-swagger/tree/master/example).
+See the [example directory](https://github.com/Glavin001/feathers-swagger/tree/master/example) for example source code.
 
 To run the example, see the [Contributing instructions below](https://github.com/Glavin001/feathers-swagger/#contributing).
+
+**The following screenshot was created with the example.**
+
+![screenshot](https://github.com/Glavin001/feathers-swagger/raw/master/example/screenshot_1.png)
 
 ## Documentation
 

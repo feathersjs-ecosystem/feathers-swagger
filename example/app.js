@@ -14,9 +14,9 @@ app.use(function(req, res, next) {
 
 // configure
 app.configure(feathersSwagger({
-    path:'/api/docs',
+    docsPath:'/docs',
     version: pkg.version,
-    basePath: 'http://locahost:3000/',
+    basePath: '/api',
     resourcePath: '/example',
     info: {
         'title': pkg.name,
@@ -44,8 +44,44 @@ app.use('/examples', {
     remove: function(id, params, callback) {
         callback({});
     },
-    setup: function(app) {}
-})
+    setup: function(app) {},
+    docs: {
+        description: "Operations about examples.",
+        find: {
+            type: 'Example',
+            parameters: [{
+                name: 'name',
+                description: 'Filter Examples by name.',
+                required: false,
+                type: 'string',
+                paramType: 'form'
+            }],
+            errorResponses: [
+                {
+                    code: 500,
+                    reason: 'Example error.'
+                }
+            ]
+        },
+        models: {
+            Example: {
+                id: 'Example',
+                description: 'This is an Example model.',
+                required: ['name'],
+                properties: {
+                    name: { 
+                        type: 'string',
+                        description: 'This is the example name.'
+                    },
+                    anotherProperty: {
+                        type:'string',
+                        description: 'This is the example description.'
+                    }
+                }
+            }
+        }
+    }
+});
 
 
 app.listen(port, function(){
