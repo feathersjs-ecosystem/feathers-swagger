@@ -3,7 +3,7 @@
 [![NPM](https://nodei.co/npm/feathers-swagger.png?downloads=true&stars=true)](https://nodei.co/npm/feathers-swagger/)
 
 
-> Add documentation to your Featherjs services and feed them to Swagger UI. 
+> Add documentation to your [Featherjs](https://github.com/feathersjs/feathers) services and feed them to [Swagger UI](https://github.com/wordnik/swagger-ui). 
 
 **Please see the [example](https://github.com/Glavin001/feathers-swagger#example) below.**
 
