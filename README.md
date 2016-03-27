@@ -1,11 +1,11 @@
-# feathers-swagger [![Build Status](https://travis-ci.org/Glavin001/feathers-swagger.png?branch=master)](https://travis-ci.org/Glavin001/feathers-swagger) [![NPM version](https://badge.fury.io/js/feathers-swagger.png)](http://badge.fury.io/js/feathers-swagger)
+# feathers-swagger [![Build Status](https://travis-ci.org/feathersjs/feathers-swagger.png?branch=master)](https://travis-ci.org/feathersjs/feathers-swagger) [![NPM version](https://badge.fury.io/js/feathers-swagger.png)](http://badge.fury.io/js/feathers-swagger)
 
 [![NPM](https://nodei.co/npm/feathers-swagger.png?downloads=true&stars=true)](https://nodei.co/npm/feathers-swagger/)
 
 
 > Add documentation to your [Featherjs](https://github.com/feathersjs/feathers) services and feed them to [Swagger UI](https://github.com/wordnik/swagger-ui). 
 
-**Please see the [example](https://github.com/Glavin001/feathers-swagger#example) below.**
+**Please see the [example](https://github.com/feathersjs/feathers-swagger#example) below.**
 
 ## Getting Started
 
@@ -34,10 +34,10 @@ app.configure(feathersSwagger({
     info: {
         'title': 'API',
         'description': 'This is an API.',
-        'termsOfServiceUrl': 'https://github.com/Glavin001/feathers-swagger/blob/master/LICENSE',
+        'termsOfServiceUrl': 'https://github.com/feathersjs/feathers-swagger/blob/master/LICENSE',
         'contact': 'example@example.com',
         'license': 'MIT',
-        'licenseUrl': 'https://github.com/Glavin001/feathers-swagger/blob/master/LICENSE'
+        'licenseUrl': 'https://github.com/feathersjs/feathers-swagger/blob/master/LICENSE'
     }
 }));
 
@@ -118,17 +118,17 @@ to `http://localhost:3000/api/docs`
 
 ## Example
 
-See the [example directory](https://github.com/Glavin001/feathers-swagger/tree/master/example) for example source code.
+See the [example directory](https://github.com/feathersjs/feathers-swagger/tree/master/example) for example source code.
 
-To run the example, see the [Contributing instructions below](https://github.com/Glavin001/feathers-swagger/#contributing).
+To run the example, see the [Contributing instructions below](https://github.com/feathersjs/feathers-swagger/#contributing).
 
 **The following screenshot was created with the example.**
 
-![screenshot](https://github.com/Glavin001/feathers-swagger/raw/master/example/screenshot_1.png)
+![screenshot](https://github.com/feathersjs/feathers-swagger/raw/master/example/screenshot_1.png)
 
 ## Documentation
 
-See the [docs directory](https://github.com/Glavin001/feathers-swagger/tree/master/docs).
+See the [docs directory](https://github.com/feathersjs/feathers-swagger/tree/master/docs).
 
 ## Contributing
 
