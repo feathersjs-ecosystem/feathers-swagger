@@ -52,9 +52,9 @@
     "grunt-develop": "~0.3.0",
     "grunt-open": "~0.2.0",
     "connect-livereload": "~0.3.2",
-    "feathers": "~0.3.0"
+    "feathers": "~1.2.0"
   },
   "peerDependencies": {
-    "feathers": "~0.3.0"
+    "feathers": "~1.2.0"
   }
 }
