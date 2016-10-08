@@ -26,16 +26,11 @@ module.exports = function (config) {
         console.log(docsPath);
 
         // Setup docs from config
+        rootDoc.apiVersion = config.version || '0.0.0';
         rootDoc.swaggerVersion = config.swaggerVersion || '1.2';
         rootDoc.info = config.info || {};
         rootDoc.apis = config.apis || [];
         rootDoc.models = config.models || {};
-
-        // by 2.0
-        rootDoc.paths = config.paths || {};
-        rootDoc.definitions = config.definitions || {};
-        rootDoc.swagger = config.swagger || '2.0';
-        rootDoc.schemes = ['http'];
 
         // Create API for Documentation
         app.get(docsPath, function (req, res) {
@@ -49,6 +44,7 @@ module.exports = function (config) {
             service.docs = service.docs || {};
             // Load documentation from service, if available.
             var doc = service.docs;
+            doc.apiVersion = doc.apiVersion || rootDoc.apiVersion;
             doc.swaggerVersion = doc.swaggerVersion || rootDoc.swaggerVersion;
             doc.basePath = doc.basePath || rootDoc.basePath;
             doc.resourcePath = doc.resourcePath || '/' + path;
@@ -145,63 +141,6 @@ module.exports = function (config) {
                 'path': doc.path || '/' + path,
                 'description': doc.description || 'Operations about this resource.'
             });
-
-            // by 2.0
-            var pathObj = {};
-            function Operation2(method, service, defaults) {
-                defaults = defaults || {};
-                // Find is available
-                var operation = service.docs[method] || {};
-                operation.parameters = operation.parameters || defaults.parameters || [];
-                operation.responses = operation.responses || defaults.responses || [];
-                operation.summary = operation.summary || defaults.summary || '';
-                operation.tags = operation.tags || defaults.tags || [];
-                operation.produces = operation.produces || defaults.produces || [];
-                operation.security = operation.security || defaults.security || [];
-                operation.securityDefinitions = operation.securityDefinitions || defaults.securityDefinitions || [];
-                // Clean up
-                delete service.docs[method]; // Remove `find` from `docs`
-                return operation;
-            };
-
-            // FIND
-            if (typeof service.find === 'function') {
-                pathObj['get'] = new Operation2('find', service, {
-                    tags: [path],
-                    summary: 'Retrieves a list of all resources from the service.'
-                });
-            }
-            // GET
-            if (typeof service.get === 'function') {
-                pathObj['get'] = new Operation2('get', service, {
-                    tags: [path],
-                    summary: 'Retrieves a single resource with the given id from the service.',
-                });
-            }
-            // CREATE
-            if (typeof service.create === 'function') {
-                pathObj['post'] = new Operation2('create', service, {
-                    tags: [path],
-                    summary: 'Creates a new resource with data.'
-                });
-            }
-            // UPDATE
-            if (typeof service.update === 'function') {
-                pathObj['put'] = new Operation2('update', service, {
-                    tags: [path],
-                    summary: 'Updates the resource identified by id using data.',
-                });
-            }
-            // REMOVE
-            if (typeof service.remove === 'function') {
-                pathObj['delete'] = new Operation2('remove', service, {
-                    tags: [path],
-                    summary: 'Removes the resource with id.',
-                });
-            }
-
-            //TODO: 按路由进行分组[path] or [path+'/{resourceId}']
-            rootDoc.paths[path] = pathObj
 
             // Create handler for serving the service's documentation
             app.get(docsPath + '/' + path + docExt, function (req, res) {
