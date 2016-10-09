@@ -23,6 +23,6 @@
     "tests"
   ],
   "devDependencies": {
-    "swagger-ui": "2.0.10"
+    "swagger-ui": "2.2.5"
   }
 }
