@@ -1,4 +1,6 @@
 var feathers = require('feathers');
+var rest = require('feathers-rest');
+var bodyParser = require('body-parser');
 var feathersSwagger = require('../lib');
 var pkg = require('../package.json');
 
@@ -13,50 +15,64 @@ app.use(function(req, res, next) {
  });
 
 // configure
-app.configure(feathersSwagger({
-    docsPath:'/docs',
-    version: pkg.version,
-    basePath: '/api',
-    resourcePath: '/example',
-    info: {
-        'title': pkg.name,
-        'description': pkg.description,
-        //'termsOfServiceUrl': 'http://helloreverb.com/terms/',
-        'contact': 'glavin.wiechert@gmail.com',
-        'license': 'MIT',
-        'licenseUrl': 'https://github.com/Glavin001/feathers-swagger/blob/master/LICENSE'
-    }
-}));
+app
+    // .configure(rest())
+    .use(bodyParser.json())
+    .use(bodyParser.urlencoded({ extended: true }))
+    .configure(feathersSwagger({
+        docsPath:'/docs',
+        version: pkg.version,
+        basePath: '/api',
+        resourcePath: '/example',
+        info: {
+            'title': pkg.name,
+            'description': pkg.description,
+            //'termsOfServiceUrl': 'http://helloreverb.com/terms/',
+            'contact': 'glavin.wiechert@gmail.com',
+            'license': 'MIT',
+            'licenseUrl': 'https://github.com/Glavin001/feathers-swagger/blob/master/LICENSE'
+        }
+    }));
 
-app.use('/examples', {
-    find: function(params, callback) {
-        callback([]);
+app.use('/user', {
+    get: function(id, params){
+        return Promise.resolve({
+            id: 1,
+            name: 111
+        });
+    }
+})
+
+app.use('/pet', {
+    find: function(params) {
+        return Promise.resolve([]);
     },
-    get: function(id, params, callback) {
-        callback({});
+    get: function(id, params) {
+        return Promise.resolve({});
     },
-    create: function(data, params, callback) {
-        callback({});
+    create: function(data, params) {
+        return Promise.resolve({});
     },
-    update: function(id, data, params, callback) {
-        callback({});
+    update: function(id, data, params) {
+        return Promise.resolve({});
     },
-    remove: function(id, params, callback) {
-        callback({});
+    remove: function(id, params) {
+        return Promise.resolve({});
     },
-    setup: function(app) {},
+    setup: function(app) {
+        // console.log(app)
+    },
     docs: {
-        description: "Operations about examples.",
+        description: 'Operations about examples.',
         find: {
-            type: 'Example',
             parameters: [{
                 name: 'name',
                 description: 'Filter Examples by name.',
                 required: false,
                 type: 'string',
-                paramType: 'form'
+                paramType: 'formData'
             }],
-            errorResponses: [
+            responses: [
                 {
                     code: 500,
                     reason: 'Example error.'
