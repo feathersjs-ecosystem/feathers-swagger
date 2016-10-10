@@ -41,6 +41,7 @@
   "devDependencies": {
     "body-parser": "^1.15.2",
     "connect-livereload": "~0.3.2",
+    "cors": "^2.8.1",
     "feathers": "^2.0.2",
     "feathers-rest": "^1.5.0",
     "feathers-sequelize": "^1.3.3",
