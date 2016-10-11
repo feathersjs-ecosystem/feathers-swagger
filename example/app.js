@@ -52,7 +52,43 @@ app
 
         var doc = {
             description: 'Operations about Users.',
-            definition: feathersSwagger.toModel(model)
+            definitions: {
+                paginate: {
+                    type: 'object',
+                    properties: {
+                        total: {
+                            type: 'integer',
+                            format: 'int32'
+                        },
+                        limit: {
+                            type: 'integer',
+                            format: 'int32'
+                        },
+                        skip: {
+                            type: 'integer',
+                            format: 'int32'
+                        },
+                        data: {
+                            type: 'array',
+                            items: {
+                                '$ref': '#/definitions/users'
+                            },
+                            format: ''
+                        }
+                    }
+                }
+            },
+            definition: feathersSwagger.toModel(model),
+            find: {
+                responses: {
+                    '200': {
+                        description: 'successful operation',
+                        schema: {
+                            '$ref': '#/definitions/paginate'
+                        }
+                    }
+                }
+            }
         };
 
         // Initialize our service with any options it requires
