@@ -53,32 +53,16 @@ app
         var doc = {
             description: 'Operations about Users.',
             definitions: {
-                paginate: {
-                    type: 'object',
-                    properties: {
-                        total: {
-                            type: 'integer',
-                            format: 'int32'
-                        },
-                        limit: {
-                            type: 'integer',
-                            format: 'int32'
-                        },
-                        skip: {
-                            type: 'integer',
-                            format: 'int32'
-                        },
-                        data: {
-                            type: 'array',
-                            items: {
-                                '$ref': '#/definitions/users'
-                            },
-                            format: ''
-                        }
-                    }
-                }
+                paginate: new feathersSwagger.util.Definition({}, 'object', {
+                    total: new feathersSwagger.util.Propertie('INTEGER'),
+                    limit: new feathersSwagger.util.Propertie('INTEGER'),
+                    skip: new feathersSwagger.util.Propertie('INTEGER'),
+                    data: new feathersSwagger.util.Propertie('ARRAY', {
+                        '$ref': '#/definitions/users'
+                    })
+                })
             },
-            definition: feathersSwagger.toModel(model),
+            definition: new feathersSwagger.util.Definition(model),
             find: {
                 responses: {
                     '200': {
