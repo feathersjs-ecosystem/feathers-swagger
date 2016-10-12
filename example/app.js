@@ -1,3 +1,4 @@
+// Require
 var cors = require('cors');
 var feathers = require('feathers');
 var rest = require('feathers-rest');
@@ -10,6 +11,7 @@ var pkg = require('../package.json');
 var path = require('path');
 
 var port = 3000;
+// Setup
 var app = feathers();
 
 // Set Sequelize
@@ -25,22 +27,29 @@ app
     .use(cors())// Cross-Orign
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
+    /* ===== Important: Feathers-Swagger part below ===== */
+    // Use Feathers Swagger Plugin
     .configure(feathersSwagger({
         docsPath:'/docs',
         version: pkg.version,
         basePath: '/',
-        resourcePath: '/example',
         info: {
             'title': pkg.name,
             'description': pkg.description,
-            //'termsOfServiceUrl': 'http://helloreverb.com/terms/',
-            'contact': 'glavin.wiechert@gmail.com',
-            'license': 'MIT',
-            'licenseUrl': 'https://github.com/Glavin001/feathers-swagger/blob/master/LICENSE'
+            'termsOfServiceUrl': 'http://helloreverb.com/terms/',
+            'contact': {
+                email: 'glavin.wiechert@gmail.com'
+            },
+            'version': '2.0',
+            'license': {
+                name: 'MIT',
+                'url': 'https://github.com/Glavin001/feathers-swagger/blob/master/LICENSE'
+            }
         }
     }))
     .configure(rest())
     .configure(function(){
+        // Add your service(s)
         var model = user(this.get('sequelize')),
             options = {
                 Model: model,
@@ -64,6 +73,13 @@ app
             },
             definition: new feathersSwagger.util.Definition(model),
             find: {
+                parameters: [{
+                    description: 'Get examples by name',
+                    in: 'path',
+                    required: true,
+                    name: 'name',
+                    type: 'string'
+                }],
                 responses: {
                     '200': {
                         description: 'successful operation',

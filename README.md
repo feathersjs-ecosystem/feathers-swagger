@@ -21,23 +21,30 @@ Finally, to use the plugin in your Feathers app:
 // Require
 var feathers = require('feathers');
 var feathersSwagger = require('feathers-swagger');
+var Definition = feathersSwagger.util.Definition;
+var Propertie = feathersSwagger.util.Propertie;
 // Setup
 var app = feathers();
 
 /* ===== Important: Feathers-Swagger part below ===== */
-// Use Feathers Swagger Plugin
-app.configure(feathersSwagger({ 
-/* example configuration */ 
+// Use Feathers Swagger Plugin 
+app.configure(feathersSwagger({
+/* example configuration */
     docsPath:'/docs',
-    version: '0.0.0',
-    basePath: '/api',
+    version: pkg.version,
+    basePath: '/',
     info: {
-        'title': 'API',
-        'description': 'This is an API.',
-        'termsOfServiceUrl': 'https://github.com/feathersjs/feathers-swagger/blob/master/LICENSE',
-        'contact': 'example@example.com',
-        'license': 'MIT',
-        'licenseUrl': 'https://github.com/feathersjs/feathers-swagger/blob/master/LICENSE'
+        'title': pkg.name,
+        'description': pkg.description,
+        'termsOfServiceUrl': 'http://helloreverb.com/terms/',
+        'contact': {
+            email: 'glavin.wiechert@gmail.com'
+        },
+        'version': '2.0',
+        'license': {
+            name: 'MIT',
+            'url': 'https://github.com/Glavin001/feathers-swagger/blob/master/LICENSE'
+        }
     }
 }));
 
@@ -73,34 +80,28 @@ app.use('/examples', {
         find: {
             type: 'Example',
             parameters: [{
+                description: 'Get examples by name',
+                in: 'path',
+                required: true,
                 name: 'name',
-                description: 'Filter Examples by name.',
-                required: false,
-                type: 'string',
-                paramType: 'form'
+                type: 'string'
             }],
-            errorResponses: [
-                {
-                    code: 500,
-                    reason: 'Example error.'
+            responses: {
+                '500': {
+                    description: 'Example error'
                 }
-            ]
+            }
         },
         models: {
-            Example: {
-                id: 'Example',
-                description: 'This is an Example model.',
-                required: ['name'],
-                properties: {
-                    name: { 
-                        type: 'string',
-                        description: 'This is the example name.'
-                    },
-                    anotherProperty: {
-                        type:'string',
-                        description: 'This is the example description.'
-                    }
-                }
+            definitions: {
+                paginate: new Definition({}, 'object', {
+                    total: new Propertie('INTEGER'),
+                    limit: new Propertie('INTEGER'),
+                    skip: new Propertie('INTEGER'),
+                    data: new Propertie('ARRAY', {
+                        type: "object"
+                    })
+                })
             }
         }
     }
@@ -109,6 +110,62 @@ app.use('/examples', {
 // Finally, start your server.
 app.listen(3000, function(){
     console.log('Feathers server listening on port '+port+'.');
+});
+```
+
+Provide support to `sequelize`, here are examples
+```
+var feathersSwagger = require('../lib');
+var Definition = feathersSwagger.util.Definition;
+var Propertie = feathersSwagger.util.Propertie;
+
+[...]
+
+app.configure(function(){
+    // Add your service(s)
+    var model = user(this.get('sequelize')),
+        options = {
+            Model: model,
+            paginate: {
+                default: 5,
+                max: 25
+            }
+        };
+
+    var doc = {
+        description: 'Operations about Users.',
+        definitions: {
+            paginate: Definition({}, 'object', {
+                total: Propertie('INTEGER'),
+                limit: Propertie('INTEGER'),
+                skip: Propertie('INTEGER'),
+                data: Propertie('ARRAY', {
+                    '$ref': '#/definitions/users'
+                })
+            })
+        },
+        definition: Definition(model),
+        find: {
+            parameters: [{
+                description: 'Get examples by name',
+                in: 'path',
+                required: true,
+                name: 'name',
+                type: 'string'
+            }],
+            responses: {
+                '200': {
+                    description: 'successful operation',
+                    schema: {
+                        '$ref': '#/definitions/paginate'
+                    }
+                }
+            }
+        }
+    };
+
+    // Initialize our service with any options it requires
+    this.use('/users', Object.assign(service(options), {docs: doc}));
 });
 ```
 
