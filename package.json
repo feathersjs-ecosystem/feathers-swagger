@@ -37,7 +37,9 @@
   "directories": {
     "lib": "lib"
   },
-  "dependencies": {},
+  "dependencies": {
+    "swagger-ui": "^2.2.5"
+  },
   "devDependencies": {
     "body-parser": "^1.15.2",
     "connect-livereload": "~0.3.2",

@@ -47,7 +47,7 @@ module.exports = function (grunt) {
                     livereload: LIVERELOAD_PORT
                 },
                 files: [
-                    'bower_components/swagger-ui/dist/*',
+                    'node_modules/swagger-ui/dist/*',
                     'example/*',
                     'lib/**/*.js'
                 ]
@@ -81,7 +81,7 @@ module.exports = function (grunt) {
                         return [
                                 lrSnippet,
                                 mountFolder(connect, 'example'),
-                                mountFolder(connect, 'bower_components/swagger-ui/dist'),
+                                mountFolder(connect, 'node_modules/swagger-ui/dist'),
                             ];
                     }
                 }
