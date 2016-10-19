@@ -30,9 +30,9 @@ app
     /* ===== Important: Feathers-Swagger part below ===== */
     // Use Feathers Swagger Plugin
     .configure(feathersSwagger({
-        docsPath:'/docs',
+        docsPath:'docs',
         version: pkg.version,
-        basePath: '/',
+        basePath: '',
         info: {
             'title': pkg.name,
             'description': pkg.description,

@@ -38,7 +38,8 @@
     "lib": "lib"
   },
   "dependencies": {
-    "swagger-ui": "^2.2.5"
+    "swagger-ui": "^2.2.5",
+    "url-join": "^1.1.0"
   },
   "devDependencies": {
     "body-parser": "^1.15.2",

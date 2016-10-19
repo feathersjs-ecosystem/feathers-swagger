@@ -3,7 +3,7 @@
 [![NPM](https://nodei.co/npm/feathers-swagger.png?downloads=true&stars=true)](https://nodei.co/npm/feathers-swagger/)
 
 
-> Add documentation to your [Featherjs](https://github.com/feathersjs/feathers) services and feed them to [Swagger UI](https://github.com/wordnik/swagger-ui). 
+> Add documentation to your [Featherjs](https://github.com/feathersjs/feathers) services and feed them to [Swagger UI](https://github.com/wordnik/swagger-ui).
 
 **Please see the [example](https://github.com/feathersjs/feathers-swagger#example) below.**
 
@@ -27,12 +27,12 @@ var Propertie = feathersSwagger.util.Propertie;
 var app = feathers();
 
 /* ===== Important: Feathers-Swagger part below ===== */
-// Use Feathers Swagger Plugin 
+// Use Feathers Swagger Plugin
 app.configure(feathersSwagger({
 /* example configuration */
-    docsPath:'/docs',
+    docsPath:'docs',
     version: pkg.version,
-    basePath: '/',
+    basePath: '',
     info: {
         'title': pkg.name,
         'description': pkg.description,
@@ -50,13 +50,13 @@ app.configure(feathersSwagger({
 
 // Add your service(s)
 app.use('/examples', {
-    
+
     // Standard `find` method for a sevice.
     // Will automatically detect that `find` is available and create documentation for it.
     find: function(params, callback) {
         callback([]);
     },
-    
+
     /*
     // The following methods will not be added to documentation,
     // because they are commented out and so do not exist for this service.
@@ -73,7 +73,7 @@ app.use('/examples', {
         callback({});
     },
     */
-    
+
     // Below is optional: showing the more advanced customization options.
     docs: {
         description: "Operations about examples.",
@@ -169,7 +169,7 @@ app.configure(function(){
 });
 ```
 
-To view, go to [the Swagger UI demo at http://swagger.wordnik.com/](http://swagger.wordnik.com/) 
+To view, go to [the Swagger UI demo at http://swagger.wordnik.com/](http://swagger.wordnik.com/)
 and change the base url from `http://petstore.swagger.wordnik.com/api/api-docs`
 to `http://localhost:3000/api/docs`
 
