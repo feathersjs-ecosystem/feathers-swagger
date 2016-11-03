@@ -32,7 +32,6 @@ app
     .configure(feathersSwagger({
         docsPath:'/docs',
         version: pkg.version,
-        basePath: '/',
         info: {
             'title': pkg.name,
             'description': pkg.description,
@@ -44,6 +43,18 @@ app
             'license': {
                 name: 'MIT',
                 'url': 'https://github.com/Glavin001/feathers-swagger/blob/master/LICENSE'
+            }
+        },
+        security: {
+            'type': 'apiKey',
+            'name': 'authorization',
+            'in': 'header'
+        },
+        securityDefinitions: {
+            'authorization': {
+                'type': 'apiKey',
+                'name': 'authorization',
+                'in': 'header'
             }
         }
     }))
@@ -62,16 +73,16 @@ app
         var doc = {
             description: 'Operations about Users.',
             definitions: {
-                paginate: new feathersSwagger.util.Definition({}, 'object', {
-                    total: new feathersSwagger.util.Propertie('INTEGER'),
-                    limit: new feathersSwagger.util.Propertie('INTEGER'),
-                    skip: new feathersSwagger.util.Propertie('INTEGER'),
-                    data: new feathersSwagger.util.Propertie('ARRAY', {
+                paginate: new feathersSwagger.utils.Definition({}, 'object', {
+                    total: new feathersSwagger.utils.Propertie('INTEGER'),
+                    limit: new feathersSwagger.utils.Propertie('INTEGER'),
+                    skip: new feathersSwagger.utils.Propertie('INTEGER'),
+                    data: new feathersSwagger.utils.Propertie('ARRAY', {
                         '$ref': '#/definitions/users'
                     })
                 })
             },
-            definition: new feathersSwagger.util.Definition(model),
+            definition: new feathersSwagger.utils.Definition(model),
             find: {
                 parameters: [{
                     description: 'Get examples by name',
