@@ -45,6 +45,8 @@
     "connect-livereload": "~0.3.2",
     "cors": "^2.8.1",
     "feathers": "^2.0.2",
+    "feathers-authentication": "^0.7.11",
+    "feathers-hooks": "^1.6.1",
     "feathers-rest": "^1.5.0",
     "feathers-sequelize": "^1.3.3",
     "grunt": "~0.4.1",

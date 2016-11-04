@@ -3,6 +3,8 @@ var cors = require('cors');
 var feathers = require('feathers');
 var rest = require('feathers-rest');
 var service = require('feathers-sequelize');
+var hooks = require('feathers-hooks');
+var authentication = require('feathers-authentication');
 var Sequelize = require('sequelize');
 var user = require('./user-model');
 var bodyParser = require('body-parser');
@@ -56,9 +58,50 @@ app
                 'name': 'authorization',
                 'in': 'header'
             }
+        },
+        definitions: {
+            'local': {
+                type: 'object',
+                properties: {
+                    email: {
+                        type: 'string',
+                    },
+                    password: {
+                        type: 'string',
+                    }
+                }
+            },
+            'token': {
+                type: 'object',
+                properties: {
+                    token: {
+                        type: 'string',
+                    }
+                }
+            },
+            'paginate': new feathersSwagger.utils.Definition({
+                attributes: {
+                    total: Sequelize.INTEGER,
+                    limit: Sequelize.INTEGER,
+                    skip: Sequelize.INTEGER,
+                    data: Sequelize.ARRAY
+                }
+            })
         }
     }))
+    .configure(hooks())
     .configure(rest())
+    .configure(function(){
+        var app = this;
+        var config = {
+                'idField': 'id',
+                'token': {
+                    'secret': '7RJeSzXr2n/Mb15vl1lVAUs7PHNjvlV3ltJLpBjdJ93MPanV1HkFf5WjK/J4V2hqFaxALsPrqr7cgBPsA0M0DQ=='
+                },
+                'local': {}
+            };
+        app.configure(authentication(config));
+    })
     .configure(function(){
         // Add your service(s)
         var model = user(this.get('sequelize')),
@@ -73,29 +116,27 @@ app
         var doc = {
             description: 'Operations about Users.',
             definitions: {
-                paginate: new feathersSwagger.utils.Definition({}, 'object', {
-                    total: new feathersSwagger.utils.Propertie('INTEGER'),
-                    limit: new feathersSwagger.utils.Propertie('INTEGER'),
-                    skip: new feathersSwagger.utils.Propertie('INTEGER'),
-                    data: new feathersSwagger.utils.Propertie('ARRAY', {
-                        '$ref': '#/definitions/users'
-                    })
-                })
+                'UserPaginate': new feathersSwagger.utils.Definition({
+                    attributes:{
+                        data: Sequelize.ARRAY('users') 
+                    }
+                }, { extends: ['paginate'] })
             },
             definition: new feathersSwagger.utils.Definition(model),
+            securities: ['find'],
             find: {
                 parameters: [{
                     description: 'Get examples by name',
-                    in: 'path',
-                    required: true,
-                    name: 'name',
+                    in: 'query',
+                    required: false,
+                    name: 'email',
                     type: 'string'
                 }],
                 responses: {
                     '200': {
                         description: 'successful operation',
                         schema: {
-                            '$ref': '#/definitions/paginate'
+                            '$ref': '#/definitions/UserPaginate'
                         }
                     }
                 }
@@ -104,6 +145,20 @@ app
 
         // Initialize our service with any options it requires
         this.use('/users', Object.assign(service(options), {docs: doc}));
+
+        const userService = this.service('/users');
+        const auth = authentication.hooks;
+        userService.before({
+            create: [auth.hashPassword()],
+            find: [
+                auth.verifyToken(),
+                auth.populateUser(),
+                auth.restrictToAuthenticated()
+            ]
+        });
+        userService.after({
+            all: [hooks.remove('password')]
+        });
     });
 
 
