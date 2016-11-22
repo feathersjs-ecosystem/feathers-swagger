@@ -43,4 +43,6 @@ const app = feathers()
   }))
   .use('/messages', messageService);
 
+console.log('Simple feathers-swagger example running on http://localhost:3030/docs/');
+
 app.listen(3030);
