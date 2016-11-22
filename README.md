@@ -78,7 +78,7 @@ const feathers = require('feathers');
 const rest = require('feathers-rest');
 const memory = require('feathers-memory');
 const bodyParser = require('body-parser');
-const swagger = require('../../lib');
+const swagger = require('feathers-swagger');
 
 const messageService = memory();
 
