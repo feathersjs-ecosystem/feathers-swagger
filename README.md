@@ -27,12 +27,12 @@ var Propertie = feathersSwagger.util.Propertie;
 var app = feathers();
 
 /* ===== Important: Feathers-Swagger part below ===== */
-// Use Feathers Swagger Plugin
+// Use Feathers Swagger Plugin 
 app.configure(feathersSwagger({
 /* example configuration */
-    docsPath:'docs',
+    docsPath:'/docs',
     version: pkg.version,
-    basePath: '',
+    basePath: '/',
     info: {
         'title': pkg.name,
         'description': pkg.description,
@@ -169,7 +169,7 @@ app.configure(function(){
 });
 ```
 
-To view, go to [the Swagger UI demo at http://swagger.wordnik.com/](http://swagger.wordnik.com/)
+To view, go to [the Swagger UI demo at http://swagger.wordnik.com/](http://swagger.wordnik.com/) 
 and change the base url from `http://petstore.swagger.wordnik.com/api/api-docs`
 to `http://localhost:3000/api/docs`
 
