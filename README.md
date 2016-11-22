@@ -14,7 +14,11 @@
 npm install feathers-swagger --save
 ```
 
-## Basic example
+## Examples
+
+> npm install feathers feathers-rest feathers-memory feathers-swagger body-parser
+
+### Basic example
 
 Here's an example of a Feathers server that uses `feathers-swagger`. 
 
@@ -68,7 +72,7 @@ app.listen(3030);
 
 Go to `localhost:3030/docs` to see the Swagger JSON documentation.
 
-## Example with UI
+### Example with UI
 
 The `uiIndex` option allows to set a [Swagger UI](http://swagger.io/swagger-ui/) index file which will host the UI at `docsPath`.
 
