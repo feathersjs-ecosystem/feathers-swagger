@@ -1,23 +1,12 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.property = property;
-exports.definition = definition;
-exports.tag = tag;
-exports.operation = operation;
-exports.getType = getType;
-exports.getFormat = getFormat;
-function property(type, items) {
-  var result = {
+export function property (type, items) {
+  const result = {
     type: getType(type),
     format: getFormat(type)
   };
 
   if (type === 'ARRAY') {
-    var isUndefined = typeof items === 'undefined';
-    var isString = typeof items === 'string';
+    const isUndefined = typeof items === 'undefined';
+    const isString = typeof items === 'string';
 
     if (isUndefined) {
       result.items = { type: getType('INTEGER') };
@@ -31,23 +20,21 @@ function property(type, items) {
   return result;
 }
 
-function definition(model) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { type: 'object' };
-
-  var result = {
+export function definition (model, options = { type: 'object' }) {
+  const result = {
     type: options.type,
     properties: {}
   };
-  var keys = typeof model.attributes !== 'undefined' ? Object.keys(model.attributes) : [];
+  const keys = typeof model.attributes !== 'undefined' ? Object.keys(model.attributes) : [];
 
-  keys.forEach(function (attrName) {
-    var attrType = model.attributes[attrName].key;
-    var prop = property(attrType, model.attributes[attrName].type);
+  keys.forEach(attrName => {
+    const attrType = model.attributes[attrName].key;
+    const prop = property(attrType, model.attributes[attrName].type);
 
     result.properties[attrName] = prop;
   });
 
-  var allOf = (options.extends || []).map(function (item) {
+  const allOf = (options.extends || []).map(item => {
     return {
       '$ref': '#definitions/' + item
     };
@@ -57,24 +44,20 @@ function definition(model) {
 
   return {
     description: options.description,
-    allOf: allOf
+    allOf
   };
 }
 
-function tag(name) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
+export function tag (name, options = {}) {
   return {
-    name: name,
-    description: options.description || 'A ' + name + ' service',
+    name,
+    description: options.description || `A ${name} service`,
     externalDocs: options.externalDocs || {}
   };
 }
 
-function operation(method, service) {
-  var defaults = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  var operation = service.docs[method] || {};
+export function operation (method, service, defaults = {}) {
+  const operation = service.docs[method] || {};
 
   operation.parameters = operation.parameters || defaults.parameters || [];
   operation.responses = operation.responses || defaults.responses || [];
@@ -85,13 +68,13 @@ function operation(method, service) {
   operation.produces = operation.produces || defaults.produces || [];
   operation.security = operation.security || defaults.security || [];
   operation.securityDefinitions = operation.securityDefinitions || defaults.securityDefinitions || [];
-  // Clean up
+      // Clean up
   delete service.docs[method]; // Remove `find` from `docs`
 
   return operation;
 }
 
-function getType(type) {
+export function getType (type) {
   switch (type) {
     case 'STRING':
     case 'CHAR':
@@ -118,7 +101,7 @@ function getType(type) {
   }
 }
 
-function getFormat(type) {
+export function getFormat (type) {
   switch (type) {
     case 'INTEGER':
     case 'DECIMAL':

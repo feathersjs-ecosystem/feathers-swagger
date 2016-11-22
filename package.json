@@ -1,70 +1,79 @@
 {
   "name": "feathers-swagger",
-  "version": "0.2.0",
-  "description": "Add documentation to your Featherjs services and feed them to Swagger UI. ",
-  "homepage": "https://github.com/Glavin001/feathers-swagger",
+  "description": "Add documentation to your Featherjs services and feed them to Swagger UI.",
+  "version": "0.0.0",
+  "homepage": "https://github.com/feathersjs/feathers-swagger",
+  "main": "lib/",
   "keywords": [
-    "feathers-plugin",
-    "feathers"
+    "feathers",
+    "feathers-plugin"
   ],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/Glavin001/feathers-swagger/blob/master/LICENSE"
-    }
-  ],
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Glavin001/feathers-swagger.git"
+    "url": "git://github.com/feathersjs/feathers-swagger.git"
   },
   "author": {
-    "name": "Glavin Wiechert",
-    "email": "",
-    "url": "https://github.com/Glavin001"
+    "name": "Feathers contributors",
+    "email": "hello@feathersjs.com",
+    "url": "https://feathersjs.com"
   },
   "contributors": [],
   "bugs": {
-    "url": "https://github.com/Glavin001/feathers-swagger/issues"
+    "url": "https://github.com/feathersjs/feathers-swagger/issues"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">= 4.6.0"
   },
-  "main": "lib/index.js",
   "scripts": {
-    "test": "grunt",
-    "start": "grunt develop"
+    "prepublish": "npm run compile",
+    "publish": "git push origin --tags && npm run changelog && git push origin",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish",
+    "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
+    "compile": "rimraf lib/ && babel -d lib/ src/",
+    "watch": "babel --watch -d lib/ src/",
+    "lint": "semistandard src/**/*.js test/**/*.js --fix",
+    "mocha": "mocha --opts mocha.opts",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
+    "test": "npm run compile && npm run lint && npm run coverage",
+    "start": "npm run compile && node example/app"
+  },
+  "semistandard": {
+    "sourceType": "module",
+    "env": [
+      "mocha"
+    ]
   },
   "directories": {
     "lib": "lib"
   },
   "dependencies": {
-    "swagger-ui": "^2.2.5"
+    "debug": "^2.3.3",
+    "feathers-errors": "^2.5.0",
+    "serve-static": "^1.11.1",
+    "swagger-ui": "^2.2.6"
   },
   "devDependencies": {
-    "body-parser": "^1.15.2",
-    "connect-livereload": "~0.3.2",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.18.0",
+    "chai": "^3.5.0",
     "cors": "^2.8.1",
     "feathers": "^2.0.2",
-    "feathers-authentication": "^0.7.11",
-    "feathers-hooks": "^1.6.1",
-    "feathers-rest": "^1.5.0",
-    "feathers-sequelize": "^1.3.3",
-    "grunt": "~0.4.1",
-    "grunt-cli": "~0.1.7",
-    "grunt-contrib-connect": "~0.6.0",
-    "grunt-contrib-jshint": "~0.x",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-develop": "~0.3.0",
-    "grunt-open": "~0.2.0",
-    "grunt-release": "~0.5.1",
-    "grunt-simple-mocha": "~0.4.0",
-    "load-grunt-tasks": "~0.1.0",
-    "mocha": "~1.17.1",
-    "sequelize": "^3.24.3",
-    "sqlite3": "^3.1.6",
-    "time-grunt": "~0.1.1"
-  },
-  "peerDependencies": {
-    "feathers": "~2.0.2"
+    "feathers-authentication": "^0.7.12",
+    "feathers-memory": "^1.0.1",
+    "feathers-rest": "^1.5.2",
+    "feathers-sequelize": "^1.4.0",
+    "istanbul": "^1.1.0-alpha.1",
+    "mocha": "^3.1.2",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "rimraf": "^2.5.4",
+    "semistandard": "^9.1.0",
+    "sequelize": "^3.27.0",
+    "sqlite3": "^3.1.8"
   }
 }

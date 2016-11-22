@@ -1,32 +1,13 @@
-'use strict';
+import path from 'path';
+import serveStatic from 'serve-static';
+import * as utils from './utils';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = init;
-
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
-var _serveStatic = require('serve-static');
-
-var _serveStatic2 = _interopRequireDefault(_serveStatic);
-
-var _utils = require('./utils');
-
-var utils = _interopRequireWildcard(_utils);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function init(config) {
+export default function init (config) {
   return function () {
-    var app = this;
+    const app = this;
 
     // Apply configuration
-    var rootDoc = Object.assign({
+    const rootDoc = Object.assign({
       paths: {},
       definitions: {},
       swagger: '2.0',
@@ -42,16 +23,16 @@ function init(config) {
       }
     }, config || {});
 
-    var docsPath = rootDoc.docsPath;
+    const docsPath = rootDoc.docsPath;
 
     // Create API for Documentation
     app.get(docsPath, function (req, res) {
       res.format({
-        'application/json': function applicationJson() {
+        'application/json': function () {
           res.json(rootDoc);
         },
 
-        'text/html': function textHtml() {
+        'text/html': function () {
           if (typeof config.uiIndex === 'function') {
             config.uiIndex(req, res);
           } else if (typeof config.uiIndex === 'string') {
@@ -64,8 +45,8 @@ function init(config) {
     });
 
     if (typeof config.uiIndex !== 'undefined') {
-      var uiPath = _path2.default.join('node_modules', 'swagger-ui', 'dist');
-      app.use(docsPath, (0, _serveStatic2.default)(uiPath));
+      const uiPath = path.join('node_modules', 'swagger-ui', 'dist');
+      app.use(docsPath, serveStatic(uiPath));
     }
 
     app.docs = rootDoc;
@@ -75,11 +56,11 @@ function init(config) {
       service.docs = service.docs || {};
 
       // Load documentation from service, if available.
-      var doc = service.docs;
-      var group = path.split('/');
-      var tag = path.indexOf('/') > -1 ? group[0] : path;
-      var model = path.indexOf('/') > -1 ? group[1] : path;
-      var security = {};
+      const doc = service.docs;
+      const group = path.split('/');
+      const tag = path.indexOf('/') > -1 ? group[0] : path;
+      const model = path.indexOf('/') > -1 ? group[1] : path;
+      const security = {};
 
       if (rootDoc.security) {
         security[rootDoc.security.name] = [];
@@ -89,10 +70,10 @@ function init(config) {
         return;
       }
 
-      var pathObj = rootDoc.paths;
-      var withIdKey = '/' + path + '/{' + (service.id || 'id') + '}';
-      var withoutIdKey = '/' + path;
-      var securities = doc.securities || [];
+      const pathObj = rootDoc.paths;
+      const withIdKey = `/${path}/{${service.id || 'id'}}`;
+      const withoutIdKey = `/${path}`;
+      const securities = doc.securities || [];
 
       if (typeof pathObj[withoutIdKey] === 'undefined') {
         pathObj[withoutIdKey] = {};
@@ -127,7 +108,7 @@ function init(config) {
           tags: [tag],
           description: 'Retrieves a single resource with the given id from the service.',
           parameters: [{
-            description: 'ID of ' + model + ' to return',
+            description: `ID of ${model} to return`,
             in: 'path',
             required: true,
             name: 'resourceId',
@@ -153,7 +134,7 @@ function init(config) {
             in: 'body',
             name: 'body',
             required: true,
-            schema: { '$ref': '#/definitions/' + model }
+            schema: {'$ref': '#/definitions/' + model}
           }],
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
@@ -176,7 +157,7 @@ function init(config) {
             in: 'body',
             name: 'body',
             required: true,
-            schema: { '$ref': '#/definitions/' + model }
+            schema: {'$ref': '#/definitions/' + model}
           }],
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
@@ -199,7 +180,7 @@ function init(config) {
             in: 'body',
             name: 'body',
             required: true,
-            schema: { '$ref': '#/definitions/' + model }
+            schema: {'$ref': '#/definitions/' + model}
           }],
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
@@ -227,9 +208,7 @@ function init(config) {
 
       rootDoc.paths = pathObj;
 
-      if (!rootDoc.tags.find(function (item) {
-        return item.name === tag;
-      })) {
+      if (!rootDoc.tags.find(item => item.name === tag)) {
         rootDoc.tags.push(utils.tag(tag, doc));
       }
     });
@@ -237,4 +216,3 @@ function init(config) {
 }
 
 Object.assign(init, utils);
-module.exports = exports['default'];
