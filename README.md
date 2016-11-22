@@ -6,7 +6,7 @@
 [![Dependency Status](https://img.shields.io/david/feathersjs/feathers-swagger.svg?style=flat-square)](https://david-dm.org/feathersjs/feathers-swagger)
 [![Download Status](https://img.shields.io/npm/dm/feathers-swagger.svg?style=flat-square)](https://www.npmjs.com/package/feathers-swagger)
 
-> Add documentation to your Featherjs services and feed them to Swagger UI.
+> Add documentation to your Featherjs services and show them in the Swagger ui.
 
 ## Installation
 
@@ -23,12 +23,35 @@ const feathers = require('feathers');
 const rest = require('feathers-rest');
 const memory = require('feathers-memory');
 const bodyParser = require('body-parser');
-const swagger = require('../../lib');
+const swagger = require('feathers-swagger');
+
+const messageService = memory();
+
+messageService.docs = {
+  description: 'A service to send and receive messages',
+  definitions: {
+    messages: {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The message text"
+        },
+        "useId": {
+          "type": "string",
+          "description": "The id of the user that send the message"
+        }
+      }
+    }
+  }
+};
 
 const app = feathers()
-  // Parse HTTP JSON bodies
+
   .use(bodyParser.json())
-  // Parse URL-encoded params
   .use(bodyParser.urlencoded({ extended: true }))
   .configure(rest())
   .configure(swagger({
@@ -38,7 +61,7 @@ const app = feathers()
       description: 'A description'
     }
   }))
-  .use('/messages', memory());
+  .use('/messages', messageService);
 
 app.listen(3030);
 ```
@@ -47,7 +70,7 @@ Go to `localhost:3030/docs` to see the Swagger JSON documentation.
 
 ## Example with UI
 
-The `uiIndex` option allows to set a [Swagger UI](http://swagger.io/swagger-ui/) index file which will host the 
+The `uiIndex` option allows to set a [Swagger UI](http://swagger.io/swagger-ui/) index file which will host the UI at `docsPath`.
 
 ```js
 const path = require('path');
@@ -57,10 +80,32 @@ const memory = require('feathers-memory');
 const bodyParser = require('body-parser');
 const swagger = require('../../lib');
 
+const messageService = memory();
+
+messageService.docs = {
+  description: 'A service to send and receive messages',
+  definitions: {
+    messages: {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The message text"
+        },
+        "useId": {
+          "type": "string",
+          "description": "The id of the user that send the message"
+        }
+      }
+    }
+  }
+};
+
 const app = feathers()
-  // Parse HTTP JSON bodies
   .use(bodyParser.json())
-  // Parse URL-encoded params
   .use(bodyParser.urlencoded({ extended: true }))
   .configure(rest())
   .configure(swagger({
@@ -71,7 +116,7 @@ const app = feathers()
       description: 'A description'
     }
   }))
-  .use('/messages', memory());
+  .use('/messages', messageService);
 
 app.listen(3030);
 ```

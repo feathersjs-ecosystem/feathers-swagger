@@ -5,10 +5,32 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const swagger = require('../../lib');
 
+const messageService = memory();
+
+messageService.docs = {
+  description: 'A service to send and receive messages',
+  definitions: {
+    messages: {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The message text"
+        },
+        "useId": {
+          "type": "string",
+          "description": "The id of the user that send the message"
+        }
+      }
+    }
+  }
+};
+
 const app = feathers()
-  // Parse HTTP JSON bodies
   .use(bodyParser.json())
-  // Parse URL-encoded params
   .use(bodyParser.urlencoded({ extended: true }))
   .configure(rest())
   .configure(swagger({
@@ -19,6 +41,6 @@ const app = feathers()
       description: 'A description'
     }
   }))
-  .use('/messages', memory());
+  .use('/messages', messageService);
 
 app.listen(3030);
