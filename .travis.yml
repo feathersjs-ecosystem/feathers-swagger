@@ -1,14 +1,17 @@
 language: node_js
 node_js:
-  - 'node'
-  - '6'
-  - '4'
+- node
+- '6'
+- '4'
 addons:
   code_climate:
-    repo_token: 'your repo token'
+    repo_token: 07af39c6cd458cf09a497d8482593c1f9698de5d80aa6aef3e706ac1d165b363
 notifications:
   email: false
+  slack:
+    rooms:
+      secure: VsjHa4c6fUN5gLL0gSdddWEXxH1j7JCY74vXozQLIr4sNqpcUsA6+pvxy1DNv50SJT8oSFpON1tKTxse9B05PIZxipSd5IC4SZUtvrFUZ2IO8k2fIOT4j1nrdgw+j8yAKrvf/3Pbv3EDtaDssGXsPMYKkdMDskR0ZwIhenNeJbc=
 before_script:
-  - npm install -g codeclimate-test-reporter
+- npm install -g codeclimate-test-reporter
 after_script:
-  - codeclimate-test-reporter < coverage/lcov.info
+- codeclimate-test-reporter < coverage/lcov.info
