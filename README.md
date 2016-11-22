@@ -225,7 +225,7 @@ Create a `docs.html` page like this:
 </html>
 ```
 
-Now `localhost:3030/docs` will show the documentation in the browser using the Swagger UI.
+Now [localhost:3030/docs/](http://localhost:3030/docs/) will show the documentation in the browser using the Swagger UI.
 
 ## License
 
