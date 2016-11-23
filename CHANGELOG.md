@@ -1,5 +1,18 @@
 # Change Log
 
+## [v0.3.1](https://github.com/feathersjs/feathers-swagger/tree/v0.3.1) (2016-11-23)
+[Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.0...v0.3.1)
+
+**Closed issues:**
+
+- Example apps only work when run from root of repo [\#21](https://github.com/feathersjs/feathers-swagger/issues/21)
+- Should redirect from /docs to /docs/ [\#20](https://github.com/feathersjs/feathers-swagger/issues/20)
+- TypeError: Cannot read property 'name' of undefined [\#19](https://github.com/feathersjs/feathers-swagger/issues/19)
+
+**Merged pull requests:**
+
+- Redirect HTML page to always trailing slash and use require.resolve to find UI [\#22](https://github.com/feathersjs/feathers-swagger/pull/22) ([daffl](https://github.com/daffl))
+
 ## [v0.3.0](https://github.com/feathersjs/feathers-swagger/tree/v0.3.0) (2016-11-22)
 [Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.1.0...v0.3.0)
 
