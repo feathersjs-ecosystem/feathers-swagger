@@ -1,4 +1,5 @@
 import path from 'path';
+import url from 'url';
 import serveStatic from 'serve-static';
 import * as utils from './utils';
 
@@ -33,6 +34,14 @@ export default function init (config) {
         },
 
         'text/html': function () {
+          const parsed = url.parse(req.url);
+          const pathname = parsed.pathname;
+
+          if (pathname[pathname.length - 1] !== '/') {
+            parsed.pathname = `${pathname}/`;
+            return res.redirect(301, url.format(parsed));
+          }
+
           if (typeof config.uiIndex === 'function') {
             config.uiIndex(req, res);
           } else if (typeof config.uiIndex === 'string') {
@@ -45,7 +54,7 @@ export default function init (config) {
     });
 
     if (typeof config.uiIndex !== 'undefined') {
-      const uiPath = path.join('node_modules', 'swagger-ui', 'dist');
+      const uiPath = path.dirname(require.resolve('swagger-ui'));
       app.use(docsPath, serveStatic(uiPath));
     }
 
