@@ -27,8 +27,9 @@ export function definition (model, options = { type: 'object' }) {
   };
   const keys = typeof model.attributes !== 'undefined' ? Object.keys(model.attributes) : [];
 
-  keys.forEach(attrName => {
-    const attrType = model.attributes[attrName].key;
+  keys.forEach(function (attrName) {
+    const attr = model.attributes[attrName];
+    const attrType = typeof attr.key !== 'undefined' ? attr.key : attr.type.constructor.prototype.key;
     const prop = property(attrType, model.attributes[attrName].type);
 
     result.properties[attrName] = prop;
