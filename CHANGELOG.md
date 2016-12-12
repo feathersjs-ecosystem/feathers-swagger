@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.3.2](https://github.com/feathersjs/feathers-swagger/tree/v0.3.2) (2016-12-12)
+[Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.1...v0.3.2)
+
+**Merged pull requests:**
+
+- Fix definition [\#27](https://github.com/feathersjs/feathers-swagger/pull/27) ([daffl](https://github.com/daffl))
+
 ## [v0.3.1](https://github.com/feathersjs/feathers-swagger/tree/v0.3.1) (2016-11-23)
 [Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.0...v0.3.1)
 
