@@ -50,7 +50,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "debug": "^2.3.3",
+    "debug": "^2.5.0",
     "feathers-errors": "^2.5.0",
     "serve-static": "^1.11.1",
     "swagger-ui": "^2.2.6"
