@@ -6,7 +6,7 @@
 [![Dependency Status](https://img.shields.io/david/feathersjs/feathers-swagger.svg?style=flat-square)](https://david-dm.org/feathersjs/feathers-swagger)
 [![Download Status](https://img.shields.io/npm/dm/feathers-swagger.svg?style=flat-square)](https://www.npmjs.com/package/feathers-swagger)
 
-> Add documentation to your Featherjs services and show them in the Swagger ui.
+> Add documentation to your Featherjs services and show them in the Swagger ui. Jsdoc documentation comment is supported.
 
 ## Installation
 
@@ -16,45 +16,69 @@ npm install feathers-swagger --save
 
 ## Examples
 
-> npm install feathers feathers-rest feathers-memory feathers-swagger body-parser
+> npm install feathers feathers-rest feathers-swagger body-parser
 
 ### Basic example
 
-Here's an example of a Feathers server that uses `feathers-swagger`. 
+Here's an example of a Feathers server that uses `feathers-swagger`.
 
 ```js
 const feathers = require('feathers');
 const rest = require('feathers-rest');
-const memory = require('feathers-memory');
 const bodyParser = require('body-parser');
 const swagger = require('feathers-swagger');
 
-const messageService = memory();
-
-messageService.docs = {
-  description: 'A service to send and receive messages',
-  definitions: {
-    messages: {
-      "type": "object",
-      "required": [
-        "text"
-      ],
-      "properties": {
-        "text": {
-          "type": "string",
-          "description": "The message text"
-        },
-        "useId": {
-          "type": "string",
-          "description": "The id of the user that send the message"
-        }
+class MessageService {
+  constructor(options = {}) {
+    this.options = options;
+    // traditional way, takes higher precedence
+    this.docs = {
+      create: {
+        description: 'Create a new message',
+        parameters: [{ in: 'query',
+          name: 'url',
+          description: 'Callback URL'
+          type: 'string',
+        }, {
+          name: 'message',
+          type: 'string'
+        }, {
+          name: 'target',
+          type: 'id'
+        }]
+      },
+      remove: {
+        description: 'Remove a message',
+        parameters: [{ in: 'query',
+          name: 'id',
+          type: 'int'
+        }]
       }
-    }
+    };
   }
-};
+
+  // new way of documenting APIs using Jsdoc. Right now, only description is
+  // supported, and more features are coming
+
+  /**
+   * Create a new message
+   */
+  create(data, params) {
+    ...
+  }
+
+  /**
+   * Remove a message
+   */
+  remove(id, params) {
+    ...
+  }
+}
+
+// Make sure to decorate your service class
+MessageService = swagger.applyJsdoc(MessageService);
 
 const app = feathers()
-
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .configure(rest())
@@ -65,7 +89,7 @@ const app = feathers()
       description: 'A description'
     }
   }))
-  .use('/messages', messageService);
+  .use('/messages', new MessageService());
 
 app.listen(3030);
 ```
@@ -80,33 +104,11 @@ The `uiIndex` option allows to set a [Swagger UI](http://swagger.io/swagger-ui/)
 const path = require('path');
 const feathers = require('feathers');
 const rest = require('feathers-rest');
-const memory = require('feathers-memory');
 const bodyParser = require('body-parser');
 const swagger = require('feathers-swagger');
 
-const messageService = memory();
-
-messageService.docs = {
-  description: 'A service to send and receive messages',
-  definitions: {
-    messages: {
-      "type": "object",
-      "required": [
-        "text"
-      ],
-      "properties": {
-        "text": {
-          "type": "string",
-          "description": "The message text"
-        },
-        "useId": {
-          "type": "string",
-          "description": "The id of the user that send the message"
-        }
-      }
-    }
-  }
-};
+// same as before
+...
 
 const app = feathers()
   .use(bodyParser.json())
@@ -120,7 +122,7 @@ const app = feathers()
       description: 'A description'
     }
   }))
-  .use('/messages', messageService);
+  .use('/messages', new MessageService());
 
 app.listen(3030);
 ```
@@ -229,6 +231,6 @@ Now [localhost:3030/docs/](http://localhost:3030/docs/) will show the documentat
 
 ## License
 
-Copyright (c) 2016
+Copyright (c) 2017 daffl guiguan
 
 Licensed under the [MIT license](LICENSE).

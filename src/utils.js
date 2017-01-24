@@ -1,3 +1,7 @@
+const jsdoc = require('jsdoc-api');
+const _ = require('lodash');
+const supportedMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'];
+
 export function property (type, items) {
   const result = {
     type: getType(type),
@@ -122,4 +126,38 @@ export function getFormat (type) {
     default:
       return '';
   }
+}
+
+/**
+ * Decorate a Feathers service class to incorporate jsdoc comments into its docs
+ * object that is supported by this plugin
+ *
+ * @param {Service} ServiceClass - service class to be decorated
+ * @return {Service} decorated service class
+ */
+export function applyJsdoc(ServiceClass) {
+  const curDocs = (new ServiceClass()).docs;
+  const rawJsDocs = jsdoc.explainSync({
+    source: ServiceClass.toString()
+  });
+
+  const jsDocs = _.reduce(rawJsDocs, (acc, v) => {
+    if (v.description && _.includes(supportedMethods, v.name)) {
+      acc[v.name] = {
+        description: v.description
+      };
+    }
+    return acc;
+  }, {});
+
+  const newDocs = _.assign(jsDocs, curDocs);
+
+  class NewServiceClass extends ServiceClass {
+    constructor(...args) {
+      super(...args);
+      this.docs = newDocs;
+    }
+  }
+
+  return NewServiceClass;
 }

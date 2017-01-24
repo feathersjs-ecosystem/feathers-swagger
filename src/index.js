@@ -1,3 +1,12 @@
+/**
+ * @Author: guiguan
+ * @Date:   2017-01-23T23:15:07+11:00
+ * @Last modified by:   guiguan
+ * @Last modified time: 2017-01-24T00:53:45+11:00
+ */
+
+
+
 import path from 'path';
 import url from 'url';
 import serveStatic from 'serve-static';
@@ -80,7 +89,8 @@ export default function init (config) {
       }
 
       const pathObj = rootDoc.paths;
-      const withIdKey = `/${path}/{${service.id || 'id'}}`;
+      const idKey = service.id || 'id';
+      const withIdKey = `/${path}/{${idKey}}`;
       const withoutIdKey = `/${path}`;
       const securities = doc.securities || [];
 
@@ -120,7 +130,7 @@ export default function init (config) {
             description: `ID of ${model} to return`,
             in: 'path',
             required: true,
-            name: 'resourceId',
+            name: idKey,
             type: 'integer'
           }],
           responses: {
@@ -160,7 +170,7 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
+            name: idKey,
             type: 'integer'
           }, {
             in: 'body',
@@ -183,7 +193,7 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
+            name: idKey,
             type: 'integer'
           }, {
             in: 'body',
@@ -206,7 +216,7 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
+            name: idKey,
             type: 'integer'
           }],
           produces: rootDoc.produces,
