@@ -31,37 +31,47 @@ const swagger = require('feathers-swagger');
 class MessageService {
   constructor(options = {}) {
     this.options = options;
-    // traditional way, takes higher precedence
+    // traditional way, takes higher precedence than jsdoc
     this.docs = {
       create: {
         description: 'Create a new message',
-        parameters: [{ in: 'query',
+        parameters: [{
+          in: 'query',
           name: 'url',
-          description: 'Callback URL'
-          type: 'string',
-        }, {
-          name: 'message',
+          description: 'Callback URL',
           type: 'string'
         }, {
-          name: 'target',
-          type: 'id'
+          in: 'body',
+          name: 'message',
+          description: 'Message to send',
+          type: 'string'
+        }, {
+          in: 'body',
+          name: 'includePics',
+          description: 'Whether to include pics in the message',
+          type: 'boolean'
         }]
       },
       remove: {
         description: 'Remove a message',
-        parameters: [{ in: 'query',
+        parameters: [{
+          in: 'path',
           name: 'id',
-          type: 'int'
+          description: 'Message ID',
+          type: 'number'
         }]
       }
     };
   }
 
-  // new way of documenting APIs using Jsdoc. Right now, only description is
-  // supported, and more features are coming
+  // new way of documenting APIs using Jsdoc. Recommended!
 
   /**
    * Create a new message
+   *
+   * @param {String} params.url - [query] callback URL
+   * @param {String} params.message - [body] message to send
+   * @param {Boolean} params.includePics - whether to include pics in the message [body]
    */
   create(data, params) {
     ...
@@ -69,6 +79,8 @@ class MessageService {
 
   /**
    * Remove a message
+   *
+   * @param {Number} params.id - [path] message ID
    */
   remove(id, params) {
     ...
@@ -231,6 +243,6 @@ Now [localhost:3030/docs/](http://localhost:3030/docs/) will show the documentat
 
 ## License
 
-Copyright (c) 2017 daffl guiguan
+Copyright (c) 2017
 
 Licensed under the [MIT license](LICENSE).
