@@ -136,7 +136,7 @@ export function getFormat (type) {
  * @param {Service} ServiceClass - service class to be decorated
  * @return {Service} decorated service class
  */
-export function applyJsdoc(ServiceClass) {
+export function applyJsdoc (ServiceClass) {
   const curDocs = (new ServiceClass()).docs;
   const rawJsDocs = jsdoc.explainSync({
     source: ServiceClass.toString()
@@ -169,7 +169,7 @@ export function applyJsdoc(ServiceClass) {
             if (param.description) {
               paramDoc.description = param.description;
 
-              const locRe = /\[(\w+)\]/g;
+              const locRe = /\[(\w+)]/g;
               let locM;
               while ((locM = locRe.exec(paramDoc.description))) {
                 const loc = locM[1];
@@ -203,9 +203,9 @@ export function applyJsdoc(ServiceClass) {
               }
               if (!requestBody.schema) {
                 requestBody.schema = {
-                  "type": "object",
-                  "required": [],
-                  "properties": {}
+                  'type': 'object',
+                  'required': [],
+                  'properties': {}
                 };
               }
               requestBodyProp.description = paramDoc.description;
@@ -228,7 +228,7 @@ export function applyJsdoc(ServiceClass) {
   const newDocs = _.assign(jsDocs, curDocs);
 
   class NewServiceClass extends ServiceClass {
-    constructor(...args) {
+    constructor (...args) {
       super(...args);
       this.docs = newDocs;
     }
