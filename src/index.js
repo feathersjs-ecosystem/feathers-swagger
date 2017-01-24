@@ -1,12 +1,3 @@
-/**
- * @Author: guiguan
- * @Date:   2017-01-23T23:15:07+11:00
- * @Last modified by:   guiguan
- * @Last modified time: 2017-01-24T00:53:45+11:00
- */
-
-
-
 import path from 'path';
 import url from 'url';
 import serveStatic from 'serve-static';

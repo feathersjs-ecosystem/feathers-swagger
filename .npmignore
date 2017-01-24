@@ -2,7 +2,6 @@
 .jshintrc
 .travis.yml
 .istanbul.yml
-.babelrc
 .idea/
 test/
 !lib/
