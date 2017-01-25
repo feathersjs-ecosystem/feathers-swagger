@@ -64,7 +64,7 @@
     "chai": "^3.5.0",
     "cors": "^2.8.1",
     "feathers": "^2.0.2",
-    "feathers-authentication": "^0.7.12",
+    "feathers-authentication": "^1.0.2",
     "feathers-memory": "^1.0.1",
     "feathers-rest": "^1.5.2",
     "feathers-sequelize": "^1.4.0",
