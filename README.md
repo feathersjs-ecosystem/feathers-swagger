@@ -227,6 +227,8 @@ Create a `docs.html` page like this:
 
 Now [localhost:3030/docs/](http://localhost:3030/docs/) will show the documentation in the browser using the Swagger UI.
 
+You can also use `uiIndex: true` to use the default [Swagger UI](http://swagger.io/swagger-ui/).
+
 ## License
 
 Copyright (c) 2016

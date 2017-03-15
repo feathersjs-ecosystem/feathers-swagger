@@ -3,6 +3,10 @@ import url from 'url';
 import serveStatic from 'serve-static';
 import * as utils from './utils';
 
+// Find node_modules root path
+let modulesRootPath = require.resolve('swagger-ui');
+modulesRootPath = modulesRootPath.substr(0, modulesRootPath.lastIndexOf('node_modules'));
+
 export default function init (config) {
   return function () {
     const app = this;
@@ -46,6 +50,13 @@ export default function init (config) {
             config.uiIndex(req, res);
           } else if (typeof config.uiIndex === 'string') {
             res.sendFile(config.uiIndex);
+          } else if (config.uiIndex === true) {
+            if (req.query.url) {
+              res.sendFile(path.join(modulesRootPath, 'node_modules/swagger-ui/dist/index.html'));
+            } else {
+              // Set swagger url (needed for default UI)
+              res.redirect('?url=' + encodeURI(config.docsPath));
+            }
           } else {
             res.json(rootDoc);
           }
