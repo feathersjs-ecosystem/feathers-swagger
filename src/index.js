@@ -76,11 +76,14 @@ export default function init (config) {
       service.docs = service.docs || {};
 
       // Load documentation from service, if available.
-      const doc = service.docs;
-      const group = path.split('/');
-      const tag = path.indexOf('/') > -1 ? group[0] : path;
-      const model = path.indexOf('/') > -1 ? group[1] : path;
-      const security = {};
+      var doc = service.docs;
+      var version = path.match(config.versionPrefix);
+      version = version ? ' ' + version[0] : '';
+      var apiPath = path.replace(config.prefix, '');
+      var group = apiPath.split('/');
+      var tag = (apiPath.indexOf('/') > -1 ? group[0] : apiPath) + version;
+      var model = apiPath.indexOf('/') > -1 ? group[1] : apiPath;
+      var security = {};
 
       if (rootDoc.security) {
         security[rootDoc.security.name] = [];
