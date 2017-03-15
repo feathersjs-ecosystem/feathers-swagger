@@ -1,5 +1,19 @@
 # Change Log
 
+## [v0.3.3](https://github.com/feathersjs/feathers-swagger/tree/v0.3.3) (2017-03-15)
+[Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.2...v0.3.3)
+
+**Closed issues:**
+
+- Use default swagger-ui? [\#38](https://github.com/feathersjs/feathers-swagger/issues/38)
+- can i use custom swagger-ui? [\#32](https://github.com/feathersjs/feathers-swagger/issues/32)
+- ENOENT: no such file or directory [\#31](https://github.com/feathersjs/feathers-swagger/issues/31)
+
+**Merged pull requests:**
+
+- Added option to display default Swagger UI \(closes \#38\) [\#40](https://github.com/feathersjs/feathers-swagger/pull/40) ([sinedied](https://github.com/sinedied))
+- Update feathers-authentication to version 1.0.2 🚀 [\#34](https://github.com/feathersjs/feathers-swagger/pull/34) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+
 ## [v0.3.2](https://github.com/feathersjs/feathers-swagger/tree/v0.3.2) (2016-12-12)
 [Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.1...v0.3.2)
 
