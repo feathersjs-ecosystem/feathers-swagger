@@ -229,6 +229,50 @@ Now [localhost:3030/docs/](http://localhost:3030/docs/) will show the documentat
 
 You can also use `uiIndex: true` to use the default [Swagger UI](http://swagger.io/swagger-ui/).
 
+### Prefixed routes
+
+If your are using versioned or prefixed routes for your API like `/api/<version>/users`, you can configure it using the
+`prefix` property so all your services don't end up in the same group. The value of the `prefix` property can be either
+a string or a RegEx.
+
+```js
+const app = feathers()
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: true }))
+  .configure(rest())
+  .configure(swagger({
+    prefix: /api\/v\d\//,
+    docsPath: '/docs',
+    info: {
+      title: 'A test',
+      description: 'A description'
+    }
+  }))
+  .use('/api/v1/messages', messageService);
+
+app.listen(3030);
+```
+
+To display your API version alongside the service name, you can also define a `versionPrefix` to be extracted:
+```js
+const app = feathers()
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: true }))
+  .configure(rest())
+  .configure(swagger({
+    prefix: /api\/v\d\//,
+    versionPrefix: /v\d/,
+    docsPath: '/docs',
+    info: {
+      title: 'A test',
+      description: 'A description'
+    }
+  }))
+  .use('/api/v1/messages', messageService);
+
+app.listen(3030);
+```
+
 ## License
 
 Copyright (c) 2016
