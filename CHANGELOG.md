@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.3.4](https://github.com/feathersjs/feathers-swagger/tree/v0.3.4) (2017-03-23)
+[Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.3...v0.3.4)
+
+**Closed issues:**
+
+- Definition for prefixed routes [\#39](https://github.com/feathersjs/feathers-swagger/issues/39)
+
+**Merged pull requests:**
+
+- Added config option to support api prefixing and versioning \(fix \#39\) [\#41](https://github.com/feathersjs/feathers-swagger/pull/41) ([sinedied](https://github.com/sinedied))
+
 ## [v0.3.3](https://github.com/feathersjs/feathers-swagger/tree/v0.3.3) (2017-03-15)
 [Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.2...v0.3.3)
 
