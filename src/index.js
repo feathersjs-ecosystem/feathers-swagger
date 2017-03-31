@@ -77,7 +77,7 @@ export default function init (config) {
 
       // Load documentation from service, if available.
       const doc = service.docs;
-      let version = path.match(config.versionPrefix);
+      let version = config.versionPrefix ? path.match(config.versionPrefix) : null;
       version = version ? ' ' + version[0] : '';
       const apiPath = path.replace(config.prefix, '');
       const group = apiPath.split('/');
