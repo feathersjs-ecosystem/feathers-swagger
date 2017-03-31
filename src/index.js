@@ -42,7 +42,7 @@ export default function init (config) {
           const pathname = parsed.pathname;
 
           if (pathname[pathname.length - 1] !== '/') {
-            parsed.pathname = `${pathname}/`;
+            parsed.pathname = `${req.baseUrl}${pathname}/`;
             return res.redirect(301, url.format(parsed));
           }
 
