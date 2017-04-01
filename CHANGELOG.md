@@ -1,5 +1,13 @@
 # Change Log
 
+## [v0.3.5](https://github.com/feathersjs/feathers-swagger/tree/v0.3.5) (2017-04-01)
+[Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.4...v0.3.5)
+
+**Merged pull requests:**
+
+- Fix extra whitespace if no versionPrefix is passed in config. [\#48](https://github.com/feathersjs/feathers-swagger/pull/48) ([cpsubrian](https://github.com/cpsubrian))
+- Fix 'text/html' redirect not respecting mountpath [\#47](https://github.com/feathersjs/feathers-swagger/pull/47) ([cpsubrian](https://github.com/cpsubrian))
+
 ## [v0.3.4](https://github.com/feathersjs/feathers-swagger/tree/v0.3.4) (2017-03-23)
 [Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.3...v0.3.4)
 
