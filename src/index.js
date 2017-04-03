@@ -26,7 +26,7 @@ export default function init (config) {
       ignore: {
         tags: []
       }
-    }, config || {});
+    }, config.docs || {});
 
     const docsPath = rootDoc.docsPath;
 
