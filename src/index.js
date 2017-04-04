@@ -94,8 +94,9 @@ export default function init (config) {
       }
 
       const pathObj = rootDoc.paths;
-      const withIdKey = `/${path}/{${service.id || 'id'}}`;
-      const withoutIdKey = `/${path}`;
+      const swaggerPath = path.replace(/\/:([^\/]+)/g, '/{$1}')
+      const withIdKey = `/${swaggerPath}/{${service.id || 'id'}}`;
+      const withoutIdKey = `/${swaggerPath}`;
       const securities = doc.securities || [];
 
       if (typeof pathObj[withoutIdKey] === 'undefined') {
