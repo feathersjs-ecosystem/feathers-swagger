@@ -58,7 +58,7 @@ export function tag (name, options = {}) {
 }
 
 export function operation (method, service, defaults = {}) {
-  const operation = service.docs[method] || {};
+  const operation = Object.assign(service.docs[method] || {}, service[method].docs || {});
 
   operation.parameters = operation.parameters || defaults.parameters || [];
   operation.responses = operation.responses || defaults.responses || [];
