@@ -49,11 +49,16 @@
   "directories": {
     "lib": "lib"
   },
+  "greenkeeper": {
+    "ignore": [
+      "swagger-ui"
+    ]
+  },
   "dependencies": {
     "debug": "^2.3.3",
     "feathers-errors": "^2.5.0",
     "serve-static": "^1.11.1",
-    "swagger-ui": "^3.0.5"
+    "swagger-ui": "^2.2.6"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

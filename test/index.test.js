@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+
 import { expect } from 'chai';
 import feathers from 'feathers';
 import rest from 'feathers-rest';
