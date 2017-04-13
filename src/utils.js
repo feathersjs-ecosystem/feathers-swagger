@@ -61,14 +61,14 @@ export function operation (method, service, defaults = {}) {
   const operation = service.docs[method] || {};
 
   operation.parameters = operation.parameters || defaults.parameters || [];
-  operation.responses = operation.responses || defaults.responses || [];
+  operation.responses = operation.responses || defaults.responses || {};
   operation.description = operation.description || defaults.description || '';
   operation.summary = operation.summary || defaults.summary || '';
   operation.tags = operation.tags || defaults.tags || [];
   operation.consumes = operation.consumes || defaults.consumes || [];
   operation.produces = operation.produces || defaults.produces || [];
-  operation.security = operation.security || defaults.security || [];
-  operation.securityDefinitions = operation.securityDefinitions || defaults.securityDefinitions || [];
+  operation.security = operation.security || defaults.security || {};
+  operation.securityDefinitions = operation.securityDefinitions || defaults.securityDefinitions || {};
       // Clean up
   delete service.docs[method]; // Remove `find` from `docs`
 
