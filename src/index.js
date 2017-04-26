@@ -97,15 +97,7 @@ export default function init (config) {
       const withIdKey = `/${path}/{${service.id || 'id'}}`;
       const withoutIdKey = `/${path}`;
       const securities = doc.securities || [];
-
-      if (typeof pathObj[withoutIdKey] === 'undefined') {
-        pathObj[withoutIdKey] = {};
-      }
-
-      if (typeof pathObj[withIdKey] === 'undefined') {
-        pathObj[withIdKey] = {};
-      }
-
+      
       if (typeof doc.definition !== 'undefined') {
         rootDoc.definitions[tag] = doc.definition;
       }
@@ -116,6 +108,7 @@ export default function init (config) {
 
       // FIND
       if (typeof service.find === 'function') {
+        pathObj[withoutIdKey] = pathObj[withoutIdKey] || {};
         pathObj[withoutIdKey].get = utils.operation('find', service, {
           tags: [tag],
           description: 'Retrieves a list of all resources from the service.',
@@ -127,6 +120,7 @@ export default function init (config) {
 
       // GET
       if (typeof service.get === 'function') {
+        pathObj[withIdKey] = pathObj[withIdKey] || {};
         pathObj[withIdKey].get = utils.operation('get', service, {
           tags: [tag],
           description: 'Retrieves a single resource with the given id from the service.',
@@ -150,6 +144,7 @@ export default function init (config) {
 
       // CREATE
       if (typeof service.create === 'function') {
+        pathObj[withoutIdKey] = pathObj[withoutIdKey] || {};
         pathObj[withoutIdKey].post = utils.operation('create', service, {
           tags: [tag],
           description: 'Creates a new resource with data.',
@@ -167,6 +162,7 @@ export default function init (config) {
 
       // UPDATE
       if (typeof service.update === 'function') {
+        pathObj[withIdKey] = pathObj[withIdKey] || {};
         pathObj[withIdKey].put = utils.operation('update', service, {
           tags: [tag],
           description: 'Updates the resource identified by id using data.',
@@ -190,6 +186,7 @@ export default function init (config) {
 
       // PATCH
       if (typeof service.patch === 'function') {
+        pathObj[withIdKey] = pathObj[withIdKey] || {};
         pathObj[withIdKey].patch = utils.operation('patch', service, {
           tags: [tag],
           description: 'Updates the resource identified by id using data.',
@@ -213,6 +210,7 @@ export default function init (config) {
 
       // REMOVE
       if (typeof service.remove === 'function') {
+        pathObj[withIdKey] = pathObj[withIdKey] || {};
         pathObj[withIdKey].delete = utils.operation('remove', service, {
           tags: [tag],
           description: 'Removes the resource with id.',
