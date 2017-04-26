@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.4.0](https://github.com/feathersjs/feathers-swagger/tree/v0.4.0) (2017-04-26)
+[Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.5...v0.4.0)
+
+**Merged pull requests:**
+
+- Don't add empty paths [\#58](https://github.com/feathersjs/feathers-swagger/pull/58) ([cpsubrian](https://github.com/cpsubrian))
+- Update semistandard to the latest version 🚀 [\#57](https://github.com/feathersjs/feathers-swagger/pull/57) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update dependencies to enable Greenkeeper 🌴 [\#56](https://github.com/feathersjs/feathers-swagger/pull/56) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Allow each method of a service to define docs. [\#52](https://github.com/feathersjs/feathers-swagger/pull/52) ([cpsubrian](https://github.com/cpsubrian))
+- Fixes a couple defaults that should be objects, not arrays. [\#49](https://github.com/feathersjs/feathers-swagger/pull/49) ([cpsubrian](https://github.com/cpsubrian))
+
 ## [v0.3.5](https://github.com/feathersjs/feathers-swagger/tree/v0.3.5) (2017-04-01)
 [Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.4...v0.3.5)
 
