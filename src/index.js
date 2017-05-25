@@ -102,6 +102,10 @@ export default function init (config) {
 
       if (typeof doc.definition !== 'undefined') {
         rootDoc.definitions[tag] = doc.definition;
+        rootDoc.definitions[`${tag} list`] = {
+          type: 'array',
+          items: doc.definition
+        };
       }
 
       if (typeof doc.definitions !== 'undefined') {
@@ -114,7 +118,18 @@ export default function init (config) {
         pathObj[withoutIdKey].get = utils.operation('find', service, {
           tags: [tag],
           description: 'Retrieves a list of all resources from the service.',
-
+          responses: {
+            '200': {
+              description: 'success',
+              schema: {'$ref': '#/definitions/' + `${tag} list`}
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('find') > -1 ? security : {}
@@ -134,6 +149,21 @@ export default function init (config) {
             name: idName,
             type: idType
           }],
+          responses: {
+            '200': {
+              description: 'success',
+              schema: {'$ref': '#/definitions/' + tag}
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            },
+            '404': {
+              description: 'not found'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('get') > -1 ? security : {}
@@ -150,8 +180,19 @@ export default function init (config) {
             in: 'body',
             name: 'body',
             required: true,
-            schema: {'$ref': '#/definitions/' + model}
+            schema: {'$ref': '#/definitions/' + tag}
           }],
+          responses: {
+            '201': {
+              description: 'created'
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('create') > -1 ? security : {}
@@ -174,8 +215,23 @@ export default function init (config) {
             in: 'body',
             name: 'body',
             required: true,
-            schema: {'$ref': '#/definitions/' + model}
+            schema: {'$ref': '#/definitions/' + tag}
           }],
+          responses: {
+            '200': {
+              description: 'success',
+              schema: {'$ref': '#/definitions/' + tag}
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            },
+            '404': {
+              description: 'not found'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('update') > -1 ? security : {}
@@ -198,8 +254,23 @@ export default function init (config) {
             in: 'body',
             name: 'body',
             required: true,
-            schema: {'$ref': '#/definitions/' + model}
+            schema: {'$ref': '#/definitions/' + tag}
           }],
+          responses: {
+            '200': {
+              description: 'success',
+              schema: {'$ref': '#/definitions/' + tag}
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            },
+            '404': {
+              description: 'not found'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('patch') > -1 ? security : {}
@@ -219,6 +290,21 @@ export default function init (config) {
             name: idName,
             type: idType
           }],
+          responses: {
+            '200': {
+              description: 'success',
+              schema: {'$ref': '#/definitions/' + tag}
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            },
+            '404': {
+              description: 'not found'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('remove') > -1 ? security : {}
