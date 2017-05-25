@@ -77,6 +77,8 @@ export default function init (config) {
 
       // Load documentation from service, if available.
       const doc = service.docs;
+      const idName = service.id || 'id';
+      const idType = doc.idType || 'integer';
       let version = config.versionPrefix ? path.match(config.versionPrefix) : null;
       version = version ? ' ' + version[0] : '';
       const apiPath = path.replace(config.prefix, '');
@@ -94,10 +96,10 @@ export default function init (config) {
       }
 
       const pathObj = rootDoc.paths;
-      const withIdKey = `/${path}/{${service.id || 'id'}}`;
+      const withIdKey = `/${path}/{${idName}}`;
       const withoutIdKey = `/${path}`;
       const securities = doc.securities || [];
-      
+
       if (typeof doc.definition !== 'undefined') {
         rootDoc.definitions[tag] = doc.definition;
       }
@@ -112,6 +114,7 @@ export default function init (config) {
         pathObj[withoutIdKey].get = utils.operation('find', service, {
           tags: [tag],
           description: 'Retrieves a list of all resources from the service.',
+
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('find') > -1 ? security : {}
@@ -128,14 +131,9 @@ export default function init (config) {
             description: `ID of ${model} to return`,
             in: 'path',
             required: true,
-            name: 'resourceId',
-            type: 'integer'
+            name: idName,
+            type: idType
           }],
-          responses: {
-            '200': {
-              description: 'success'
-            }
-          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('get') > -1 ? security : {}
@@ -170,8 +168,8 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
-            type: 'integer'
+            name: idName,
+            type: idType
           }, {
             in: 'body',
             name: 'body',
@@ -194,8 +192,8 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
-            type: 'integer'
+            name: idName,
+            type: idType
           }, {
             in: 'body',
             name: 'body',
@@ -218,8 +216,8 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
-            type: 'integer'
+            name: idName,
+            type: idType
           }],
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
