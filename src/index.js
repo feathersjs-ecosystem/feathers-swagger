@@ -118,6 +118,26 @@ export default function init (config) {
         pathObj[withoutIdKey].get = utils.operation('find', service, {
           tags: [tag],
           description: 'Retrieves a list of all resources from the service.',
+          parameters: [
+            {
+              description: 'Number of results to return',
+              in: 'query',
+              name: '$limit',
+              type: 'integer'
+            },
+            {
+              description: 'Number of results to skip',
+              in: 'query',
+              name: '$skip',
+              type: 'integer'
+            },
+            {
+              description: 'Property to sort results',
+              in: 'query',
+              name: '$sort',
+              type: 'string'
+            }
+          ],
           responses: {
             '200': {
               description: 'success',
