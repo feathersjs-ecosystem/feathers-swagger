@@ -97,7 +97,7 @@ export default function init (config) {
       const withIdKey = `/${path}/{${service.id || 'id'}}`;
       const withoutIdKey = `/${path}`;
       const securities = doc.securities || [];
-      
+
       if (typeof doc.definition !== 'undefined') {
         rootDoc.definitions[tag] = doc.definition;
       }
@@ -128,7 +128,7 @@ export default function init (config) {
             description: `ID of ${model} to return`,
             in: 'path',
             required: true,
-            name: 'resourceId',
+            name: `${service.id || 'id'}`,
             type: 'integer'
           }],
           responses: {
@@ -170,7 +170,7 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
+            name: `${service.id || 'id'}`,
             type: 'integer'
           }, {
             in: 'body',
@@ -194,7 +194,7 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
+            name: `${service.id || 'id'}`,
             type: 'integer'
           }, {
             in: 'body',
@@ -218,7 +218,7 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
+            name: `${service.id || 'id'}`,
             type: 'integer'
           }],
           produces: rootDoc.produces,
