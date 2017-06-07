@@ -57,7 +57,25 @@ export function tag (name, options = {}) {
   };
 }
 
-export function operation (method, service, defaults = {}) {
+function addPathParameters (swaggerPath, parameters) {
+  var paramRgxp = /\{([^}]+)\}\//g;
+  var match;
+  while ((match = paramRgxp.exec(swaggerPath)) !== null) {
+    parameters.push({
+      in: 'path',
+      name: match[1],
+      type: 'string',
+      required: true,
+      description: match[1] + ' parameter'
+    });
+  }
+}
+
+export function operation (method, service, defaults, swaggerPath) {
+  if (!defaults) defaults = {};
+  if (!defaults.parameters) defaults.parameters = [];
+  if (swaggerPath) addPathParameters(swaggerPath, defaults.parameters);
+
   const operation = Object.assign(service.docs[method] || {}, service[method].docs || {});
 
   operation.parameters = operation.parameters || defaults.parameters || [];

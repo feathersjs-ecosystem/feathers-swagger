@@ -94,14 +94,13 @@ export default function init (config) {
       }
 
       const pathObj = rootDoc.paths;
-      const withIdKey = `/${path}/{${service.id || 'id'}}`;
-      const withoutIdKey = `/${path}`;
+      const swaggerPath = path.replace(/\/:([^/]+)/g, '/{$1}');
+      const withIdKey = `/${swaggerPath}/{${service.id || 'id'}}`;
+      const withoutIdKey = `/${swaggerPath}`;
       const securities = doc.securities || [];
-      
       if (typeof doc.definition !== 'undefined') {
         rootDoc.definitions[tag] = doc.definition;
       }
-
       if (typeof doc.definitions !== 'undefined') {
         rootDoc.definitions = Object.assign(rootDoc.definitions, doc.definitions);
       }
@@ -115,7 +114,7 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('find') > -1 ? security : {}
-        });
+        }, swaggerPath);
       }
 
       // GET
@@ -139,7 +138,7 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('get') > -1 ? security : {}
-        });
+        }, swaggerPath);
       }
 
       // CREATE
@@ -157,7 +156,7 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('create') > -1 ? security : {}
-        });
+        }, swaggerPath);
       }
 
       // UPDATE
@@ -181,7 +180,7 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('update') > -1 ? security : {}
-        });
+        }, swaggerPath);
       }
 
       // PATCH
@@ -205,7 +204,7 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('patch') > -1 ? security : {}
-        });
+        }, swaggerPath);
       }
 
       // REMOVE
@@ -224,7 +223,7 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('remove') > -1 ? security : {}
-        });
+        }, swaggerPath);
       }
 
       rootDoc.paths = pathObj;
