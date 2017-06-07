@@ -97,11 +97,9 @@ export default function init (config) {
       const withIdKey = `/${path}/{${service.id || 'id'}}`;
       const withoutIdKey = `/${path}`;
       const securities = doc.securities || [];
-      
       if (typeof doc.definition !== 'undefined') {
         rootDoc.definitions[tag] = doc.definition;
       }
-
       if (typeof doc.definitions !== 'undefined') {
         rootDoc.definitions = Object.assign(rootDoc.definitions, doc.definitions);
       }
@@ -229,8 +227,11 @@ export default function init (config) {
 
       rootDoc.paths = pathObj;
 
-      if (!rootDoc.tags.find(item => item.name === tag)) {
+      const existingTag = rootDoc.tags.find(item => item.name === tag);
+      if (!existingTag) {
         rootDoc.tags.push(utils.tag(tag, doc));
+      } else {
+        Object.assign(existingTag, utils.tag(tag, doc));
       }
     });
   };
