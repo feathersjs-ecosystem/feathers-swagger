@@ -5,7 +5,9 @@ const service = require('feathers-sequelize');
 const cors = require('cors');
 const path = require('path');
 const hooks = require('feathers-hooks');
+const { discard } = require('feathers-hooks-common');
 const authentication = require('feathers-authentication');
+const { hashPassword } = require('feathers-authentication-local').hooks;
 const Sequelize = require('sequelize');
 const user = require('./user-model');
 const bodyParser = require('body-parser');
@@ -100,6 +102,7 @@ app.options('*', cors())
       'token': {
         'secret': '7RJeSzXr2n/Mb15vl1lVAUs7PHNjvlV3ltJLpBjdJ93MPanV1HkFf5WjK/J4V2hqFaxALsPrqr7cgBPsA0M0DQ=='
       },
+      'secret': 'thisIsRequiredForSequelizeExampleToRunButIDoNotKnowWhatItDoes',
       'local': {}
     };
     app.configure(authentication(config));
@@ -155,15 +158,15 @@ app.options('*', cors())
     const userService = this.service('/users');
     const auth = authentication.hooks;
     userService.before({
-      create: [auth.hashPassword()],
+      create: [hashPassword()],
       find: [
-        auth.verifyToken(),
-        auth.populateUser(),
-        auth.restrictToAuthenticated()
+        // auth.verifyToken(), //need migrating to new authentication?
+        // auth.populateUser(),
+        // auth.restrictToAuthenticated()
       ]
     });
     userService.after({
-      all: [hooks.remove('password')]
+      all: [discard('password')]
     });
   });
 

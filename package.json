@@ -38,7 +38,8 @@
     "mocha": "mocha --opts mocha.opts",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
     "test": "npm run compile && npm run lint && npm run coverage",
-    "start": "npm run compile && node example/simple/app"
+    "start": "npm run compile && node example/simple/app",
+    "example2": "npm run compile && node example/sequelize/app"
   },
   "semistandard": {
     "sourceType": "module",
@@ -70,6 +71,9 @@
     "cors": "^2.8.1",
     "feathers": "^2.0.2",
     "feathers-authentication": "^1.0.2",
+    "feathers-authentication-local": "^0.3.4",
+    "feathers-hooks": "^2.0.1",
+    "feathers-hooks-common": "^3.5.1",
     "feathers-memory": "^1.0.1",
     "feathers-rest": "^1.5.2",
     "feathers-sequelize": "^2.0.0",
