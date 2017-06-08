@@ -77,6 +77,8 @@ export default function init (config) {
 
       // Load documentation from service, if available.
       const doc = service.docs;
+      const idName = service.id || 'id';
+      const idType = doc.idType || 'integer';
       let version = config.versionPrefix ? path.match(config.versionPrefix) : null;
       version = version ? ' ' + version[0] : '';
       const apiPath = path.replace(config.prefix, '');
@@ -94,11 +96,16 @@ export default function init (config) {
       }
 
       const pathObj = rootDoc.paths;
-      const withIdKey = `/${path}/{${service.id || 'id'}}`;
+      const withIdKey = `/${path}/{${idName}}`;
       const withoutIdKey = `/${path}`;
       const securities = doc.securities || [];
+
       if (typeof doc.definition !== 'undefined') {
         rootDoc.definitions[tag] = doc.definition;
+        rootDoc.definitions[`${tag} list`] = {
+          type: 'array',
+          items: doc.definition
+        };
       }
       if (typeof doc.definitions !== 'undefined') {
         rootDoc.definitions = Object.assign(rootDoc.definitions, doc.definitions);
@@ -110,6 +117,38 @@ export default function init (config) {
         pathObj[withoutIdKey].get = utils.operation('find', service, {
           tags: [tag],
           description: 'Retrieves a list of all resources from the service.',
+          parameters: [
+            {
+              description: 'Number of results to return',
+              in: 'query',
+              name: '$limit',
+              type: 'integer'
+            },
+            {
+              description: 'Number of results to skip',
+              in: 'query',
+              name: '$skip',
+              type: 'integer'
+            },
+            {
+              description: 'Property to sort results',
+              in: 'query',
+              name: '$sort',
+              type: 'string'
+            }
+          ],
+          responses: {
+            '200': {
+              description: 'success',
+              schema: {'$ref': '#/definitions/' + `${tag} list`}
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('find') > -1 ? security : {}
@@ -126,12 +165,22 @@ export default function init (config) {
             description: `ID of ${model} to return`,
             in: 'path',
             required: true,
-            name: 'resourceId',
-            type: 'integer'
+            name: idName,
+            type: idType
           }],
           responses: {
             '200': {
-              description: 'success'
+              description: 'success',
+              schema: {'$ref': '#/definitions/' + tag}
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            },
+            '404': {
+              description: 'not found'
             }
           },
           produces: rootDoc.produces,
@@ -150,8 +199,19 @@ export default function init (config) {
             in: 'body',
             name: 'body',
             required: true,
-            schema: {'$ref': '#/definitions/' + model}
+            schema: {'$ref': '#/definitions/' + tag}
           }],
+          responses: {
+            '201': {
+              description: 'created'
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('create') > -1 ? security : {}
@@ -168,14 +228,29 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
-            type: 'integer'
+            name: idName,
+            type: idType
           }, {
             in: 'body',
             name: 'body',
             required: true,
-            schema: {'$ref': '#/definitions/' + model}
+            schema: {'$ref': '#/definitions/' + tag}
           }],
+          responses: {
+            '200': {
+              description: 'success',
+              schema: {'$ref': '#/definitions/' + tag}
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            },
+            '404': {
+              description: 'not found'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('update') > -1 ? security : {}
@@ -192,14 +267,29 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
-            type: 'integer'
+            name: idName,
+            type: idType
           }, {
             in: 'body',
             name: 'body',
             required: true,
-            schema: {'$ref': '#/definitions/' + model}
+            schema: {'$ref': '#/definitions/' + tag}
           }],
+          responses: {
+            '200': {
+              description: 'success',
+              schema: {'$ref': '#/definitions/' + tag}
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            },
+            '404': {
+              description: 'not found'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('patch') > -1 ? security : {}
@@ -216,9 +306,24 @@ export default function init (config) {
             description: 'ID of ' + model + ' to return',
             in: 'path',
             required: true,
-            name: 'resourceId',
-            type: 'integer'
+            name: idName,
+            type: idType
           }],
+          responses: {
+            '200': {
+              description: 'success',
+              schema: {'$ref': '#/definitions/' + tag}
+            },
+            '500': {
+              description: 'general error'
+            },
+            '401': {
+              description: 'not authenticated'
+            },
+            '404': {
+              description: 'not found'
+            }
+          },
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('remove') > -1 ? security : {}
