@@ -79,7 +79,7 @@
     "request-promise": "^4.1.1",
     "rimraf": "^2.5.4",
     "semistandard": "^11.0.0",
-    "sequelize": "^3.27.0",
+    "sequelize": "^4.0.0",
     "sqlite3": "^3.1.8"
   }
 }
