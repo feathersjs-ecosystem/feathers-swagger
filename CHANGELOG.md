@@ -1,13 +1,24 @@
 # Change Log
 
+## [v0.5.0](https://github.com/feathersjs/feathers-swagger/tree/v0.5.0) (2017-06-08)
+[Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.4.0...v0.5.0)
+
+**Merged pull requests:**
+
+- Update sequelize to the latest version 🚀 [\#71](https://github.com/feathersjs/feathers-swagger/pull/71) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Fix: docs ignored when path already exists \#23 [\#69](https://github.com/feathersjs/feathers-swagger/pull/69) ([psi-4ward](https://github.com/psi-4ward))
+- Quality of life [\#68](https://github.com/feathersjs/feathers-swagger/pull/68) ([christopherjbaker](https://github.com/christopherjbaker))
+- Update chai to the latest version 🚀 [\#66](https://github.com/feathersjs/feathers-swagger/pull/66) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update feathers-sequelize to the latest version 🚀 [\#60](https://github.com/feathersjs/feathers-swagger/pull/60) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v0.4.0](https://github.com/feathersjs/feathers-swagger/tree/v0.4.0) (2017-04-26)
 [Full Changelog](https://github.com/feathersjs/feathers-swagger/compare/v0.3.5...v0.4.0)
 
 **Merged pull requests:**
 
 - Don't add empty paths [\#58](https://github.com/feathersjs/feathers-swagger/pull/58) ([cpsubrian](https://github.com/cpsubrian))
-- Update semistandard to the latest version 🚀 [\#57](https://github.com/feathersjs/feathers-swagger/pull/57) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
-- Update dependencies to enable Greenkeeper 🌴 [\#56](https://github.com/feathersjs/feathers-swagger/pull/56) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update semistandard to the latest version 🚀 [\#57](https://github.com/feathersjs/feathers-swagger/pull/57) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update dependencies to enable Greenkeeper 🌴 [\#56](https://github.com/feathersjs/feathers-swagger/pull/56) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Allow each method of a service to define docs. [\#52](https://github.com/feathersjs/feathers-swagger/pull/52) ([cpsubrian](https://github.com/cpsubrian))
 - Fixes a couple defaults that should be objects, not arrays. [\#49](https://github.com/feathersjs/feathers-swagger/pull/49) ([cpsubrian](https://github.com/cpsubrian))
 
