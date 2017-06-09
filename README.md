@@ -33,6 +33,7 @@ const swagger = require('feathers-swagger');
 
 const messageService = memory();
 
+// swagger spec for this service, see http://swagger.io/specification/
 messageService.docs = {
   description: 'A service to send and receive messages',
   definitions: {
@@ -48,7 +49,7 @@ messageService.docs = {
         },
         "useId": {
           "type": "string",
-          "description": "The id of the user that send the message"
+          "description": "The id of the user that sent the message"
         }
       }
     }
