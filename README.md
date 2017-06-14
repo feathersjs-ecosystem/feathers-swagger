@@ -22,7 +22,7 @@ npm install feathers-swagger --save
 
 ### Basic example
 
-Here's an example of a Feathers server that uses `feathers-swagger`. 
+Here's an example of a Feathers server that uses `feathers-swagger`.
 
 ```js
 const feathers = require('feathers');
@@ -74,6 +74,63 @@ app.listen(3030);
 ```
 
 Go to `localhost:3030/docs` to see the Swagger JSON documentation.
+
+### Example with Feathers Generate app
+1. Go into your `src/services/` folder, and open the service you want to edit `PATH.service.js`
+2. Change from this:
+```
+// Initialize our service with any options it requires
+app.use('/events', createService(options));
+```
+to this:
+```
+const events = createService(options)
+events.docs = {
+  //overwrite things here.
+  //if we want to add a mongoose style $search hook to find, we can write this:
+  find: {
+    parameters: [
+      {
+        description: 'Number of results to return',
+        in: 'query',
+        name: '$limit',
+        type: 'integer'
+      },
+      {
+        description: 'Number of results to skip',
+        in: 'query',
+        name: '$skip',
+        type: 'integer'
+      },
+      {
+        description: 'Property to sort results',
+        in: 'query',
+        name: '$sort',
+        type: 'string'
+      },
+      {
+        description: 'Property to query results',
+        in: 'query',
+        name: '$search',
+        type: 'string'
+      }
+    ]
+  },
+  //if we want to add the mongoose model to the 'definitions' so it is a named model in the swagger ui:
+  definitions: {
+    event: mongooseToJsonLibraryYouImport(Model) //import your own library, use the 'Model' object in this file.
+    'event list': { //this library currently configures the return documentation to look for ``${tag} list`
+         type: 'array',
+         schema: { $ref: '#/definitions/event' }
+       }
+   }
+}
+app.use('/events', events)
+```
+
+The overrides work at a property level - if you pass in find.parameters, that whole object will be used, it is not merged in.
+you can find more information in the utils.js file to get an idea of what is passed in.
+
 
 ### Example with UI
 
