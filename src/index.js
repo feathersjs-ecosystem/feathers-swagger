@@ -25,7 +25,8 @@ export default function init (config) {
       info: {},
       ignore: {
         tags: []
-      }
+      },
+      defaults: {}
     }, config || {});
 
     const docsPath = rootDoc.docsPath;
@@ -114,7 +115,7 @@ export default function init (config) {
       // FIND
       if (typeof service.find === 'function') {
         pathObj[withoutIdKey] = pathObj[withoutIdKey] || {};
-        pathObj[withoutIdKey].get = utils.operation('find', service, {
+        const findDefaults = {
           tags: [tag],
           description: 'Retrieves a list of all resources from the service.',
           parameters: [
@@ -152,13 +153,15 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('find') > -1 ? security : {}
-        });
+        };
+        let defaults = Object.assign(findDefaults, rootDoc.defaults.find);
+        pathObj[withoutIdKey].get = utils.operation('find', service, defaults);
       }
 
       // GET
       if (typeof service.get === 'function') {
         pathObj[withIdKey] = pathObj[withIdKey] || {};
-        pathObj[withIdKey].get = utils.operation('get', service, {
+        const getDefaults = {
           tags: [tag],
           description: 'Retrieves a single resource with the given id from the service.',
           parameters: [{
@@ -186,13 +189,15 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('get') > -1 ? security : {}
-        });
+        };
+        let defaults = Object.assign(getDefaults, rootDoc.defaults.get);
+        pathObj[withIdKey].get = utils.operation('get', service, defaults);
       }
 
       // CREATE
       if (typeof service.create === 'function') {
         pathObj[withoutIdKey] = pathObj[withoutIdKey] || {};
-        pathObj[withoutIdKey].post = utils.operation('create', service, {
+        const createDefaults = {
           tags: [tag],
           description: 'Creates a new resource with data.',
           parameters: [{
@@ -215,13 +220,15 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('create') > -1 ? security : {}
-        });
+        };
+        let defaults = Object.assign(createDefaults, rootDoc.defaults.create);
+        pathObj[withoutIdKey].post = utils.operation('create', service, defaults);
       }
 
       // UPDATE
       if (typeof service.update === 'function') {
         pathObj[withIdKey] = pathObj[withIdKey] || {};
-        pathObj[withIdKey].put = utils.operation('update', service, {
+        const updateDefaults = {
           tags: [tag],
           description: 'Updates the resource identified by id using data.',
           parameters: [{
@@ -254,13 +261,15 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('update') > -1 ? security : {}
-        });
+        };
+        let defaults = Object.assign(updateDefaults, rootDoc.defaults.update);
+        pathObj[withIdKey].put = utils.operation('update', service, defaults);
       }
 
       // PATCH
       if (typeof service.patch === 'function') {
         pathObj[withIdKey] = pathObj[withIdKey] || {};
-        pathObj[withIdKey].patch = utils.operation('patch', service, {
+        const patchDefaults = {
           tags: [tag],
           description: 'Updates the resource identified by id using data.',
           parameters: [{
@@ -293,13 +302,15 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('patch') > -1 ? security : {}
-        });
+        };
+        let defaults = Object.assign(patchDefaults, rootDoc.defaults.patch);
+        pathObj[withIdKey].patch = utils.operation('patch', service, defaults);
       }
 
       // REMOVE
       if (typeof service.remove === 'function') {
         pathObj[withIdKey] = pathObj[withIdKey] || {};
-        pathObj[withIdKey].delete = utils.operation('remove', service, {
+        const removeDefaults = {
           tags: [tag],
           description: 'Removes the resource with id.',
           parameters: [{
@@ -327,7 +338,9 @@ export default function init (config) {
           produces: rootDoc.produces,
           consumes: rootDoc.consumes,
           security: securities.indexOf('remove') > -1 ? security : {}
-        });
+        };
+        let defaults = Object.assign(removeDefaults, rootDoc.defaults.remove);
+        pathObj[withIdKey].delete = utils.operation('remove', service, defaults);
       }
 
       rootDoc.paths = pathObj;
