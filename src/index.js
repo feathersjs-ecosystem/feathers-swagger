@@ -4,7 +4,7 @@ import serveStatic from 'serve-static';
 import * as utils from './utils';
 
 // Find node_modules root path
-let modulesRootPath = require.resolve('swagger-ui');
+let modulesRootPath = require.resolve('swagger-ui-dist');
 modulesRootPath = modulesRootPath.substr(0, modulesRootPath.lastIndexOf('node_modules'));
 
 export default function init (config) {
@@ -15,7 +15,7 @@ export default function init (config) {
     const rootDoc = Object.assign({
       paths: {},
       definitions: {},
-      swagger: '2.0',
+      swagger: '3.2',
       schemes: ['http'],
       tags: [],
       basePath: '',
@@ -52,7 +52,7 @@ export default function init (config) {
             res.sendFile(config.uiIndex);
           } else if (config.uiIndex === true) {
             if (req.query.url) {
-              res.sendFile(path.join(modulesRootPath, 'node_modules/swagger-ui/dist/index.html'));
+              res.sendFile(path.join(modulesRootPath, 'node_modules/swagger-ui-dist/index.html'));
             } else {
               // Set swagger url (needed for default UI)
               res.redirect('?url=' + encodeURI(config.docsPath));
@@ -65,7 +65,8 @@ export default function init (config) {
     });
 
     if (typeof config.uiIndex !== 'undefined') {
-      const uiPath = path.dirname(require.resolve('swagger-ui'));
+      const uiPath = path.dirname(require.resolve('swagger-ui-dist'));
+      console.log('Adding static path', uiPath);
       app.use(docsPath, serveStatic(uiPath));
     }
 
@@ -117,30 +118,31 @@ export default function init (config) {
         pathObj[withoutIdKey].get = utils.operation('find', service, {
           tags: [tag],
           description: 'Retrieves a list of all resources from the service.',
-          parameters: [
-            {
-              description: 'Number of results to return',
-              in: 'query',
-              name: '$limit',
-              type: 'integer'
-            },
-            {
-              description: 'Number of results to skip',
-              in: 'query',
-              name: '$skip',
-              type: 'integer'
-            },
-            {
-              description: 'Property to sort results',
-              in: 'query',
-              name: '$sort',
-              type: 'string'
-            }
+          parameters: [{
+            description: 'Number of results to return',
+            in: 'query',
+            name: '$limit',
+            type: 'integer'
+          },
+          {
+            description: 'Number of results to skip',
+            in: 'query',
+            name: '$skip',
+            type: 'integer'
+          },
+          {
+            description: 'Property to sort results',
+            in: 'query',
+            name: '$sort',
+            type: 'string'
+          }
           ],
           responses: {
             '200': {
               description: 'success',
-              schema: {'$ref': '#/definitions/' + `${tag} list`}
+              schema: {
+                '$ref': '#/definitions/' + `${tag} list`
+              }
             },
             '500': {
               description: 'general error'
@@ -171,7 +173,9 @@ export default function init (config) {
           responses: {
             '200': {
               description: 'success',
-              schema: {'$ref': '#/definitions/' + tag}
+              schema: {
+                '$ref': '#/definitions/' + tag
+              }
             },
             '500': {
               description: 'general error'
@@ -195,11 +199,12 @@ export default function init (config) {
         pathObj[withoutIdKey].post = utils.operation('create', service, {
           tags: [tag],
           description: 'Creates a new resource with data.',
-          parameters: [{
-            in: 'body',
+          parameters: [{ in: 'body',
             name: 'body',
             required: true,
-            schema: {'$ref': '#/definitions/' + tag}
+            schema: {
+              '$ref': '#/definitions/' + tag
+            }
           }],
           responses: {
             '201': {
@@ -230,16 +235,19 @@ export default function init (config) {
             required: true,
             name: idName,
             type: idType
-          }, {
-            in: 'body',
+          }, { in: 'body',
             name: 'body',
             required: true,
-            schema: {'$ref': '#/definitions/' + tag}
+            schema: {
+              '$ref': '#/definitions/' + tag
+            }
           }],
           responses: {
             '200': {
               description: 'success',
-              schema: {'$ref': '#/definitions/' + tag}
+              schema: {
+                '$ref': '#/definitions/' + tag
+              }
             },
             '500': {
               description: 'general error'
@@ -269,16 +277,19 @@ export default function init (config) {
             required: true,
             name: idName,
             type: idType
-          }, {
-            in: 'body',
+          }, { in: 'body',
             name: 'body',
             required: true,
-            schema: {'$ref': '#/definitions/' + tag}
+            schema: {
+              '$ref': '#/definitions/' + tag
+            }
           }],
           responses: {
             '200': {
               description: 'success',
-              schema: {'$ref': '#/definitions/' + tag}
+              schema: {
+                '$ref': '#/definitions/' + tag
+              }
             },
             '500': {
               description: 'general error'
@@ -312,7 +323,9 @@ export default function init (config) {
           responses: {
             '200': {
               description: 'success',
-              schema: {'$ref': '#/definitions/' + tag}
+              schema: {
+                '$ref': '#/definitions/' + tag
+              }
             },
             '500': {
               description: 'general error'

@@ -5,6 +5,9 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const swagger = require('../../lib');
 
+let modulesRootPath = require.resolve('swagger-ui-dist');
+modulesRootPath = modulesRootPath.substr(0, modulesRootPath.lastIndexOf('node_modules'));
+
 const messageService = memory();
 
 messageService.docs = {
@@ -29,13 +32,24 @@ messageService.docs = {
   }
 };
 
+const serveStatic = require('serve-static')
+const distPath = path.join(modulesRootPath, 'node_modules/swagger-ui-dist')
+
+// alternatively point to local file:
+// const uiIndex = path.join(__dirname, 'docs.html')
+const uiIndex = path.join(distPath, 'index.html')
+
 const app = feathers()
   .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: true }))
+  .use(bodyParser.urlencoded({
+    extended: true
+  }))
+  .use(serveStatic(distPath))
   .configure(rest())
+
   .configure(swagger({
     docsPath: '/docs',
-    uiIndex: path.join(__dirname, 'docs.html'),
+    uiIndex,
     info: {
       title: 'A test',
       description: 'A description'
