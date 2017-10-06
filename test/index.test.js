@@ -1,15 +1,18 @@
 /* eslint-disable no-unused-expressions */
 
-import { expect } from 'chai';
+import {
+  expect
+} from 'chai';
 import feathers from 'feathers';
 import rest from 'feathers-rest';
 import memory from 'feathers-memory';
 import rp from 'request-promise';
 import swagger from '../src';
+import lib from '../lib';
 
 describe('feathers-swagger', () => {
   it('is CommonJS compatible', () => {
-    expect(typeof require('../lib')).to.equal('function');
+    expect(typeof lib).to.equal('function');
   });
 
   describe('basic functionality', () => {

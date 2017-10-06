@@ -16,6 +16,9 @@ const port = 3030;
 // Setup
 const app = feathers();
 
+let modulesRootPath = require.resolve('swagger-ui-dist');
+modulesRootPath = modulesRootPath.substr(0, modulesRootPath.lastIndexOf('node_modules'));
+
 // Set Sequelize
 app.set('sequelize', new Sequelize('sequelize', '', '', {
   dialect: 'sqlite',
@@ -93,7 +96,7 @@ app.options('*', cors())
   }))
   .configure(hooks())
   .configure(rest())
-  .configure(function() {
+  .configure(function () {
     const app = this;
     const config = {
       'idField': 'id',
@@ -104,7 +107,7 @@ app.options('*', cors())
     };
     app.configure(authentication(config));
   })
-  .configure(function() {
+  .configure(function () {
     // Add your service(s)
     const model = user(this.get('sequelize')),
       options = {
@@ -131,7 +134,7 @@ app.options('*', cors())
       find: {
         parameters: [{
           description: 'Get examples by name',
-          in : 'query',
+          in: 'query',
           required: false,
           name: 'email',
           type: 'string'
@@ -168,7 +171,7 @@ app.options('*', cors())
   });
 
 
-app.listen(port, function() {
+app.listen(port, function () {
   console.log('Feathers server listening on port ' + port + '.');
 });
 
