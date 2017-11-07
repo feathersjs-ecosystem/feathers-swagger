@@ -72,8 +72,7 @@ export default function init (config) {
 
     app.docs = rootDoc;
 
-    // Optional: Register this plugin as a Feathers provider
-    app.providers.push(function (path, service) {
+    const configurePlugin = function(service, path) {
       service.docs = service.docs || {};
 
       // Load documentation from service, if available.
@@ -351,7 +350,14 @@ export default function init (config) {
       } else {
         Object.assign(existingTag, utils.tag(tag, doc));
       }
-    });
+    }
+
+    // Optional: Register this plugin as a Feathers provider
+    if(app.version && parseInt(app.version, 10) >= 3) {
+      app.mixins.push(configurePlugin);
+    } else {
+      app.providers.push((path, service) => configurePlugin(service, path));
+    }
   };
 }
 
