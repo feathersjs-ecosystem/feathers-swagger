@@ -10,6 +10,9 @@ import rp from 'request-promise';
 import swagger from '../src';
 import lib from '../lib';
 
+import buzzard from '@feathersjs/feathers';
+import expressify from '@feathersjs/express';
+
 describe('feathers-swagger', () => {
   it('is CommonJS compatible', () => {
     expect(typeof lib).to.equal('function');
@@ -43,6 +46,20 @@ describe('feathers-swagger', () => {
         expect(docs.info.title).to.equal('A test');
         expect(docs.info.description).to.equal('A description');
         expect(docs.paths['/messages']).to.exist;
+      });
+    });
+  });
+
+  describe('support for Buzzard', () => {
+    it('should support Buzzard provider syntax', () => {
+      const app = expressify(buzzard())
+        .configure(swagger({}))
+        .use('/messages', memory());
+
+      return new Promise((resolve, reject) => {
+        const server = app.listen(9001, () => {
+          resolve(server.close());
+        });
       });
     });
   });
