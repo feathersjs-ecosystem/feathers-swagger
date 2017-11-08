@@ -1,23 +1,16 @@
 /* eslint-disable no-unused-expressions */
+const { expect } = require('chai');
 
-import {
-  expect
-} from 'chai';
-import feathers from 'feathers';
-import rest from 'feathers-rest';
-import memory from 'feathers-memory';
-import rp from 'request-promise';
-import swagger from '../src';
-import lib from '../lib';
+const feathers = require('feathers');
+const rest = require('feathers-rest');
+const memory = require('feathers-memory');
+const rp = require('request-promise');
+const swagger = require('../lib');
 
 import buzzard from '@feathersjs/feathers';
 import expressify from '@feathersjs/express';
 
 describe('feathers-swagger', () => {
-  it('is CommonJS compatible', () => {
-    expect(typeof lib).to.equal('function');
-  });
-
   describe('basic functionality', () => {
     let server;
 
