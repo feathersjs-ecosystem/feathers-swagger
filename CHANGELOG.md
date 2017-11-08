@@ -1,5 +1,26 @@
 # Change Log
 
+## [v0.6.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.6.0) (2017-11-08)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.5.0...v0.6.0)
+
+**Closed issues:**
+
+- Outdated provider signature w/ Buzzard [\#83](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/83)
+- Is there a version that works with OAS 2.0? [\#82](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/82)
+- Swagger 3.x compatible version [\#78](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/78)
+- Did it working with last swagger 3.0 [\#61](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/61)
+- \[How to\] add documentation for the /auth/xxx endpoints [\#54](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/54)
+
+**Merged pull requests:**
+
+- Update to new plugin infrastructure and fix test and examples [\#85](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/85) ([daffl](https://github.com/daffl))
+- Fix: Adding support for Buzzard provider syntax \(\#83\) [\#84](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/84) ([alexisabril](https://github.com/alexisabril))
+- Update mocha to the latest version 🚀 [\#80](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/80) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Support for Swagger UI 3.x [\#79](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/79) ([kristianmandrup](https://github.com/kristianmandrup))
+- Update debug to the latest version 🚀 [\#77](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/77) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- adding another example to readme [\#75](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/75) ([paul42](https://github.com/paul42))
+- add link and comment about what is being defined [\#74](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/74) ([jamesjnadeau](https://github.com/jamesjnadeau))
+
 ## [v0.5.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.5.0) (2017-06-08)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.4.0...v0.5.0)
 
