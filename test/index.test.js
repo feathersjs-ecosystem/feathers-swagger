@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-expressions */
 const { expect } = require('chai');
 
+const buzzard = require('@feathersjs/feathers');
+const expressify = require('@feathersjs/express');
 const feathers = require('feathers');
 const rest = require('feathers-rest');
 const memory = require('feathers-memory');
 const rp = require('request-promise');
 const swagger = require('../lib');
-
-import buzzard from '@feathersjs/feathers';
-import expressify from '@feathersjs/express';
 
 describe('feathers-swagger', () => {
   describe('basic functionality', () => {
