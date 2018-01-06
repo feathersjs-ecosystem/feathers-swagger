@@ -41,7 +41,8 @@ describe('feathers-swagger', () => {
             docsPath: '/docs',
             info: {
               title: 'A test',
-              description: 'A description'
+              description: 'A description',
+              version: '1.0.0'
             },
             idType: 'string'
           })

@@ -65,7 +65,8 @@ const app = feathers()
     docsPath: '/docs',
     info: {
       title: 'A test',
-      description: 'A description'
+      description: 'A description',
+      version: '1.0.0'
     }
   }))
   .use('/messages', messageService);
@@ -177,7 +178,8 @@ const app = feathers()
     uiIndex: path.join(__dirname, 'docs.html'),
     info: {
       title: 'A test',
-      description: 'A description'
+      description: 'A description',
+      version: '1.0.0'
     }
   }))
   .use('/messages', messageService);
@@ -360,7 +362,8 @@ const app = feathers()
     docsPath: '/docs',
     info: {
       title: 'A test',
-      description: 'A description'
+      description: 'A description',
+      version: '1.0.0'
     }
   }))
   .use('/api/v1/messages', messageService);
@@ -380,7 +383,8 @@ const app = feathers()
     docsPath: '/docs',
     info: {
       title: 'A test',
-      description: 'A description'
+      description: 'A description',
+      version: '1.0.0'
     }
   }))
   .use('/api/v1/messages', messageService);
