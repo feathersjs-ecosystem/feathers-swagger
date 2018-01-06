@@ -51,7 +51,8 @@ const app = feathers()
     uiIndex,
     info: {
       title: 'A test',
-      description: 'A description'
+      description: 'A description',
+      version: '1.0.0'
     }
   }))
   .use('/messages', messageService);
