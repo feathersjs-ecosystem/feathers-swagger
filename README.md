@@ -123,7 +123,7 @@ events.docs = {
     event: mongooseToJsonLibraryYouImport(Model) //import your own library, use the 'Model' object in this file.
     'event list': { //this library currently configures the return documentation to look for ``${tag} list`
          type: 'array',
-         schema: { $ref: '#/definitions/event' }
+         items: { $ref: '#/definitions/event' }
        }
    }
 }
