@@ -54,6 +54,7 @@
   "dependencies": {
     "debug": "^3.1.0",
     "feathers-errors": "^2.5.0",
+    "lodash.pick": "^4.4.0",
     "serve-static": "^1.12.4",
     "swagger-ui": "^3.2.0",
     "swagger-ui-dist": "^3.2.0"
