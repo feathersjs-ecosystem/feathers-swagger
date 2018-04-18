@@ -20,7 +20,8 @@ describe('feathers-swagger', () => {
           docsPath: '/docs',
           info: {
             'title': 'A test',
-            'description': 'A description'
+            'description': 'A description',
+            'version': '1.0.0'
           }
         }))
         .use('/messages', memory());
@@ -37,6 +38,7 @@ describe('feathers-swagger', () => {
       }).then(docs => {
         expect(docs.info.title).to.equal('A test');
         expect(docs.info.description).to.equal('A description');
+        expect(docs.info.version).to.equal('1.0.0');
         expect(docs.paths['/messages']).to.exist;
       });
     });
