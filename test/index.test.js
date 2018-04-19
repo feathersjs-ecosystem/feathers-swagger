@@ -22,6 +22,9 @@ describe('feathers-swagger', () => {
             'title': 'A test',
             'description': 'A description',
             'version': '1.0.0'
+          },
+          ignore: {
+            tags: []
           }
         }))
         .use('/messages', memory());
