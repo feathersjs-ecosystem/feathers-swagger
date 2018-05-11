@@ -3,8 +3,8 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/feathersjs-ecosystem/feathers-swagger.svg)](https://greenkeeper.io/)
 
 [![Build Status](https://travis-ci.org/feathersjs-ecosystem/feathers-swagger.png?branch=master)](https://travis-ci.org/feathersjs-ecosystem/feathers-swagger)
-[![Code Climate](https://codeclimate.com/github/feathersjs-ecosystem/feathers-swagger/badges/gpa.svg)](https://codeclimate.com/github/feathersjs-ecosystem/feathers-swagger)
-[![Test Coverage](https://codeclimate.com/github/feathersjs-ecosystem/feathers-swagger/badges/coverage.svg)](https://codeclimate.com/github/feathersjs-ecosystem/feathers-swagger/coverage)
+[![Code Climate](https://codeclimate.com/github/feathersjs/feathers-swagger/badges/gpa.svg)](https://codeclimate.com/github/feathersjs/feathers-swagger)
+[![Test Coverage](https://codeclimate.com/github/feathersjs/feathers-swagger/badges/coverage.svg)](https://codeclimate.com/github/feathersjs/feathers-swagger/coverage)
 [![Dependency Status](https://img.shields.io/david/feathersjs-ecosystem/feathers-swagger.svg?style=flat-square)](https://david-dm.org/feathersjs-ecosystem/feathers-swagger)
 [![Download Status](https://img.shields.io/npm/dm/feathers-swagger.svg?style=flat-square)](https://www.npmjs.com/package/feathers-swagger)
 
