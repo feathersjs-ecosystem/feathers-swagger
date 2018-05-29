@@ -14,7 +14,7 @@ This version is configured to work with Swagger UI 3.x
 
 ## Installation
 
-```
+```shell
 npm install feathers-swagger --save
 ```
 
@@ -75,17 +75,17 @@ const app = feathers()
 app.listen(3030);
 ```
 
-Go to `localhost:3030/docs` to see the Swagger JSON documentation.
+Go to <http://localhost:3030/docs> to see the Swagger JSON documentation.
 
 ### Example with Feathers Generate app
 1. Go into your `src/services/` folder, and open the service you want to edit `PATH.service.js`
 2. Change from this:
-```
+```js
 // Initialize our service with any options it requires
 app.use('/events', createService(options));
 ```
 to this:
-```
+```js
 const events = createService(options)
 events.docs = {
   //overwrite things here.
@@ -342,7 +342,7 @@ Create a `docs.html` page like this:
 </html>
 ```
 
-Now [localhost:3030/docs/](http://localhost:3030/docs/) will show the documentation in the browser using the Swagger UI.
+Now <http://localhost:3030/docs/> will show the documentation in the browser using the Swagger UI.
 
 You can also use `uiIndex: true` to use the default [Swagger UI](http://swagger.io/swagger-ui/).
 
@@ -392,6 +392,6 @@ app.listen(3030);
 
 ## License
 
-Copyright (c) 2016
+Copyright (c) 2016 - 2018
 
 Licensed under the [MIT license](LICENSE).
