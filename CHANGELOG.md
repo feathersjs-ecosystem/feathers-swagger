@@ -1,5 +1,26 @@
 # Change Log
 
+## [v0.5.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.5.1) (2018-05-29)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.6.0...v0.5.1)
+
+**Closed issues:**
+
+- Swagger & Express [\#106](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/106)
+- exclude [\#96](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/96)
+- Resolve Errors displayed in Swagger UI [\#91](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/91)
+- Test [\#65](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/65)
+
+**Merged pull requests:**
+
+- Config contains idType to set default for application [\#108](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/108) ([andys8](https://github.com/andys8))
+- fix\(documentation\): Improved markdown highlighting [\#104](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/104) ([andys8](https://github.com/andys8))
+-  fix\(documentation\): Array items reference [\#101](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/101) ([jraut](https://github.com/jraut))
+- typo fix [\#95](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/95) ([sarkistlt](https://github.com/sarkistlt))
+- Update mocha to the latest version 🚀 [\#92](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/92) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update semistandard to the latest version 🚀 [\#88](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/88) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update feathers-sequelize to the latest version 🚀 [\#87](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/87) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update feathers-memory to the latest version 🚀 [\#86](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/86) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v0.6.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.6.0) (2017-11-08)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.5.0...v0.6.0)
 
