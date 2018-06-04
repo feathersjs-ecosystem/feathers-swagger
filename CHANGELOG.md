@@ -1,7 +1,22 @@
 # Change Log
 
+## [v0.7.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.1) (2018-06-04)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.0...v0.7.1)
+
+**Closed issues:**
+
+- Log statement in the code: Remove it? [\#110](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/110)
+
+**Merged pull requests:**
+
+- Removed ui integration log statement [\#111](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/111) ([andys8](https://github.com/andys8))
+- fix\(documentation\): Codeclimate badges [\#105](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/105) ([andys8](https://github.com/andys8))
+
 ## [v0.7.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.0) (2018-05-29)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.5.1...v0.7.0)
+
+## [v0.5.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.5.1) (2018-05-29)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.6.0...v0.5.1)
 
 **Closed issues:**
 
