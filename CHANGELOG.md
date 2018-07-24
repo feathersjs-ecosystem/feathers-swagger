@@ -1,5 +1,17 @@
 # Change Log
 
+## [v0.7.2](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.2) (2018-07-24)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.1...v0.7.2)
+
+**Closed issues:**
+
+- Codeclimate links and badges in readme are dead [\#103](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/103)
+
+**Merged pull requests:**
+
+- API key authentication bug fixed, no more "undefined" security object. [\#115](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/115) ([ivanmarjanovic](https://github.com/ivanmarjanovic))
+- added findQueryParameters [\#114](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/114) ([xFuryMaxHD](https://github.com/xFuryMaxHD))
+
 ## [v0.7.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.1) (2018-06-04)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.0...v0.7.1)
 
