@@ -52,7 +52,7 @@
     ]
   },
   "dependencies": {
-    "debug": "^3.1.0",
+    "debug": "^4.0.0",
     "feathers-errors": "^2.5.0",
     "serve-static": "^1.12.4",
     "swagger-ui": "^3.2.0",
