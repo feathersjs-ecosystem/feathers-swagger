@@ -68,7 +68,7 @@
     "feathers-authentication": "^1.0.2",
     "feathers-memory": "^2.0.0",
     "feathers-rest": "^1.5.2",
-    "feathers-sequelize": "^3.0.0",
+    "feathers-sequelize": "^4.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.0.0",
     "request": "^2.79.0",
