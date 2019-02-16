@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-expressions */
 const { expect } = require('chai');
 
-const buzzard = require('@feathersjs/feathers');
-const expressify = require('@feathersjs/express');
-const feathers = require('feathers');
-const rest = require('feathers-rest');
+const feathers = require('@feathersjs/feathers');
+const express = require('@feathersjs/express');
 const memory = require('feathers-memory');
 const rp = require('request-promise');
 const swagger = require('../lib');
@@ -14,8 +12,8 @@ describe('feathers-swagger', () => {
     let server;
 
     before(done => {
-      const app = feathers()
-        .configure(rest())
+      const app = express(feathers())
+        .configure(express.rest())
         .configure(
           swagger({
             docsPath: '/docs',
@@ -51,20 +49,6 @@ describe('feathers-swagger', () => {
       }).then(docs => {
         const messagesIdParam = docs.paths['/messages/{id}'].get.parameters[0];
         expect(messagesIdParam.type).to.equal('string');
-      });
-    });
-  });
-
-  describe('support for Buzzard', () => {
-    it('should support Buzzard provider syntax', () => {
-      const app = expressify(buzzard())
-        .configure(swagger({}))
-        .use('/messages', memory());
-
-      return new Promise((resolve, reject) => {
-        const server = app.listen(9001, () => {
-          resolve(server.close());
-        });
       });
     });
   });

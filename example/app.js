@@ -1,8 +1,7 @@
-const feathers = require('feathers');
-const rest = require('feathers-rest');
+const feathers = require('@feathersjs/feathers');
+const express = require('@feathersjs/express');
 const memory = require('feathers-memory');
 const path = require('path');
-const bodyParser = require('body-parser');
 const swagger = require('../lib');
 const messageService = memory();
 
@@ -38,13 +37,13 @@ const distPath = require.resolve('swagger-ui-dist');
 // const uiIndex = path.join(__dirname, 'docs.html')
 const uiIndex = path.join(__dirname, 'docs.html');
 
-const app = feathers()
-  .use(bodyParser.json())
-  .use(bodyParser.urlencoded({
+const app = express(feathers())
+  .use(express.json())
+  .use(express.urlencoded({
     extended: true
   }))
   .use(serveStatic(distPath))
-  .configure(rest())
+  .configure(express.rest())
 
   .configure(swagger({
     docsPath: '/docs',
