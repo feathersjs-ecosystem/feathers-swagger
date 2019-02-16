@@ -1,0 +1,19 @@
+{
+  "check-coverage": true,
+  "per-file": true,
+  "lines": [50, 80],
+  "statements": [50, 80],
+  "functions": [50, 80],
+  "branches": [50, 80],
+  "reporter": [
+    "html",
+    "text",
+    "text-summary",
+    "lcov"
+  ],
+  "include": [
+    "lib/**/*.js"
+  ],
+  "cache": true,
+  "all": true
+}

@@ -33,7 +33,7 @@
     "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "lint": "semistandard --fix",
     "mocha": "mocha --opts mocha.opts",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
+    "coverage": "nyc report node_modules/mocha/bin/_mocha -- --opts mocha.opts",
     "test": "npm run lint && npm run coverage",
     "start": "npm run compile && node example/simple/app"
   },
@@ -63,8 +63,8 @@
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "feathers-memory": "^3.0.2",
-    "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
+    "nyc": "^13.3.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "semistandard": "^13.0.1"
