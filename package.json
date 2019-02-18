@@ -64,7 +64,7 @@
     "cors": "^2.8.5",
     "feathers-memory": "^3.0.2",
     "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^5.2.0",
+    "mocha": "^6.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "semistandard": "^13.0.1"
