@@ -1,8 +1,7 @@
-const feathers = require('feathers');
-const rest = require('feathers-rest');
+const feathers = require('@feathersjs/feathers');
+const express = require('@feathersjs/express');
 const memory = require('feathers-memory');
 const path = require('path');
-const bodyParser = require('body-parser');
 const swagger = require('../lib');
 const messageService = memory();
 
@@ -10,23 +9,23 @@ messageService.docs = {
   description: 'A service to send and receive messages',
   definitions: {
     messages: {
-      'type': 'object',
-      'required': [
+      type: 'object',
+      required: [
         'text'
       ],
-      'properties': {
-        'text': {
-          'type': 'string',
-          'description': 'The message text'
+      properties: {
+        text: {
+          type: 'string',
+          description: 'The message text'
         },
-        'userId': {
-          'type': 'string',
-          'description': 'The id of the user that send the message'
+        userId: {
+          type: 'string',
+          description: 'The id of the user that send the message'
         }
       }
     },
     'messages list': {
-      'type': 'array'
+      type: 'array'
     }
   }
 };
@@ -38,13 +37,13 @@ const distPath = require.resolve('swagger-ui-dist');
 // const uiIndex = path.join(__dirname, 'docs.html')
 const uiIndex = path.join(__dirname, 'docs.html');
 
-const app = feathers()
-  .use(bodyParser.json())
-  .use(bodyParser.urlencoded({
+const app = express(feathers())
+  .use(express.json())
+  .use(express.urlencoded({
     extended: true
   }))
   .use(serveStatic(distPath))
-  .configure(rest())
+  .configure(express.rest())
 
   .configure(swagger({
     docsPath: '/docs',

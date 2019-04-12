@@ -52,27 +52,21 @@
     ]
   },
   "dependencies": {
-    "debug": "^4.0.0",
-    "feathers-errors": "^2.5.0",
-    "serve-static": "^1.12.4",
-    "swagger-ui": "^3.2.0",
-    "swagger-ui-dist": "^3.2.0"
+    "debug": "^4.1.1",
+    "serve-static": "^1.13.2",
+    "swagger-ui": "^3.20.8",
+    "swagger-ui-dist": "^3.20.8"
   },
   "devDependencies": {
-    "@feathersjs/express": "^1.1.1",
-    "@feathersjs/feathers": "^3.0.0",
-    "body-parser": "^1.15.2",
-    "chai": "^4.0.0",
-    "cors": "^2.8.1",
-    "feathers": "^2.0.2",
-    "feathers-authentication": "^1.0.2",
-    "feathers-memory": "^2.0.0",
-    "feathers-rest": "^1.5.2",
-    "feathers-sequelize": "^4.0.0",
+    "@feathersjs/express": "^1.3.1",
+    "@feathersjs/feathers": "^3.3.1",
+    "chai": "^4.2.0",
+    "cors": "^2.8.5",
+    "feathers-memory": "^3.0.2",
     "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^5.0.0",
-    "request": "^2.79.0",
-    "request-promise": "^4.1.1",
-    "semistandard": "^13.0.0"
+    "mocha": "^6.0.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "semistandard": "^13.0.1"
   }
 }
