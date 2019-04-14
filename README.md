@@ -47,7 +47,7 @@ messageService.docs = {
           "type": "string",
           "description": "The message text"
         },
-        "useId": {
+        "userId": {
           "type": "string",
           "description": "The id of the user that sent the message"
         }
