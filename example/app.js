@@ -25,7 +25,10 @@ messageService.docs = {
       }
     },
     'messages list': {
-      type: 'array'
+      type: 'array',
+      items: {
+        $ref: `#/definitions/messages`
+      }
     }
   }
 };
