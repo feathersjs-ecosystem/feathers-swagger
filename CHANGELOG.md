@@ -1,5 +1,34 @@
 # Change Log
 
+## [v0.7.3](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.3) (2019-04-15)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.2...v0.7.3)
+
+**Implemented enhancements:**
+
+- chore: Standardise concatenation and object keys [\#131](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/131) ([EspadaV8](https://github.com/EspadaV8))
+
+**Fixed bugs:**
+
+- fix: Remove invalid securityDefinitions key from operations [\#133](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/133) ([EspadaV8](https://github.com/EspadaV8))
+
+**Closed issues:**
+
+- An in-range update of debug is breaking the build 🚨 [\#118](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/118)
+- Version 10 of node.js has been released [\#102](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/102)
+- Feature Idea: Validation [\#26](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/26)
+
+**Merged pull requests:**
+
+- Add test to validate swagger specification, fix spec errors [\#139](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/139) ([Mairu](https://github.com/Mairu))
+- Update mocha to the latest version 🚀 [\#134](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/134) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update all dependencies [\#130](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/130) ([daffl](https://github.com/daffl))
+- feat: Update list of nodejs versions to test against [\#129](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/129) ([EspadaV8](https://github.com/EspadaV8))
+- fix: Remove invalid root level keys from swagger file [\#127](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/127) ([EspadaV8](https://github.com/EspadaV8))
+- fix: Default security value should not be an object [\#126](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/126) ([EspadaV8](https://github.com/EspadaV8))
+- Update feathers-sequelize to the latest version 🚀 [\#123](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/123) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update semistandard to the latest version 🚀 [\#120](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/120) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update debug to the latest version 🚀 [\#119](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/119) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v0.7.2](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.2) (2018-07-24)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.1...v0.7.2)
 
