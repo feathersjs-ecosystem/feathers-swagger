@@ -35,7 +35,7 @@
     "mocha": "mocha --opts mocha.opts",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
     "test": "npm run lint && npm run coverage",
-    "start": "npm run compile && node example/simple/app"
+    "start": "node example/app"
   },
   "semistandard": {
     "sourceType": "module",
@@ -67,6 +67,7 @@
     "mocha": "^6.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "semistandard": "^13.0.1"
+    "semistandard": "^13.0.1",
+    "swagger-parser": "^6.0.5"
   }
 }
