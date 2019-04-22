@@ -39,12 +39,14 @@ describe('feathers-swagger', () => {
         .configure(
           swagger({
             docsPath: '/docs',
-            info: {
-              title: 'A test',
-              description: 'A description',
-              version: '1.0.0'
-            },
-            idType: 'string'
+            idType: 'string',
+            specs: {
+              info: {
+                title: 'A test',
+                description: 'A description',
+                version: '1.0.0'
+              },
+            }
           })
         )
         .use('/messages', messageService);

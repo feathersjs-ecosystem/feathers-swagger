@@ -51,10 +51,12 @@ const app = express(feathers())
   .configure(swagger({
     docsPath: '/docs',
     uiIndex,
-    info: {
-      title: 'A test',
-      description: 'A description',
-      version: '1.0.0'
+    specs: {
+      info: {
+        title: 'A test',
+        description: 'A description',
+        version: '1.0.0'
+      }
     }
   }))
   .use('/messages', messageService);

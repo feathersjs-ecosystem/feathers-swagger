@@ -63,11 +63,13 @@ const app = feathers()
   .configure(rest())
   .configure(swagger({
     docsPath: '/docs',
-    info: {
-      title: 'A test',
-      description: 'A description',
-      version: '1.0.0'
-    }
+    specs: {
+      info: {
+        title: 'A test',
+        description: 'A description',
+        version: '1.0.0',
+      },
+    },
   }))
   .use('/messages', messageService);
 
@@ -119,7 +121,7 @@ events.docs = {
   },
   //if we want to add the mongoose model to the 'definitions' so it is a named model in the swagger ui:
   definitions: {
-    event: mongooseToJsonLibraryYouImport(Model) //import your own library, use the 'Model' object in this file.
+    event: mongooseToJsonLibraryYouImport(Model), //import your own library, use the 'Model' object in this file.
     'event list': { //this library currently configures the return documentation to look for ``${tag} list`
          type: 'array',
          items: { $ref: '#/definitions/event' }
@@ -176,11 +178,13 @@ const app = feathers()
   .configure(swagger({
     docsPath: '/docs',
     uiIndex: path.join(__dirname, 'docs.html'),
-    info: {
-      title: 'A test',
-      description: 'A description',
-      version: '1.0.0'
-    }
+    specs: {
+      info: {
+        title: 'A test',
+        description: 'A description',
+        version: '1.0.0',
+      },
+    },
   }))
   .use('/messages', messageService);
 
@@ -360,11 +364,13 @@ const app = feathers()
   .configure(swagger({
     prefix: /api\/v\d\//,
     docsPath: '/docs',
-    info: {
-      title: 'A test',
-      description: 'A description',
-      version: '1.0.0'
-    }
+    specs: {
+      info: {
+        title: 'A test',
+        description: 'A description',
+        version: '1.0.0',
+      },
+    },
   }))
   .use('/api/v1/messages', messageService);
 
@@ -381,11 +387,13 @@ const app = feathers()
     prefix: /api\/v\d\//,
     versionPrefix: /v\d/,
     docsPath: '/docs',
-    info: {
-      title: 'A test',
-      description: 'A description',
-      version: '1.0.0'
-    }
+    specs: {
+      info: {
+        title: 'A test',
+        description: 'A description',
+        version: '1.0.0',
+      },
+    },
   }))
   .use('/api/v1/messages', messageService);
 
@@ -394,6 +402,6 @@ app.listen(3030);
 
 ## License
 
-Copyright (c) 2016 - 2018
+Copyright (c) 2016 - 2019
 
 Licensed under the [MIT license](LICENSE).
