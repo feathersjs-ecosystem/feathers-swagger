@@ -400,6 +400,88 @@ const app = feathers()
 app.listen(3030);
 ```
 
+## API
+
+### `swagger(options)`
+
+Initializes the module. Should be provided to app.configure before the registration of services. 
+
+```js
+const feathers = require('@feathersjs/feathers');
+const swagger = require('feathers-swagger');
+
+const app = feathers();
+//...
+app.configure(swagger({
+  specs: {
+    info: {
+      title: 'A test',
+      description: 'A description',
+      version: '1.0.0',
+    },
+  }
+}));
+// now you can register feather services
+app.use('/message', messageService);
+```
+
+__Options:__
+
+- `specs` (**required**) - Global specifications that should at least contain the info section to generate a valid swagger specification
+- `docsPath` (*optional*, default: `'/docs'`) - The path where the swagger json / ui will be available.
+- `docsJsonPath` (*optional*) - The path where the swagger json will be available (independently of request Accept header).
+- `uiIndex` (*optional*) - Configuration of swagger ui initialization, possibilities:
+  - `false` - Disable swagger ui, the json specification will be available at `docsPaths`
+  - `true` - Enable default swagger ui with index from node_modules package
+  - `'path/to/doc.html'` - Enable swagger ui with the provided file as index
+  - `function(req, res)` - A function with customized initialization
+- `idType` (*optional*) - The default swagger type of ids used in paths, `'integer'` will be used when not provided
+- `prefix` (*optional*) - Used for automatic tag and name generation for services
+- `versionPrefix` (*optional*) - Used for automatic tag and name generation for services
+- `findQueryParameters` (*optional*) - Allow addition of parameters to the find documentation
+- `include` (*optional*) - Object to configure for which services documentation will be generated, empty means all will be included:
+  - `tags` - Array of tags for that service documentation will be generated
+  - `paths` - Array of paths (string or regex) for that service documentation will be generated, Notice: paths dont start with /
+- `ignore` (*optional*) - Object to configure  to ignore with the following keys:
+  - `tags` - Array of tags for that no service documentation will be generated
+  - `paths` - Array of paths (string or regex) for that no service documentation will be generated, Notice: paths dont start with /
+- `appProperty` (*optional*, default: `docs`) - Property of the feathers app object that the generated specification will be saved to, allows custom post processing; set empty to disable
+- `defaults` (*optional*) - Object with methods to be able to customize the default specifications for methods
+
+### `service.docs`
+
+If you want to customize the specifications generation for a service you can configure it by providing a options object as `docs` property of the service.
+
+```js
+// service generation
+messageService.docs = {
+  description: 'My service description',
+  definition: {
+    type: 'object',
+    required: [
+    'text'
+    ],
+    properties: {
+    text: {
+      type: 'string',
+      description: 'The message text'
+    },
+    userId: {
+      type: 'string',
+      description: 'The id of the user that send the message'
+    }
+    }
+  }
+};
+```
+
+__Options:__
+
+- `description`: (*optional*) Provide a description for the service documentation
+- `definition`: (*optional*) Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
+- `definitions`: (*optional*) Swagger definitions that will merged in the global definitions
+- `find`|`get`|`create`|`update`|`patch`|`remove`: (*optional*) Custom definition for a method, can alternately be set as doc property of the method
+
 ## License
 
 Copyright (c) 2016 - 2019

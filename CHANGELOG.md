@@ -1,5 +1,17 @@
 # Change Log
 
+## [NEXT]
+
+**BREAKING:**
+- swagger specifications have to be defined in `specs` instead of the root of the config object
+
+**ADDED:**
+- add option to ignore by paths
+- add options to specify which services to include to documentation by paths or tags
+- add appProperty option
+- add docsJsonPath option
+- add defaults option where generator functions for customized defaults can be defined
+
 ## [v0.7.3](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.3) (2019-04-15)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.2...v0.7.3)
 

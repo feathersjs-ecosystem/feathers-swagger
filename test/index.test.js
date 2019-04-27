@@ -45,7 +45,7 @@ describe('feathers-swagger', () => {
                 title: 'A test',
                 description: 'A description',
                 version: '1.0.0'
-              },
+              }
             }
           })
         )
