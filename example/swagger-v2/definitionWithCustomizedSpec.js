@@ -47,12 +47,12 @@ module.exports = (app) => {
       paths: ['v2/definition-with-customized-update/messages']
     },
     defaults: {
-      update ({ tag, model, idName, idType, security, securities, specs }) {
+      update ({ tag, modelName, idName, idType, security, securities, specs, refs }) {
         return {
           tags: [tag, 'update'],
           description: 'Changed stuff',
           parameters: [{
-            description: `Some custom text still with ${model}`,
+            description: `Some custom text still with ${modelName}`,
             in: 'path',
             required: true,
             name: idName,
@@ -62,7 +62,7 @@ module.exports = (app) => {
             name: 'body',
             required: true,
             schema: {
-              $ref: `#/definitions/${tag}`
+              $ref: `#/definitions/${refs.updateRequest}`
             }
           }],
           responses: {

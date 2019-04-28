@@ -11,6 +11,12 @@
 - add appProperty option
 - add docsJsonPath option
 - add defaults option where generator functions for customized defaults can be defined
+- add possibility to customize the refs used for different operations [\#116](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/116)
+- allow disabling of specific service methods [\#63](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/63)
+- add possibility to customize tag, tags and model for a service [\#24](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/24) [\#112](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/112)
+
+**FIXED:**
+- do not use space in list ref [\#109](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/109)
 
 ## [v0.7.3](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.3) (2019-04-15)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.2...v0.7.3)

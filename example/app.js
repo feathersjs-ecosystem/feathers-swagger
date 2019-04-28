@@ -7,6 +7,7 @@ const distPath = require.resolve('swagger-ui-dist');
 
 const swaggerV2Definitions = require('./swagger-v2/definitions');
 const swaggerV2DefinitionWithCustomizedSpec = require('./swagger-v2/definitionWithCustomizedSpec');
+const swaggerV2customTags = require('./swagger-v2/customTags');
 
 const app = express(feathers())
   .use(express.json())
@@ -22,6 +23,7 @@ const app = express(feathers())
 
   .configure(swaggerV2Definitions)
   .configure(swaggerV2DefinitionWithCustomizedSpec)
+  .configure(swaggerV2customTags)
 
   ;
 

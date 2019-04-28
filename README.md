@@ -446,7 +446,10 @@ __Options:__
   - `tags` - Array of tags for that no service documentation will be generated
   - `paths` - Array of paths (string or regex) for that no service documentation will be generated, Notice: paths dont start with /
 - `appProperty` (*optional*, default: `docs`) - Property of the feathers app object that the generated specification will be saved to, allows custom post processing; set empty to disable
-- `defaults` (*optional*) - Object with methods to be able to customize the default specifications for methods
+- `defaults` (*optional*) - Object to customize the defaults for generation of the specification
+  - `getOperationArgs` - method to generate args that the methods for operations will consume, can also customize default tag and model generation
+  - `getOperationsRefs` - method to generate refs that the methods for operations will consume, see service.docs.refs option
+  - `find`|`get`|`create`|`update`|`patch`|`remove` - methods that generate the default specification for the operation
 
 ### `service.docs`
 
@@ -462,14 +465,14 @@ messageService.docs = {
     'text'
     ],
     properties: {
-    text: {
-      type: 'string',
-      description: 'The message text'
-    },
-    userId: {
-      type: 'string',
-      description: 'The id of the user that send the message'
-    }
+      text: {
+        type: 'string',
+        description: 'The message text'
+      },
+      userId: {
+        type: 'string',
+        description: 'The id of the user that send the message'
+      }
     }
   }
 };
@@ -477,10 +480,16 @@ messageService.docs = {
 
 __Options:__
 
-- `description`: (*optional*) Provide a description for the service documentation
-- `definition`: (*optional*) Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
-- `definitions`: (*optional*) Swagger definitions that will merged in the global definitions
-- `find`|`get`|`create`|`update`|`patch`|`remove`: (*optional*) Custom definition for a method, can alternately be set as doc property of the method
+- `tag` (*optional*) - Override tag that is parsed from path
+- `description` (*optional*) - Provide a description for the service documentation (tag)
+- `externalDocs` (*optional*) - Add external docs to service documentation (tag)
+- `tags` (*optional*) - Give multiple tags
+- `model` (*optional*) - Override model that is parsed from path
+- `modelName` (*optional*) - Override modelName that is parsed from path
+- `definition` (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
+- `definitions` (*optional*) - Swagger definitions that will merged in the global definitions
+- `find`|`get`|`create`|`update`|`patch`|`remove` (*optional*) - Custom (parts of the) specification for a method, can alternatively be set as doc property of the method. To disable the generation set to false.
+- `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse
 
 ## License
 

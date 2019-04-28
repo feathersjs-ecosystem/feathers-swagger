@@ -1,22 +1,25 @@
 /**
  * Example for swagger v2
  * - using definitions option of service.docs to define all needed definitions
- * - using a custom uiIndex file
- * - using findQueryParameters option
+ * - using custom tag
+ * - using custom tags, with one being ignored
+ * - using custom model
  */
 
-const path = require('path');
 const memory = require('feathers-memory');
 const swagger = require('../../lib');
 
 module.exports = (app) => {
   const messageService = memory();
-  const uiIndex = path.join(__dirname, 'docs.html');
 
   messageService.docs = {
+    tag: 'message',
     description: 'A service to send and receive messages',
+    tags: ['message', 'additional', 'ignored'],
+    model: 'custom_message',
     definitions: {
-      messages: {
+      custom_message: {
+        title: 'Message',
         type: 'object',
         required: [
           'text'
@@ -32,41 +35,37 @@ module.exports = (app) => {
           }
         }
       },
-      'messages_list': {
+      'custom_message_list': {
+        title: 'List of Messages',
         type: 'array',
         items: {
-          $ref: `#/definitions/messages`
+          $ref: `#/definitions/custom_message`
         }
       }
-    },
-    get: {
-      description: 'This is my custom get description'
     }
   };
 
   app.configure(swagger({
-    docsPath: '/v2/definitions',
-    prefix: 'v2/definitions/',
-    docsJsonPath: '/v2/definitions.json',
-    uiIndex,
-    findQueryParameters: [
-      {
-        description: 'My custom query parameter',
-        in: 'query',
-        name: '$custom',
-        type: 'string'
-      }
-    ],
+    docsPath: '/v2/custom-tags',
+    prefix: 'v2/custom-tags/',
+    docsJsonPath: '/v2/custom-tags.json',
+    uiIndex: true,
     specs: {
       info: {
         title: 'A test',
-        description: 'A description',
+        description: 'An example using custom tags and model',
         version: '1.0.0'
-      }
+      },
+      tags: [swagger.tag('additional', {
+        description: 'An additional tag, that can be used'
+      })]
     },
     include: {
-      paths: ['v2/definitions/messages']
+      paths: ['v2/custom-tags/messages']
+    },
+    ignore: {
+      tags: ['ignored']
     }
   }))
-    .use('/v2/definitions/messages', messageService);
+    .use('/v2/custom-tags/messages', messageService);
 };
