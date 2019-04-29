@@ -1,5 +1,5 @@
 /**
- * Example for swagger v2
+ * Example for openapi v3
  * - using definitions option of service.docs to define all needed definitions
  * - using custom tag
  * - using custom tags, with one being ignored
@@ -39,16 +39,17 @@ module.exports = (app) => {
         title: 'List of Messages',
         type: 'array',
         items: {
-          $ref: `#/definitions/custom_message`
+          $ref: `#/components/schemas/custom_message`
         }
       }
     }
   };
 
   app.configure(swagger({
-    docsPath: '/v2/custom-tags',
-    prefix: 'v2/custom-tags/',
-    docsJsonPath: '/v2/custom-tags.json',
+    openApiVersion: 3,
+    docsPath: '/v3/custom-tags',
+    prefix: 'v3/custom-tags/',
+    docsJsonPath: '/v3/custom-tags.json',
     uiIndex: true,
     specs: {
       info: {
@@ -61,11 +62,11 @@ module.exports = (app) => {
       })]
     },
     include: {
-      paths: ['v2/custom-tags/messages']
+      paths: ['v3/custom-tags/messages']
     },
     ignore: {
       tags: ['ignored']
     }
   }))
-    .use('/v2/custom-tags/messages', messageService);
+    .use('/v3/custom-tags/messages', messageService);
 };

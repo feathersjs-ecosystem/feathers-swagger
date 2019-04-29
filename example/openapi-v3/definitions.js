@@ -1,25 +1,22 @@
 /**
- * Example for swagger v2
+ * Example for openapi v3
  * - using definitions option of service.docs to define all needed definitions
- * - using custom tag
- * - using custom tags, with one being ignored
- * - using custom model
+ * - using a custom uiIndex file
+ * - using findQueryParameters option
  */
 
+const path = require('path');
 const memory = require('feathers-memory');
 const swagger = require('../../lib');
 
 module.exports = (app) => {
   const messageService = memory();
+  const uiIndex = path.join(__dirname, 'docs.html');
 
   messageService.docs = {
-    tag: 'message',
     description: 'A service to send and receive messages',
-    tags: ['message', 'additional', 'ignored'],
-    model: 'custom_message',
     definitions: {
-      custom_message: {
-        title: 'Message',
+      messages: {
         type: 'object',
         required: [
           'text'
@@ -35,37 +32,44 @@ module.exports = (app) => {
           }
         }
       },
-      custom_message_list: {
-        title: 'List of Messages',
+      'messages_list': {
         type: 'array',
         items: {
-          $ref: `#/definitions/custom_message`
+          $ref: `#/components/schemas/messages`
         }
       }
+    },
+    get: {
+      description: 'This is my custom get description'
     }
   };
 
   app.configure(swagger({
-    docsPath: '/v2/custom-tags',
-    prefix: 'v2/custom-tags/',
-    docsJsonPath: '/v2/custom-tags.json',
-    uiIndex: true,
+    openApiVersion: 3,
+    docsPath: '/v3/definitions',
+    prefix: 'v3/definitions/',
+    docsJsonPath: '/v3/definitions.json',
+    uiIndex,
+    findQueryParameters: [
+      {
+        description: 'My custom query parameter',
+        in: 'query',
+        name: '$custom',
+        schema: {
+          type: 'string'
+        }
+      }
+    ],
     specs: {
       info: {
         title: 'A test',
-        description: 'An example using custom tags and model',
+        description: 'A description',
         version: '1.0.0'
-      },
-      tags: [swagger.tag('additional', {
-        description: 'An additional tag, that can be used'
-      })]
+      }
     },
     include: {
-      paths: ['v2/custom-tags/messages']
-    },
-    ignore: {
-      tags: ['ignored']
+      paths: ['v3/definitions/messages']
     }
   }))
-    .use('/v2/custom-tags/messages', messageService);
+    .use('/v3/definitions/messages', messageService);
 };

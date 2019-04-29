@@ -1,9 +1,9 @@
 /**
  * Example for swagger v2
  * - using definitions option of service.docs to define all needed definitions
- * - using custom tag
- * - using custom tags, with one being ignored
- * - using custom model
+ * - add security definitions
+ * - configure security for service operations
+ * - use custom security definitions for specific operation
  */
 
 const memory = require('feathers-memory');
@@ -13,12 +13,9 @@ module.exports = (app) => {
   const messageService = memory();
 
   messageService.docs = {
-    tag: 'message',
     description: 'A service to send and receive messages',
-    tags: ['message', 'additional', 'ignored'],
-    model: 'custom_message',
     definitions: {
-      custom_message: {
+      messages: {
         title: 'Message',
         type: 'object',
         required: [
@@ -35,20 +32,26 @@ module.exports = (app) => {
           }
         }
       },
-      custom_message_list: {
+      messages_list: {
         title: 'List of Messages',
         type: 'array',
         items: {
-          $ref: `#/definitions/custom_message`
+          $ref: `#/definitions/messages`
         }
       }
+    },
+    securities: ['create', 'update', 'patch', 'remove'],
+    find: {
+      security: [
+        { BasicAuth: [] }
+      ]
     }
   };
 
   app.configure(swagger({
-    docsPath: '/v2/custom-tags',
-    prefix: 'v2/custom-tags/',
-    docsJsonPath: '/v2/custom-tags.json',
+    docsPath: '/v2/security',
+    prefix: 'v2/security/',
+    docsJsonPath: '/v2/security.json',
     uiIndex: true,
     specs: {
       info: {
@@ -56,16 +59,23 @@ module.exports = (app) => {
         description: 'An example using custom tags and model',
         version: '1.0.0'
       },
-      tags: [swagger.tag('additional', {
-        description: 'An additional tag, that can be used'
-      })]
+      securityDefinitions: {
+        BasicAuth: {
+          type: 'basic'
+        },
+        ApiKeyAuth: {
+          type: 'apiKey',
+          in: 'header',
+          name: 'X-API-Key'
+        }
+      },
+      security: [
+        { ApiKeyAuth: [] }
+      ]
     },
     include: {
-      paths: ['v2/custom-tags/messages']
-    },
-    ignore: {
-      tags: ['ignored']
+      paths: ['v2/security/messages']
     }
   }))
-    .use('/v2/custom-tags/messages', messageService);
+    .use('/v2/security/messages', messageService);
 };

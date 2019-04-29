@@ -3,7 +3,7 @@
 ## [NEXT]
 
 **BREAKING:**
-- swagger specifications have to be defined in `specs` instead of the root of the config object
+- swagger/openapi specifications have to be defined in `specs` instead of the root of the config object
 
 **ADDED:**
 - add option to ignore by paths
@@ -14,6 +14,7 @@
 - add possibility to customize the refs used for different operations [\#116](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/116)
 - allow disabling of specific service methods [\#63](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/63)
 - add possibility to customize tag, tags and model for a service [\#24](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/24) [\#112](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/112)
+- add support for openapi v3 [\#137](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/137) 
 
 **FIXED:**
 - do not use space in list ref [\#109](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/109)

@@ -7,7 +7,13 @@ const distPath = require.resolve('swagger-ui-dist');
 
 const swaggerV2Definitions = require('./swagger-v2/definitions');
 const swaggerV2DefinitionWithCustomizedSpec = require('./swagger-v2/definitionWithCustomizedSpec');
-const swaggerV2customTags = require('./swagger-v2/customTags');
+const swaggerV2CustomTags = require('./swagger-v2/customTags');
+const swaggerV2Security = require('./swagger-v2/security');
+
+const openApiV3Definitions = require('./openapi-v3/definitions');
+const openApiV3DefinitionWithCustomizedSpec = require('./openapi-v3/definitionWithCustomizedSpec');
+const openApiV3CustomTags = require('./openapi-v3/customTags');
+const openApiV3Security = require('./openapi-v3/security');
 
 const app = express(feathers())
   .use(express.json())
@@ -23,7 +29,13 @@ const app = express(feathers())
 
   .configure(swaggerV2Definitions)
   .configure(swaggerV2DefinitionWithCustomizedSpec)
-  .configure(swaggerV2customTags)
+  .configure(swaggerV2CustomTags)
+  .configure(swaggerV2Security)
+
+  .configure(openApiV3Definitions)
+  .configure(openApiV3DefinitionWithCustomizedSpec)
+  .configure(openApiV3CustomTags)
+  .configure(openApiV3Security)
 
   ;
 

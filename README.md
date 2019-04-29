@@ -428,6 +428,7 @@ app.use('/message', messageService);
 __Options:__
 
 - `specs` (**required**) - Global specifications that should at least contain the info section to generate a valid swagger specification
+- `openApiVersion` - (*optional*, default: `2`) - OpenApi version the specification will be generated for. Allowed: 2 or 3
 - `docsPath` (*optional*, default: `'/docs'`) - The path where the swagger json / ui will be available.
 - `docsJsonPath` (*optional*) - The path where the swagger json will be available (independently of request Accept header).
 - `uiIndex` (*optional*) - Configuration of swagger ui initialization, possibilities:
@@ -486,8 +487,9 @@ __Options:__
 - `tags` (*optional*) - Give multiple tags
 - `model` (*optional*) - Override model that is parsed from path
 - `modelName` (*optional*) - Override modelName that is parsed from path
-- `definition` (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
-- `definitions` (*optional*) - Swagger definitions that will merged in the global definitions
+- `definition`(`schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
+- `definitions`(`schemas` for openapi v3) (*optional*) - Swagger definitions that will merged in the global definitions
+- `securities` (*optional*) - Array of operation names that are secured by global security definition
 - `find`|`get`|`create`|`update`|`patch`|`remove` (*optional*) - Custom (parts of the) specification for a method, can alternatively be set as doc property of the method. To disable the generation set to false.
 - `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse
 
