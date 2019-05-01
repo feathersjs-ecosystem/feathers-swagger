@@ -3,6 +3,7 @@
  * - using default swagger ui with uiIndex: true
  * - just define the model with definition option of service.docs
  * - use a customized default (function) for update
+ * - use a customized default (object) for get
  */
 
 const memory = require('feathers-memory');
@@ -74,6 +75,10 @@ module.exports = (app) => {
           consumes: specs.consumes,
           security: securities.indexOf('update') > -1 ? security : []
         };
+      },
+      get: {
+        description: 'Overwrite just one property',
+        'responses.500.description': 'Oops, something went wrong'
       }
     }
   }))

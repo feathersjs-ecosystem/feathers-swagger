@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-const { expect, assert } = require('chai');
+const { expect } = require('chai');
 
 const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
@@ -91,7 +91,7 @@ describe('feathers-swagger', () => {
           expect(api).to.exist;
         })
         .catch(error => {
-          assert.fail(`${error.message}\n\nJSON:\n${JSON.stringify(swaggerSpec, undefined, 2)}`);
+          expect.fail(`${error.message}\n\nJSON:\n${JSON.stringify(swaggerSpec, undefined, 2)}`);
         });
     });
   });
@@ -179,7 +179,7 @@ describe('feathers-swagger', () => {
           expect(api).to.exist;
         })
         .catch(error => {
-          assert.fail(`${error.message}\n\nJSON:\n${JSON.stringify(swaggerSpec, undefined, 2)}`);
+          expect.fail(`${error.message}\n\nJSON:\n${JSON.stringify(swaggerSpec, undefined, 2)}`);
         });
     });
   });

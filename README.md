@@ -439,7 +439,6 @@ __Options:__
 - `idType` (*optional*) - The default swagger type of ids used in paths, `'integer'` will be used when not provided
 - `prefix` (*optional*) - Used for automatic tag and name generation for services
 - `versionPrefix` (*optional*) - Used for automatic tag and name generation for services
-- `findQueryParameters` (*optional*) - Allow addition of parameters to the find documentation
 - `include` (*optional*) - Object to configure for which services documentation will be generated, empty means all will be included:
   - `tags` - Array of tags for that service documentation will be generated
   - `paths` - Array of paths (string or regex) for that service documentation will be generated, Notice: paths dont start with /
@@ -450,7 +449,8 @@ __Options:__
 - `defaults` (*optional*) - Object to customize the defaults for generation of the specification
   - `getOperationArgs` - method to generate args that the methods for operations will consume, can also customize default tag and model generation
   - `getOperationsRefs` - method to generate refs that the methods for operations will consume, see service.docs.refs option
-  - `find`|`get`|`create`|`update`|`patch`|`remove` - methods that generate the default specification for the operation
+  - `find`|`get`|`create`|`update`|`patch`|`remove` - methods that generate the default specification for the operation or objects to modify the provided defaults, with [path support to update nested structures](#path-support-to-update-nested-structures)
+  - `__all` - object to modify the default of all operations, with [path support to update nested structures](#path-support-to-update-nested-structures)
 
 ### `service.docs`
 
@@ -487,11 +487,26 @@ __Options:__
 - `tags` (*optional*) - Give multiple tags
 - `model` (*optional*) - Override model that is parsed from path
 - `modelName` (*optional*) - Override modelName that is parsed from path
-- `definition`(`schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
-- `definitions`(`schemas` for openapi v3) (*optional*) - Swagger definitions that will merged in the global definitions
+- `definition`(also `schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
+- `definitions`(also `schemas` for openapi v3) (*optional*) - Swagger definitions that will merged in the global definitions
 - `securities` (*optional*) - Array of operation names that are secured by global security definition
-- `find`|`get`|`create`|`update`|`patch`|`remove` (*optional*) - Custom (parts of the) specification for a method, can alternatively be set as doc property of the method. To disable the generation set to false.
+- `find`|`get`|`create`|`update`|`patch`|`remove`|`__all` (*optional*) - Custom (parts of the) specification for a method, can alternatively be set as doc property of the method. [Support path keys to update specific nested structures](#path-support-to-update-nested-structures). To disable the generation set to false.
 - `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse
+
+### Path support to update nested structures
+
+To be able to set only parts of a nested structure the keys of a specification object (used to define operation specifications) can be the path that should be updated.
+For that the [`set`](https://lodash.com/docs/4.17.11#set) method of lodash is used with additional support to push and unshift support for arrays. Also setting undefined will remove the value at the given path.
+Take into account that the order of defined keys matters!
+
+Valid push syntax:
+  - `path[]`
+  - `path[+]`
+  - `path[+D]` with D being digits (needed to be able to define more than one element to push, the digits does not refer to a position)
+  
+Valid unshift syntax:
+  - `path[-]`
+  - `path[-D]` with D being digits (needed to be able to define more than one element to unshift, the digits does not refer to a position)
 
 ## License
 

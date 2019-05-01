@@ -4,13 +4,15 @@
 
 **BREAKING:**
 - swagger/openapi specifications have to be defined in `specs` instead of the root of the config object
+- remove support of findQueryParameters option in favor of defaults with path support for nested structures
 
 **ADDED:**
 - add option to ignore by paths
 - add options to specify which services to include to documentation by paths or tags
 - add appProperty option
 - add docsJsonPath option
-- add defaults option where generator functions for customized defaults can be defined
+- add defaults option where generator functions or objects for customized defaults can be defined
+- add possibility to use paths as keys for setting only parts of the specification
 - add possibility to customize the refs used for different operations [\#116](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/116)
 - allow disabling of specific service methods [\#63](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/63)
 - add possibility to customize tag, tags and model for a service [\#24](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/24) [\#112](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/112)

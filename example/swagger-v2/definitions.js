@@ -2,7 +2,8 @@
  * Example for swagger v2
  * - using definitions option of service.docs to define all needed definitions
  * - using a custom uiIndex file
- * - using findQueryParameters option
+ * - add parameter to find (globally)
+ * - set specific values and sub values for a operation
  */
 
 const path = require('path');
@@ -40,7 +41,13 @@ module.exports = (app) => {
       }
     },
     get: {
-      description: 'This is my custom get description'
+      description: 'This is my custom get description',
+      'responses.200.description': 'Change just the description'
+    },
+    __all: {
+      'parameters[-]': { $ref: '#/definitions/customHeaderBefore' },
+      'parameters[]': { $ref: '#/definitions/customHeaderAfter' },
+      'responses.401': undefined
     }
   };
 
@@ -49,19 +56,37 @@ module.exports = (app) => {
     prefix: 'v2/definitions/',
     docsJsonPath: '/v2/definitions.json',
     uiIndex,
-    findQueryParameters: [
-      {
-        description: 'My custom query parameter',
-        in: 'query',
-        name: '$custom',
-        type: 'string'
+    defaults: {
+      find: {
+        'parameters[]': {
+          description: 'My custom query parameter',
+          in: 'query',
+          name: '$custom',
+          type: 'string'
+        }
       }
-    ],
+    },
     specs: {
       info: {
         title: 'A test',
         description: 'A description',
         version: '1.0.0'
+      },
+      definitions: {
+        customHeaderBefore: {
+          description: `My custom header before all other parameters`,
+          in: 'header',
+          required: false,
+          name: 'X-Custom-Header-Before',
+          type: 'string'
+        },
+        customHeaderAfter: {
+          description: `My custom header after all other parameters`,
+          in: 'header',
+          required: true,
+          name: 'X-Custom-Header-After',
+          type: 'string'
+        }
       }
     },
     include: {

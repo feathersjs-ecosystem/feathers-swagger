@@ -2,7 +2,9 @@
  * Example for openapi v3
  * - using definitions option of service.docs to define all needed definitions
  * - using a custom uiIndex file
- * - using findQueryParameters option
+ * - add parameter to find (globally)
+ * - set specific values and sub values for a operation
+ * - set/remove a value from all methods
  */
 
 const path = require('path');
@@ -40,7 +42,13 @@ module.exports = (app) => {
       }
     },
     get: {
-      description: 'This is my custom get description'
+      description: 'This is my custom get description',
+      'responses.200.description': 'Change just the description'
+    },
+    __all: {
+      'parameters[-]': { $ref: '#/components/parameters/customHeaderBefore' },
+      'parameters[]': { $ref: '#/components/parameters/customHeaderAfter' },
+      'responses.401': undefined
     }
   };
 
@@ -50,21 +58,45 @@ module.exports = (app) => {
     prefix: 'v3/definitions/',
     docsJsonPath: '/v3/definitions.json',
     uiIndex,
-    findQueryParameters: [
-      {
-        description: 'My custom query parameter',
-        in: 'query',
-        name: '$custom',
-        schema: {
-          type: 'string'
+    defaults: {
+      find: {
+        'parameters[]': {
+          description: 'My custom query parameter',
+          in: 'query',
+          name: '$custom',
+          schema: {
+            type: 'string'
+          }
         }
       }
-    ],
+    },
     specs: {
       info: {
         title: 'A test',
         description: 'A description',
         version: '1.0.0'
+      },
+      components: {
+        parameters: {
+          customHeaderBefore: {
+            description: `My custom header before all other parameters`,
+            in: 'header',
+            required: false,
+            name: 'X-Custom-Header-Before',
+            schema: {
+              type: 'string'
+            }
+          },
+          customHeaderAfter: {
+            description: `My custom header after all other parameters`,
+            in: 'header',
+            required: true,
+            name: 'X-Custom-Header-After',
+            schema: {
+              type: 'string'
+            }
+          }
+        }
       }
     },
     include: {

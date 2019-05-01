@@ -4,6 +4,7 @@
  * - using custom tag
  * - using custom tags, with one being ignored
  * - using custom model
+ * - using externalDocs
  */
 
 const memory = require('feathers-memory');
@@ -15,6 +16,10 @@ module.exports = (app) => {
   messageService.docs = {
     tag: 'message',
     description: 'A service to send and receive messages',
+    externalDocs: {
+      description: 'find more info here',
+      url: 'https://swagger.io/about'
+    },
     tags: ['message', 'additional', 'ignored'],
     model: 'custom_message',
     definitions: {
