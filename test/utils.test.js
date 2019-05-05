@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 const { expect } = require('chai');
-const { operation } = require('../lib/utils');
+const { operation, tag, security } = require('../lib/utils');
 
 describe('util tests', () => {
   describe('operation', () => {
@@ -77,6 +77,51 @@ describe('util tests', () => {
           added: 'key'
         }
       });
+    });
+  });
+
+  describe('tag', () => {
+    it('should provide a default description', () => {
+      expect(tag('message')).to.deep.equal({
+        name: 'message',
+        description: 'A message service'
+      });
+    });
+
+    it('should consume known options', () => {
+      const options = {
+        description: 'my description',
+        externalDocs: {
+          url: 'https://example.com',
+          description: 'The external documentation'
+        },
+        additionalOption: 'should not be consumed'
+      };
+      expect(tag('message', options)).to.deep.equal({
+        name: 'message',
+        description: options.description,
+        externalDocs: options.externalDocs
+      });
+    });
+  });
+
+  describe('security', () => {
+    const securityDefinitions = [
+      { BasicAuth: [] }
+    ];
+
+    const securities = ['create'];
+
+    it('should return empty array when method should not be secured', () => {
+      expect(security('find', securities, securityDefinitions)).to.deep.equals([]);
+    });
+
+    it('should return security definitions array when method should be secured', () => {
+      expect(security('create', securities, securityDefinitions)).to.equals(securityDefinitions);
+    });
+
+    it('should return security definitions array when __all methods should be secured', () => {
+      expect(security('create', ['__all'], securityDefinitions)).to.equals(securityDefinitions);
     });
   });
 });

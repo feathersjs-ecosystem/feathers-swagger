@@ -26,6 +26,10 @@ const app = express(feathers())
   .get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
   })
+  .get('/docs', (req, res) => {
+    res.sendFile(path.join(__dirname, 'docs.html'));
+  })
+  .use(serveStatic(path.dirname(require.resolve('swagger-ui-dist'))))
 
   .configure(swaggerV2Definitions)
   .configure(swaggerV2DefinitionWithCustomizedSpec)

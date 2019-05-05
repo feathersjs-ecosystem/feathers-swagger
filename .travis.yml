@@ -2,5 +2,8 @@ sudo: false
 language: node_js
 node_js:
   - node
-  - 10
-  - 8
+  - "10"
+  - "8"
+cache:
+  directories:
+    - /home/travis/.dts/typescript-installs

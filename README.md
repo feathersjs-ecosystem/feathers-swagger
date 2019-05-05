@@ -6,7 +6,7 @@
 [![Dependency Status](https://img.shields.io/david/feathersjs-ecosystem/feathers-swagger.svg?style=flat-square)](https://david-dm.org/feathersjs-ecosystem/feathers-swagger)
 [![Download Status](https://img.shields.io/npm/dm/feathers-swagger.svg?style=flat-square)](https://www.npmjs.com/package/feathers-swagger)
 
-> Add documentation to your Featherjs services and show them in the Swagger ui.
+> Add documentation to your Featherjs services and show them in the Swagger UI.
 
 This version is configured to work with Swagger UI 3.x
 
@@ -25,11 +25,9 @@ npm install feathers-swagger --save
 Here's an example of a Feathers server that uses `feathers-swagger`.
 
 ```js
-const feathers = require('feathers');
-const rest = require('feathers-rest');
+const feathers = require('@feathersjs/feathers');
+const express = require('@feathersjs/express');
 const memory = require('feathers-memory');
-const bodyParser = require('body-parser');
-const swagger = require('feathers-swagger');
 
 const messageService = memory();
 
@@ -56,11 +54,10 @@ messageService.docs = {
   }
 };
 
-const app = feathers()
-
-  .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: true }))
-  .configure(rest())
+const app = express(feathers())
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }))
+  .configure(express.rest())
   .configure(swagger({
     docsPath: '/docs',
     specs: {
@@ -87,7 +84,7 @@ app.use('/events', createService(options));
 ```
 to this:
 ```js
-const events = createService(options)
+const events = createService(options);
 events.docs = {
   //overwrite things here.
   //if we want to add a mongoose style $search hook to find, we can write this:
@@ -122,18 +119,18 @@ events.docs = {
   //if we want to add the mongoose model to the 'definitions' so it is a named model in the swagger ui:
   definitions: {
     event: mongooseToJsonLibraryYouImport(Model), //import your own library, use the 'Model' object in this file.
-    'event list': { //this library currently configures the return documentation to look for ``${tag} list`
+    'event_list': { //this library currently configures the return documentation to look for ``${tag} list`
          type: 'array',
          items: { $ref: '#/definitions/event' }
        }
    }
-}
-app.use('/events', events)
+};
+app.use('/events', events);
 ```
 
 The overrides work at a property level - if you pass in find.parameters, that whole object will be used, it is not merged in.
-you can find more information in the utils.js file to get an idea of what is passed in.
-
+If you want to update only parts there is [support of path keys to update specific nested structures](#path-support-to-update-nested-structures).
+You can find more information in the utils.js file to get an idea of what is passed in.
 
 ### Example with UI
 
@@ -141,11 +138,9 @@ The `uiIndex` option allows to set a [Swagger UI](http://swagger.io/swagger-ui/)
 
 ```js
 const path = require('path');
-const feathers = require('feathers');
-const rest = require('feathers-rest');
+const feathers = require('@feathersjs/feathers');
+const express = require('@feathersjs/express');
 const memory = require('feathers-memory');
-const bodyParser = require('body-parser');
-const swagger = require('feathers-swagger');
 
 const messageService = memory();
 
@@ -171,10 +166,10 @@ messageService.docs = {
   }
 };
 
-const app = feathers()
-  .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: true }))
-  .configure(rest())
+const app = express(feathers())
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }))
+  .configure(express.rest())
   .configure(swagger({
     docsPath: '/docs',
     uiIndex: path.join(__dirname, 'docs.html'),
@@ -327,18 +322,18 @@ Create a `docs.html` page like this:
           SwaggerUIBundle.plugins.DownloadUrl
         ],
         layout: "StandaloneLayout"
-      })
+      });
 
-      window.ui = ui
+      window.ui = ui;
 
       $('#input_apiKey').change(function() {
         var key = $('#input_apiKey')[0].value;
         log("key: " + key);
-        if(key && key.trim() != "") {
+        if(key && key.trim() !== "") {
           log("added key " + key);
           window.authorizations.add("key", new ApiKeyAuthorization("api_key", key, "query"));
         }
-      })
+      });
     }
   </script>
 </body>
@@ -357,10 +352,8 @@ If your are using versioned or prefixed routes for your API like `/api/<version>
 a string or a RegEx.
 
 ```js
-const app = feathers()
-  .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: true }))
-  .configure(rest())
+const app = express(feathers())
+  // ... configure app
   .configure(swagger({
     prefix: /api\/v\d\//,
     docsPath: '/docs',
@@ -379,10 +372,8 @@ app.listen(3030);
 
 To display your API version alongside the service name, you can also define a `versionPrefix` to be extracted:
 ```js
-const app = feathers()
-  .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: true }))
-  .configure(rest())
+const app = express(feathers())
+  // ... configure app
   .configure(swagger({
     prefix: /api\/v\d\//,
     versionPrefix: /v\d/,
@@ -411,7 +402,7 @@ const feathers = require('@feathersjs/feathers');
 const swagger = require('feathers-swagger');
 
 const app = feathers();
-//...
+// ... configure app
 app.configure(swagger({
   specs: {
     info: {
@@ -447,8 +438,8 @@ __Options:__
   - `paths` - Array of paths (string or regex) for that no service documentation will be generated, Notice: paths dont start with /
 - `appProperty` (*optional*, default: `docs`) - Property of the feathers app object that the generated specification will be saved to, allows custom post processing; set empty to disable
 - `defaults` (*optional*) - Object to customize the defaults for generation of the specification
-  - `getOperationArgs` - method to generate args that the methods for operations will consume, can also customize default tag and model generation
-  - `getOperationsRefs` - method to generate refs that the methods for operations will consume, see service.docs.refs option
+  - `getOperationArgs({ service, path, config, apiPath, version })` - method to generate args that the methods for operations will consume, can also customize default tag and model generation
+  - `getOperationsRefs(model, service)` - method to generate refs that the methods for operations will consume, see service.docs.refs option
   - `find`|`get`|`create`|`update`|`patch`|`remove` - methods that generate the default specification for the operation or objects to modify the provided defaults, with [path support to update nested structures](#path-support-to-update-nested-structures)
   - `__all` - object to modify the default of all operations, with [path support to update nested structures](#path-support-to-update-nested-structures)
 
@@ -489,7 +480,7 @@ __Options:__
 - `modelName` (*optional*) - Override modelName that is parsed from path
 - `definition`(also `schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
 - `definitions`(also `schemas` for openapi v3) (*optional*) - Swagger definitions that will merged in the global definitions
-- `securities` (*optional*) - Array of operation names that are secured by global security definition
+- `securities` (*optional*) - Array of operation names that are secured by global security definition, use `__all` to enable security for all operations of the service
 - `find`|`get`|`create`|`update`|`patch`|`remove`|`__all` (*optional*) - Custom (parts of the) specification for a method, can alternatively be set as doc property of the method. [Support path keys to update specific nested structures](#path-support-to-update-nested-structures). To disable the generation set to false.
 - `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse
 

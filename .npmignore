@@ -7,4 +7,8 @@
 .vscode/
 test/
 coverage/
+mocha.opts
 .github/
+types/test.ts
+types/tsconfig.json
+example
