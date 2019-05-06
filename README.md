@@ -16,6 +16,118 @@ This version is configured to work with Swagger UI 3.x
 npm install feathers-swagger --save
 ```
 
+## API
+
+### `swagger(options)`
+
+Initializes the module. Should be provided to app.configure before the registration of services. 
+
+```js
+const feathers = require('@feathersjs/feathers');
+const express = require('@feathersjs/express');
+const swagger = require('feathers-swagger');
+
+const app = express(feathers())
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }))
+  .configure(express.rest());
+// ... configure app
+app.configure(swagger({
+  specs: {
+    info: {
+      title: 'A test',
+      description: 'A description',
+      version: '1.0.0',
+    },
+  }
+}));
+// now you can register feather services
+app.use('/message', messageService);
+```
+
+__Options:__
+
+- `specs` (**required**) - Global specifications that should at least contain the info section to generate a valid swagger specification
+- `openApiVersion` - (*optional*, default: `2`) - OpenApi version the specification will be generated for. Allowed: 2 or 3
+- `docsPath` (*optional*, default: `'/docs'`) - The path where the swagger json / ui will be available.
+- `docsJsonPath` (*optional*) - The path where the swagger json will be available (independently of request Accept header).
+- `uiIndex` (*optional*) - Configuration of swagger ui initialization, possibilities:
+  - `false` - Disable swagger ui, the json specification will be available at `docsPaths`
+  - `true` - Enable default swagger ui with index from node_modules package
+  - `'path/to/doc.html'` - Enable swagger ui with the provided file as index
+  - `function(req, res)` - A function with customized initialization
+- `idType` (*optional*) - The default swagger type of ids used in paths, `'integer'` will be used when not provided
+- `prefix` (*optional*) - Used for automatic tag and name generation for services
+- `versionPrefix` (*optional*) - Used for automatic tag and name generation for services
+- `include` (*optional*) - Object to configure for which services documentation will be generated, empty means all will be included:
+  - `tags` - Array of tags for that service documentation will be generated
+  - `paths` - Array of paths (string or regex) for that service documentation will be generated, Notice: paths dont start with /
+- `ignore` (*optional*) - Object to configure  to ignore with the following keys:
+  - `tags` - Array of tags for that no service documentation will be generated
+  - `paths` - Array of paths (string or regex) for that no service documentation will be generated, Notice: paths dont start with /
+- `appProperty` (*optional*, default: `docs`) - Property of the feathers app object that the generated specification will be saved to, allows custom post processing; set empty to disable
+- `defaults` (*optional*) - Object to customize the defaults for generation of the specification
+  - `getOperationArgs({ service, path, config, apiPath, version })` - method to generate args that the methods for operations will consume, can also customize default tag and model generation
+  - `getOperationsRefs(model, service)` - method to generate refs that the methods for operations will consume, see service.docs.refs option
+  - `find`|`get`|`create`|`update`|`patch`|`remove` - methods that generate the default specification for the operation or objects to modify the provided defaults, with [path support to update nested structures](#path-support-to-update-nested-structures)
+  - `__all` - object to modify the default of all operations, with [path support to update nested structures](#path-support-to-update-nested-structures)
+
+### `service.docs`
+
+If you want to customize the specifications generation for a service you can configure it by providing a options object as `docs` property of the service.
+
+```js
+// service generation
+messageService.docs = {
+  description: 'My service description',
+  definition: {
+    type: 'object',
+    required: [
+    'text'
+    ],
+    properties: {
+      text: {
+        type: 'string',
+        description: 'The message text'
+      },
+      userId: {
+        type: 'string',
+        description: 'The id of the user that send the message'
+      }
+    }
+  }
+};
+```
+
+__Options:__
+
+- `tag` (*optional*) - Override tag that is parsed from path
+- `description` (*optional*) - Provide a description for the service documentation (tag)
+- `externalDocs` (*optional*) - Add external docs to service documentation (tag)
+- `tags` (*optional*) - Give multiple tags
+- `model` (*optional*) - Override model that is parsed from path
+- `modelName` (*optional*) - Override modelName that is parsed from path
+- `definition`(also `schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
+- `definitions`(also `schemas` for openapi v3) (*optional*) - Swagger definitions that will merged in the global definitions
+- `securities` (*optional*) - Array of operation names that are secured by global security definition, use `__all` to enable security for all operations of the service
+- `find`|`get`|`create`|`update`|`patch`|`remove`|`__all` (*optional*) - Custom (parts of the) specification for a method, can alternatively be set as doc property of the method. [Support path keys to update specific nested structures](#path-support-to-update-nested-structures). To disable the generation set to false.
+- `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse
+
+### Path support to update nested structures
+
+To be able to set only parts of a nested structure the keys of a specification object (used to define operation specifications) can be the path that should be updated.
+For that the [`set`](https://lodash.com/docs/4.17.11#set) method of lodash is used with additional support to push and unshift for arrays. Also setting undefined will remove the value at the given path.
+Take into account that the order of defined keys matters!
+
+Valid push syntax:
+  - `path[]`
+  - `path[+]`
+  - `path[+D]` with D being digits (needed to be able to define more than one element to push, the digits does not refer to a position)
+  
+Valid unshift syntax:
+  - `path[-]`
+  - `path[-D]` with D being digits (needed to be able to define more than one element to unshift, the digits does not refer to a position)
+
 ## Examples
 
 > npm install feathers feathers-rest feathers-memory feathers-swagger body-parser
@@ -89,40 +201,20 @@ events.docs = {
   //overwrite things here.
   //if we want to add a mongoose style $search hook to find, we can write this:
   find: {
-    parameters: [
-      {
-        description: 'Number of results to return',
-        in: 'query',
-        name: '$limit',
-        type: 'integer'
-      },
-      {
-        description: 'Number of results to skip',
-        in: 'query',
-        name: '$skip',
-        type: 'integer'
-      },
-      {
-        description: 'Property to sort results',
-        in: 'query',
-        name: '$sort',
-        type: 'string'
-      },
-      {
-        description: 'Property to query results',
-        in: 'query',
-        name: '$search',
-        type: 'string'
-      }
-    ]
+    'parameters[]': {
+      description: 'Property to query results',
+      in: 'query',
+      name: '$search',
+      type: 'string'
+    },
   },
   //if we want to add the mongoose model to the 'definitions' so it is a named model in the swagger ui:
   definitions: {
     event: mongooseToJsonLibraryYouImport(Model), //import your own library, use the 'Model' object in this file.
     'event_list': { //this library currently configures the return documentation to look for ``${tag} list`
-         type: 'array',
-         items: { $ref: '#/definitions/event' }
-       }
+       type: 'array',
+       items: { $ref: '#/definitions/event' }
+     }
    }
 };
 app.use('/events', events);
@@ -391,113 +483,164 @@ const app = express(feathers())
 app.listen(3030);
 ```
 
-## API
+## Migration
 
-### `swagger(options)`
+Version X.X.X introduces some breaking changes to previous 0.7.x versions. These changes and ways to migrate to the new release will be described here.
 
-Initializes the module. Should be provided to app.configure before the registration of services. 
+### Introduction of specs option
 
+To not mix up options and specification as before all specifications go into the new specs option.
+
+#### Before
 ```js
-const feathers = require('@feathersjs/feathers');
-const swagger = require('feathers-swagger');
+swagger({
+  prefix: /api\/v\d\//,
+  versionPrefix: /v\d/,
+  docsPath: '/docs',
+  info: {
+    title: 'A test',
+    description: 'A description',
+    version: '1.0.0'
+  },
+  definitions: {
+    // ...
+  },
+})
+```
 
-const app = feathers();
-// ... configure app
-app.configure(swagger({
+#### After
+```js
+swagger({
+  prefix: /api\/v\d\//,
+  versionPrefix: /v\d/,
+  docsPath: '/docs',
   specs: {
     info: {
       title: 'A test',
       description: 'A description',
-      version: '1.0.0',
+      version: '1.0.0'
     },
-  }
-}));
-// now you can register feather services
-app.use('/message', messageService);
+    definitions: {
+      // ...
+    },
+  },
+})
 ```
 
-__Options:__
+### Remove of findQueryParameters option
 
-- `specs` (**required**) - Global specifications that should at least contain the info section to generate a valid swagger specification
-- `openApiVersion` - (*optional*, default: `2`) - OpenApi version the specification will be generated for. Allowed: 2 or 3
-- `docsPath` (*optional*, default: `'/docs'`) - The path where the swagger json / ui will be available.
-- `docsJsonPath` (*optional*) - The path where the swagger json will be available (independently of request Accept header).
-- `uiIndex` (*optional*) - Configuration of swagger ui initialization, possibilities:
-  - `false` - Disable swagger ui, the json specification will be available at `docsPaths`
-  - `true` - Enable default swagger ui with index from node_modules package
-  - `'path/to/doc.html'` - Enable swagger ui with the provided file as index
-  - `function(req, res)` - A function with customized initialization
-- `idType` (*optional*) - The default swagger type of ids used in paths, `'integer'` will be used when not provided
-- `prefix` (*optional*) - Used for automatic tag and name generation for services
-- `versionPrefix` (*optional*) - Used for automatic tag and name generation for services
-- `include` (*optional*) - Object to configure for which services documentation will be generated, empty means all will be included:
-  - `tags` - Array of tags for that service documentation will be generated
-  - `paths` - Array of paths (string or regex) for that service documentation will be generated, Notice: paths dont start with /
-- `ignore` (*optional*) - Object to configure  to ignore with the following keys:
-  - `tags` - Array of tags for that no service documentation will be generated
-  - `paths` - Array of paths (string or regex) for that no service documentation will be generated, Notice: paths dont start with /
-- `appProperty` (*optional*, default: `docs`) - Property of the feathers app object that the generated specification will be saved to, allows custom post processing; set empty to disable
-- `defaults` (*optional*) - Object to customize the defaults for generation of the specification
-  - `getOperationArgs({ service, path, config, apiPath, version })` - method to generate args that the methods for operations will consume, can also customize default tag and model generation
-  - `getOperationsRefs(model, service)` - method to generate refs that the methods for operations will consume, see service.docs.refs option
-  - `find`|`get`|`create`|`update`|`patch`|`remove` - methods that generate the default specification for the operation or objects to modify the provided defaults, with [path support to update nested structures](#path-support-to-update-nested-structures)
-  - `__all` - object to modify the default of all operations, with [path support to update nested structures](#path-support-to-update-nested-structures)
+This option was very specific to add (prepend) parameters to all find operations.
+With the introduced option to customize defaults you can also add more default find parameters. 
 
-### `service.docs`
-
-If you want to customize the specifications generation for a service you can configure it by providing a options object as `docs` property of the service.
-
+#### Before
 ```js
-// service generation
-messageService.docs = {
-  description: 'My service description',
-  definition: {
-    type: 'object',
-    required: [
-    'text'
-    ],
-    properties: {
-      text: {
-        type: 'string',
-        description: 'The message text'
-      },
-      userId: {
-        type: 'string',
-        description: 'The id of the user that send the message'
+swagger({
+  // ...
+  findQueryParameters: [
+    {
+      description: 'My custom query parameter',
+      in: 'query',
+      name: '$custom',
+      type: 'string'
+    },
+  ],
+})
+```
+
+#### After
+```js
+swagger({
+  // ...
+  defaults: {
+    find: {
+      'parameters[-]': {
+        description: 'My custom query parameter',
+        in: 'query',
+        name: '$custom',
+        type: 'string'
       }
+    }
+  }
+})
+```
+
+### Generate RFC3986-compliant percent-encoded URIs
+
+To generate valid specifications there may not be spaces in $ref links.
+Therefor concatenation is done with _ by default now. This applies to list and version refs of the previous version.
+
+#### Before
+```js
+messageService.docs = {
+  definitions: {
+    message: { /* definition */ },
+    'message list': {
+      type: 'array',
+      items: { $ref: '#/definitions/message' }
+    }
+  }
+};
+// Versioned service
+messageV1Service.docs = {
+  definitions: {
+    'message v1': { /* definition */ },
+    'message v1 list': {
+      type: 'array',
+      items: { $ref: '#/definitions/message v1' }
     }
   }
 };
 ```
 
-__Options:__
+#### After
+```js
+messageService.docs = {
+  definitions: {
+    message: { /* definition */ },
+    message_list: {
+      type: 'array',
+      items: { $ref: '#/definitions/message' }
+    }
+  }
+};
+// Versioned service
+messageV1Service.docs = {
+  definitions: {
+    message_v1: { /* definition */ },
+    message_v1_list: {
+      type: 'array',
+      items: { $ref: '#/definitions/message_v1' }
+    }
+  }
+};
+```
 
-- `tag` (*optional*) - Override tag that is parsed from path
-- `description` (*optional*) - Provide a description for the service documentation (tag)
-- `externalDocs` (*optional*) - Add external docs to service documentation (tag)
-- `tags` (*optional*) - Give multiple tags
-- `model` (*optional*) - Override model that is parsed from path
-- `modelName` (*optional*) - Override modelName that is parsed from path
-- `definition`(also `schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
-- `definitions`(also `schemas` for openapi v3) (*optional*) - Swagger definitions that will merged in the global definitions
-- `securities` (*optional*) - Array of operation names that are secured by global security definition, use `__all` to enable security for all operations of the service
-- `find`|`get`|`create`|`update`|`patch`|`remove`|`__all` (*optional*) - Custom (parts of the) specification for a method, can alternatively be set as doc property of the method. [Support path keys to update specific nested structures](#path-support-to-update-nested-structures). To disable the generation set to false.
-- `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse
+### Removal of sequelize related utils
 
-### Path support to update nested structures
+Because sequelize is not in the scope of this package the utils getType, getFormat, property and definition were removed.
+If you used them extract them from an old version or use other packages which provide this functionality.
 
-To be able to set only parts of a nested structure the keys of a specification object (used to define operation specifications) can be the path that should be updated.
-For that the [`set`](https://lodash.com/docs/4.17.11#set) method of lodash is used with additional support to push and unshift support for arrays. Also setting undefined will remove the value at the given path.
-Take into account that the order of defined keys matters!
+#### Before
+```js
+const { definition } = 'feathers-swagger';
 
-Valid push syntax:
-  - `path[]`
-  - `path[+]`
-  - `path[+D]` with D being digits (needed to be able to define more than one element to push, the digits does not refer to a position)
-  
-Valid unshift syntax:
-  - `path[-]`
-  - `path[-D]` with D being digits (needed to be able to define more than one element to unshift, the digits does not refer to a position)
+messageService.docs = {
+  definition: {
+    message: definition(Model),
+  }
+};
+```
+
+#### After
+```js
+const sequelizeJsonSchema = require('sequelize-json-schema');
+
+messageService.docs = {
+  definition: {
+    message: sequelizeJsonSchema(Model),
+  }
+};
+```
 
 ## License
 
