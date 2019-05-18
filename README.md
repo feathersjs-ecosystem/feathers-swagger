@@ -41,7 +41,7 @@ app.configure(swagger({
     },
   }
 }));
-// now you can register feather services
+// now you can register feathers services
 app.use('/message', messageService);
 ```
 
@@ -69,8 +69,12 @@ __Options:__
 - `defaults` (*optional*) - Object to customize the defaults for generation of the specification
   - `getOperationArgs({ service, path, config, apiPath, version })` - method to generate args that the methods for operations will consume, can also customize default tag and model generation
   - `getOperationsRefs(model, service)` - method to generate refs that the methods for operations will consume, see service.docs.refs option
-  - `find`|`get`|`create`|`update`|`patch`|`remove` - methods that generate the default specification for the operation or objects to modify the provided defaults, with [path support to update nested structures](#path-support-to-update-nested-structures)
-  - `__all` - object to modify the default of all operations, with [path support to update nested structures](#path-support-to-update-nested-structures)
+  - `operationGenerators` - generator functions to fully customize specification generation for operations
+    - `find`|`get`|`create`|`update`|`patch`|`remove` - generator function for the specific operation
+    - `custom` - generator function for all custom operations
+  - `operations` - objects with defaults for the operations, with [path support to update nested structures](#path-support-to-update-nested-structures)
+    - `find`|`get`|`create`|`update`|`patch`|`remove`|`nameOfCustomMethod` - to change defaults of a specific operation
+    - `all` - to change defaults of all operations
 
 ### `service.docs`
 
@@ -109,9 +113,12 @@ __Options:__
 - `modelName` (*optional*) - Override modelName that is parsed from path
 - `definition`(also `schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
 - `definitions`(also `schemas` for openapi v3) (*optional*) - Swagger definitions that will merged in the global definitions
-- `securities` (*optional*) - Array of operation names that are secured by global security definition, use `__all` to enable security for all operations of the service
-- `find`|`get`|`create`|`update`|`patch`|`remove`|`__all` (*optional*) - Custom (parts of the) specification for a method, can alternatively be set as doc property of the method. [Support path keys to update specific nested structures](#path-support-to-update-nested-structures). To disable the generation set to false.
-- `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse
+- `securities` (*optional*) - Array of operation names that are secured by global security definition, use `all` to enable security for all operations of the service
+- `operations` (*optional*) - Object with specifications for the operations / methods of the service. [Support path keys to update specific nested structures](#path-support-to-update-nested-structures).
+  - `find`|`get`|`create`|`update`|`patch`|`remove`|`nameOfCustomMethod` - Custom (parts of the) specification for the operation, can alternatively be set as doc property of the method. To disable the generation set to false.
+  - `all` - Custom (parts of the) specification for all operations.
+- `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse, {customMethodName[Request|Response]}
+- `pathParams` (*optional*) - Object with param name as key and the definition as value, should be used when using "global" path parameters
 
 ### Path support to update nested structures
 
@@ -130,7 +137,9 @@ Valid unshift syntax:
 
 ## Examples
 
-> npm install feathers feathers-rest feathers-memory feathers-swagger body-parser
+*Notice:* There are more detailed examples in the example folder.
+
+> npm install @feathersjs/feathers @feathersjs/express feathers-memory feathers-swagger
 
 ### Basic example
 
@@ -200,12 +209,14 @@ const events = createService(options);
 events.docs = {
   //overwrite things here.
   //if we want to add a mongoose style $search hook to find, we can write this:
-  find: {
-    'parameters[]': {
-      description: 'Property to query results',
-      in: 'query',
-      name: '$search',
-      type: 'string'
+  operations: {
+    find: {
+      'parameters[]': {
+        description: 'Property to query results',
+        in: 'query',
+        name: '$search',
+        type: 'string'
+      },
     },
   },
   //if we want to add the mongoose model to the 'definitions' so it is a named model in the swagger ui:
@@ -525,6 +536,30 @@ swagger({
     },
   },
 })
+
+```
+### Introduction of operations option of the service.doc config
+
+With introduction of custom methods support it made more sense (also because of TypeScript) to nest operations specifications.
+
+#### Before
+```js
+messageService.docs = {
+  find: {
+    description: 'My description',
+  },
+};
+```
+
+#### After
+```js
+messageService.docs = {
+  operations: {
+    find: {
+        description: 'My description',
+      },
+  },
+};
 ```
 
 ### Remove of findQueryParameters option

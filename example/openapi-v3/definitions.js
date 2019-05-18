@@ -41,14 +41,16 @@ module.exports = (app) => {
         }
       }
     },
-    get: {
-      description: 'This is my custom get description',
-      'responses.200.description': 'Change just the description'
-    },
-    __all: {
-      'parameters[-]': { $ref: '#/components/parameters/customHeaderBefore' },
-      'parameters[]': { $ref: '#/components/parameters/customHeaderAfter' },
-      'responses.401': undefined
+    operations: {
+      get: {
+        description: 'This is my custom get description',
+        'responses.200.description': 'Change just the description'
+      },
+      all: {
+        'parameters[-]': { $ref: '#/components/parameters/customHeaderBefore' },
+        'parameters[]': { $ref: '#/components/parameters/customHeaderAfter' },
+        'responses.401': undefined
+      }
     }
   };
 
@@ -59,13 +61,15 @@ module.exports = (app) => {
     docsJsonPath: '/v3/definitions.json',
     uiIndex,
     defaults: {
-      find: {
-        'parameters[]': {
-          description: 'My custom query parameter',
-          in: 'query',
-          name: '$custom',
-          schema: {
-            type: 'string'
+      operations: {
+        find: {
+          'parameters[]': {
+            description: 'My custom query parameter',
+            in: 'query',
+            name: '$custom',
+            schema: {
+              type: 'string'
+            }
           }
         }
       }

@@ -15,7 +15,7 @@ describe('util tests', () => {
       security: ['default', 'security']
     };
 
-    it('should provide spec defaults for empty service.docs[method] and defaults', () => {
+    it('should provide spec defaults for empty service.docs.operations[method] and defaults', () => {
       expect(operation('find', { docs: {}, find () {} }, {})).to.deep.equal({
         parameters: [],
         responses: {},
@@ -32,12 +32,18 @@ describe('util tests', () => {
       expect(operation('find', { docs: {}, find () {} }, defaults)).to.deep.equal(defaults);
     });
 
-    it('should prefer prefer method.docs over service.docs[method]', () => {
+    it('should prefer prefer method.docs over service.docs.operations[method] overservice.docs.operations.all ', () => {
       const service = {
         docs: {
-          find: {
-            description: 'description of docs.find',
-            summary: 'only from docs.find'
+          operations: {
+            all: {
+              tags: ['onlyAll'],
+              summary: 'global summary'
+            },
+            find: {
+              description: 'description of docs.find',
+              summary: 'only from docs.operations.find'
+            }
           }
         },
         find () {}
@@ -50,21 +56,22 @@ describe('util tests', () => {
         parameters: defaults.parameters,
         responses: defaults.responses,
         description: 'description of find.docs',
-        summary: 'only from docs.find',
-        tags: defaults.tags,
+        summary: 'only from docs.operations.find',
+        tags: ['onlyAll'],
         consumes: defaults.consumes,
         produces: defaults.produces,
         security: defaults.security
       });
-      expect(service.docs.find, 'service.doc[method] should be cleaned up').to.be.undefined;
     });
 
     it('should support setting of nested path keys', () => {
       const service = {
         docs: {
-          find: {
-            description: 'description of docs.find',
-            'nested.added': 'key'
+          operations: {
+            find: {
+              description: 'description of docs.find',
+              'nested.added': 'key'
+            }
           }
         },
         find () {}
@@ -120,8 +127,8 @@ describe('util tests', () => {
       expect(security('create', securities, securityDefinitions)).to.equals(securityDefinitions);
     });
 
-    it('should return security definitions array when __all methods should be secured', () => {
-      expect(security('create', ['__all'], securityDefinitions)).to.equals(securityDefinitions);
+    it('should return security definitions array when all methods should be secured', () => {
+      expect(security('create', ['all'], securityDefinitions)).to.equals(securityDefinitions);
     });
   });
 });

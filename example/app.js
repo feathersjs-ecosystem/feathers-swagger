@@ -9,11 +9,13 @@ const swaggerV2Definitions = require('./swagger-v2/definitions');
 const swaggerV2DefinitionWithCustomizedSpec = require('./swagger-v2/definitionWithCustomizedSpec');
 const swaggerV2CustomTags = require('./swagger-v2/customTags');
 const swaggerV2Security = require('./swagger-v2/security');
+const swaggerV2CustomMethods = require('./swagger-v2/customMethods');
 
 const openApiV3Definitions = require('./openapi-v3/definitions');
 const openApiV3DefinitionWithCustomizedSpec = require('./openapi-v3/definitionWithCustomizedSpec');
 const openApiV3CustomTags = require('./openapi-v3/customTags');
 const openApiV3Security = require('./openapi-v3/security');
+const openApiV3CustomMethods = require('./openapi-v3/customMethods');
 
 const app = express(feathers())
   .use(express.json())
@@ -35,11 +37,13 @@ const app = express(feathers())
   .configure(swaggerV2DefinitionWithCustomizedSpec)
   .configure(swaggerV2CustomTags)
   .configure(swaggerV2Security)
+  .configure(swaggerV2CustomMethods)
 
   .configure(openApiV3Definitions)
   .configure(openApiV3DefinitionWithCustomizedSpec)
   .configure(openApiV3CustomTags)
   .configure(openApiV3Security)
+  .configure(openApiV3CustomMethods)
 
   ;
 

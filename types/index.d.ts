@@ -32,26 +32,37 @@ interface OperationRefs {
   patchRequest?: string;
   patchResponse?: string;
   removeResponse?: string;
+  [customMethodRef: string]: string | undefined;
 }
 
 interface FnGetOperationRefs {
   (model: string, service: feathersSwagger.SwaggerService<any>): OperationRefs;
 }
 
+type FnOperationSpecsGeneratorOptions = {
+  tag: string,
+  tags: [string],
+  model: string,
+  modelName: string,
+  idName: string,
+  idType: string,
+  security: [any],
+  securities: Securities,
+  refs: OperationRefs,
+  service: feathersSwagger.SwaggerService<any>,
+  config: feathersSwagger.SwaggerInitOptions,
+} & UnknownObject;
+
 interface FnOperationSpecsGenerator {
-  (options: {
-    tag: string,
-    tags: [string],
-    model: string,
-    modelName: string,
-    idName: string,
-    idType: string,
-    security: [any],
-    securities: Securities,
-    refs: OperationRefs,
-    service: feathersSwagger.SwaggerService<any>,
-    config: feathersSwagger.SwaggerInitOptions,
-  } & UnknownObject): UnknownObject;
+  (options: FnOperationSpecsGeneratorOptions): UnknownObject;
+}
+
+interface FnCustomOperationSpecsGenerator {
+  (options: FnOperationSpecsGeneratorOptions, customMethodOptions: {
+    method: string,
+    httpMethod: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options' | 'connect' | 'trace',
+    withId: boolean,
+  }): UnknownObject;
 }
 
 interface ExternalDocs {
@@ -59,9 +70,7 @@ interface ExternalDocs {
   url: string;
 }
 
-type DefaultsOperation = UnknownObject | FnOperationSpecsGenerator;
-
-type Securities = Array<'find' | 'get' | 'create' | 'update' | 'patch' | 'remove' | '__all'>;
+type Securities = Array<'find' | 'get' | 'create' | 'update' | 'patch' | 'remove' | 'all' | string>;
 
 declare function feathersSwagger(config: feathersSwagger.SwaggerInitOptions): () => void;
 
@@ -93,13 +102,25 @@ declare namespace feathersSwagger {
     defaults?: {
       getOperationArgs?: FnGetOperationArgs;
       getOperationRefs?: FnGetOperationRefs;
-      find?: DefaultsOperation;
-      get?: DefaultsOperation;
-      create?: DefaultsOperation;
-      update?: DefaultsOperation;
-      patch?: DefaultsOperation;
-      remove?: DefaultsOperation;
-      __all?: UnknownObject;
+      operationGenerators?: {
+        find?: FnOperationSpecsGenerator;
+        get?: FnOperationSpecsGenerator;
+        create?: FnOperationSpecsGenerator;
+        update?: FnOperationSpecsGenerator;
+        patch?: FnOperationSpecsGenerator;
+        remove?: FnOperationSpecsGenerator;
+        custom?: FnCustomOperationSpecsGenerator;
+      }
+      operations?: {
+        find?: UnknownObject;
+        get?: UnknownObject;
+        create?: UnknownObject;
+        update?: UnknownObject;
+        patch?: UnknownObject;
+        remove?: UnknownObject;
+        all?: UnknownObject;
+        [customMethod: string]: UnknownObject | undefined;
+      }
     };
   }
 
@@ -116,14 +137,20 @@ declare namespace feathersSwagger {
     modelName?: string;
     securities?: Securities;
     refs?: OperationRefs;
+    pathParams?: {
+      [paramName: string]: UnknownObject;
+    };
 
-    find?: UnknownObject | false;
-    get?: UnknownObject | false;
-    create?: UnknownObject | false;
-    update?: UnknownObject | false;
-    patch?: UnknownObject | false;
-    remove?: UnknownObject | false;
-    __all?: UnknownObject;
+    operations?: {
+      find?: UnknownObject | false;
+      get?: UnknownObject | false;
+      create?: UnknownObject | false;
+      update?: UnknownObject | false;
+      patch?: UnknownObject | false;
+      remove?: UnknownObject | false;
+      all?: UnknownObject;
+      [customOperation: string]: UnknownObject | false | undefined;
+    };
   }
 
   interface ServiceSwaggerAddon {

@@ -2,7 +2,7 @@
  * Example for openapi v3
  * - using default swagger ui with uiIndex: true
  * - just define the model with definition option of service.docs
- * - use a customized default (function) for update
+ * - use a customized default generator for update
  * - use a customized default (object) for get
  */
 
@@ -49,40 +49,44 @@ module.exports = (app) => {
       paths: ['v3/definition-with-customized-update/messages']
     },
     defaults: {
-      update ({ tag, modelName, idName, idType, security, securities, refs }) {
-        return {
-          tags: [tag, 'update'],
-          description: 'Changed stuff',
-          parameters: [{
-            description: `Some custom text still with ${modelName}`,
-            in: 'path',
-            required: true,
-            name: idName,
-            schema: {
-              type: idType
-            }
-          }],
-          requestBody: {
-            required: true,
-            content: {
-              'application/json': {
-                schema: {
-                  $ref: `#/components/schemas/${refs.updateRequest}`
+      operationGenerators: {
+        update ({ tag, modelName, idName, idType, security, securities, refs }) {
+          return {
+            tags: [tag, 'update'],
+            description: 'Changed stuff',
+            parameters: [{
+              description: `Some custom text still with ${modelName}`,
+              in: 'path',
+              required: true,
+              name: idName,
+              schema: {
+                type: idType
+              }
+            }],
+            requestBody: {
+              required: true,
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: `#/components/schemas/${refs.updateRequest}`
+                  }
                 }
               }
-            }
-          },
-          responses: {
-            500: {
-              description: 'will always fail :D'
-            }
-          },
-          security: securities.indexOf('update') > -1 ? security : []
-        };
+            },
+            responses: {
+              500: {
+                description: 'will always fail :D'
+              }
+            },
+            security: securities.indexOf('update') > -1 ? security : []
+          };
+        }
       },
-      get: {
-        description: 'Overwrite just one property',
-        'responses.500.description': 'Oops, something went wrong'
+      operations: {
+        get: {
+          description: 'Overwrite just one property',
+          'responses.500.description': 'Oops, something went wrong'
+        }
       }
     }
   }))

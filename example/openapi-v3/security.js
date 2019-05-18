@@ -41,10 +41,12 @@ module.exports = (app) => {
       }
     },
     securities: ['create', 'update', 'patch', 'remove'],
-    find: {
-      security: [
-        { BasicAuth: [] }
-      ]
+    operations: {
+      find: {
+        security: [
+          { BasicAuth: [] }
+        ]
+      }
     }
   };
 

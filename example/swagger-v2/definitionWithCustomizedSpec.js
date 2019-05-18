@@ -2,7 +2,7 @@
  * Example for swagger v2
  * - using default swagger ui with uiIndex: true
  * - just define the model with definition option of service.docs
- * - use a customized default (function) for update
+ * - use a customized default generator for update
  * - use a customized default (object) for get
  */
 
@@ -48,37 +48,41 @@ module.exports = (app) => {
       paths: ['v2/definition-with-customized-update/messages']
     },
     defaults: {
-      update ({ tag, modelName, idName, idType, security, securities, specs, refs }) {
-        return {
-          tags: [tag, 'update'],
-          description: 'Changed stuff',
-          parameters: [{
-            description: `Some custom text still with ${modelName}`,
-            in: 'path',
-            required: true,
-            name: idName,
-            type: idType
-          }, {
-            in: 'body',
-            name: 'body',
-            required: true,
-            schema: {
-              $ref: `#/definitions/${refs.updateRequest}`
-            }
-          }],
-          responses: {
-            500: {
-              description: 'will always fail :D'
-            }
-          },
-          produces: specs.produces,
-          consumes: specs.consumes,
-          security: securities.indexOf('update') > -1 ? security : []
-        };
+      operationGenerators: {
+        update ({ tag, modelName, idName, idType, security, securities, specs, refs }) {
+          return {
+            tags: [tag, 'update'],
+            description: 'Changed stuff',
+            parameters: [{
+              description: `Some custom text still with ${modelName}`,
+              in: 'path',
+              required: true,
+              name: idName,
+              type: idType
+            }, {
+              in: 'body',
+              name: 'body',
+              required: true,
+              schema: {
+                $ref: `#/definitions/${refs.updateRequest}`
+              }
+            }],
+            responses: {
+              500: {
+                description: 'will always fail :D'
+              }
+            },
+            produces: specs.produces,
+            consumes: specs.consumes,
+            security: securities.indexOf('update') > -1 ? security : []
+          };
+        }
       },
-      get: {
-        description: 'Overwrite just one property',
-        'responses.500.description': 'Oops, something went wrong'
+      operations: {
+        get: {
+          description: 'Overwrite just one property',
+          'responses.500.description': 'Oops, something went wrong'
+        }
       }
     }
   }))

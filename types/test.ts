@@ -31,30 +31,66 @@ swagger({
         removeResponse: 'model',
         updateRequest: 'model',
         updateResponse: 'model',
+        customResponse: 'model',
+        customRequest: 'model',
       };
     },
-    find({
-      config,
-      service,
-      securities,
-      idName,
-      idType,
-      model,
-      modelName,
-      refs,
-      security,
-      tag,
-      tags,
-      additionalAlsoAllowed
-    }) {},
-    get() {},
-    create() {},
-    update() {},
-    patch() {},
-    remove() {},
-    __all: {
-      'some.path.to.update': 'text',
-      anObject: {}
+    operationGenerators: {
+      find(
+        {
+          config,
+          service,
+          securities,
+          idName,
+          idType,
+          model,
+          modelName,
+          refs,
+          security,
+          tag,
+          tags,
+          additionalAlsoAllowed
+        }
+      ) { return {}; },
+      get() { return {}; },
+      create() { return {}; },
+      update() { return {}; },
+      patch() { return {}; },
+      remove() { return {}; },
+      custom(
+        {
+          config,
+          service,
+          securities,
+          idName,
+          idType,
+          model,
+          modelName,
+          refs,
+          security,
+          tag,
+          tags,
+          additionalAlsoAllowed
+        },
+        {
+          method,
+          httpMethod,
+          withId
+        }
+      ) { return {}; },
+    },
+    operations: {
+      find: {},
+      get: {},
+      create: {},
+      update: {},
+      patch: {},
+      remove: {},
+      customMethod: {},
+      all: {
+        'some.path.to.update': 'text',
+        anObject: {}
+      },
     },
   },
   docsJsonPath: '/swagger.json',
@@ -114,25 +150,6 @@ swagger({
   defaults: {},
 });
 
-// alternative defaults objects
-swagger({
-  specs: {
-    info: {
-      description: 'My test description',
-      title: 'Title of Tests',
-      version: '1.0.0'
-    }
-  },
-  defaults: {
-    find: {},
-    get: {},
-    create: {},
-    update: {},
-    patch: {},
-    remove: {},
-  }
-});
-
 // $ExpectError
 swagger({});
 
@@ -156,13 +173,17 @@ const service: ServiceSwaggerAddon = {
         type: 'object',
       }
     },
-    securities: ['create', 'find', 'get', 'update', 'remove', 'patch'],
-    find: { any: 'key' },
-    get: { any: 'key' },
-    create: { any: 'key' },
-    update: { any: 'key' },
-    patch: { any: 'key' },
-    remove: { any: 'key' },
+    securities: ['create', 'find', 'get', 'update', 'remove', 'patch', 'all', 'customMethod'],
+    operations: {
+      find: { any: 'key' },
+      get: { any: 'key' },
+      create: { any: 'key' },
+      update: { any: 'key' },
+      patch: { any: 'key' },
+      remove: { any: 'key' },
+      all: { any: 'key' },
+      customMethod: { any: 'key' },
+    },
     refs: {
       createRequest: 'model',
       createResponse: 'model',
@@ -173,13 +194,27 @@ const service: ServiceSwaggerAddon = {
       removeResponse: 'model',
       updateRequest: 'model',
       updateResponse: 'model',
+      customMethodRequest: 'model',
+      customMethodResponse: 'model',
     },
+    pathParams: {
+      testParam: { any: 'key' },
+    }
   }
 };
 
-// test empty refs
+// test empty refs + disabled methods
 const serviceEmptyRefs: ServiceSwaggerAddon = {
   docs: {
+    operations: {
+      find: false,
+      get: false,
+      create: false,
+      update: false,
+      patch: false,
+      remove: false,
+      customMethod: false,
+    },
     refs: {},
   }
 };
@@ -211,10 +246,8 @@ tag('name', { description: 'test' });
 // $ExpectError
 tag([]);
 
-security('find', ['get', '__all', 'find', 'create', 'patch', 'update', 'remove'], [{ any: 'thing' }]);
+security('find', ['get', 'all', 'find', 'create', 'patch', 'update', 'remove', 'customMethod'], [{ any: 'thing' }]);
 // $ExpectError
 security([], [], [{ any: 'thing' }]);
-// $ExpectError
-security('find', ['unknown'], [{ any: 'thing' }]);
 // $ExpectError
 security('find', [], ['wrong']);
