@@ -76,6 +76,10 @@ __Options:__
     - `find`|`get`|`create`|`update`|`patch`|`remove`|`nameOfCustomMethod` - to change defaults of a specific operation
     - `all` - to change defaults of all operations
 
+### `service.id`
+
+Defines the name of the id in the swagger path, by default it is `'id'`;
+
 ### `service.docs`
 
 If you want to customize the specifications generation for a service you can configure it by providing a options object as `docs` property of the service.
@@ -111,6 +115,7 @@ __Options:__
 - `tags` (*optional*) - Give multiple tags
 - `model` (*optional*) - Override model that is parsed from path
 - `modelName` (*optional*) - Override modelName that is parsed from path
+- `idType` (*optional*) - The swagger type of ids used in paths for this service
 - `definition`(also `schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
 - `definitions`(also `schemas` for openapi v3) (*optional*) - Swagger definitions that will merged in the global definitions
 - `securities` (*optional*) - Array of operation names that are secured by global security definition, use `all` to enable security for all operations of the service
@@ -119,6 +124,7 @@ __Options:__
   - `all` - Custom (parts of the) specification for all operations.
 - `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse, {customMethodName[Request|Response]}
 - `pathParams` (*optional*) - Object with param name as key and the definition as value, should be used when using "global" path parameters
+- `overwriteTagSpec` (*optional*, default: `false`) - If tag is already defined in the specs, should be overwritten from this service 
 
 ### Path support to update nested structures
 
@@ -556,8 +562,8 @@ messageService.docs = {
 messageService.docs = {
   operations: {
     find: {
-        description: 'My description',
-      },
+      description: 'My description',
+    },
   },
 };
 ```
@@ -675,6 +681,30 @@ messageService.docs = {
     message: sequelizeJsonSchema(Model),
   }
 };
+```
+
+### Overwriting of already defined tags specifications is now opt-in
+
+Introduced with [PR: Fix: docs ignored when path already exists \#69](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/69)
+the last registered service will always overwrite previously defined tags. To be able to handle it by config
+the `overwriteTagSpec` was introduced. It defaults to false, which is a breaking change.
+
+#### Before
+```js
+  // ...
+  app.use('/projects/:projectId/sync', projectsSyncService);
+  // use tag from second service
+  const docs = { description: 'My Project Service' };
+  app.use('/projects', Object.assign(service(options), { docs }) );
+```
+
+#### After
+```js
+  // ...
+  app.use('/projects/:projectId/sync', projectsSyncService);
+  // use tag from second service
+  const docs = { description: 'My Project Service', overwriteTagSpec: true };
+  app.use('/projects', Object.assign(service(options), { docs }) );
 ```
 
 ## License

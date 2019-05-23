@@ -151,7 +151,8 @@ describe('helper tests', () => {
       const source = {
         'a[-]': '3',
         'a[-1]': '2',
-        'a[-2]': '1'
+        'a[-2]': '1',
+        'b[-]': 4
       };
 
       const expectedResult = {
@@ -161,7 +162,8 @@ describe('helper tests', () => {
           '3',
           '4',
           '5'
-        ]
+        ],
+        b: [4]
       };
 
       const result = assignWithSet(object, source);

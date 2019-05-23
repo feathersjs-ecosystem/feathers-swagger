@@ -165,6 +165,7 @@ const service: ServiceSwaggerAddon = {
     tags: ['tag1', 'tag2'],
     model: 'custom-model',
     modelName: 'Nice name of my Model',
+    idType: 'string',
     definition: {
       type: 'string'
     },
@@ -199,7 +200,8 @@ const service: ServiceSwaggerAddon = {
     },
     pathParams: {
       testParam: { any: 'key' },
-    }
+    },
+    overwriteTagSpec: true,
   }
 };
 

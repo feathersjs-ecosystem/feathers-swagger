@@ -135,11 +135,13 @@ declare namespace feathersSwagger {
     tags?: string[];
     model?: string;
     modelName?: string;
+    idType?: string;
     securities?: Securities;
     refs?: OperationRefs;
     pathParams?: {
       [paramName: string]: UnknownObject;
     };
+    overwriteTagSpec?: boolean;
 
     operations?: {
       find?: UnknownObject | false;
