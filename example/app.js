@@ -1,44 +1,21 @@
 const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
-const memory = require('feathers-memory');
 const path = require('path');
-const swagger = require('../lib');
-const messageService = memory();
-
-messageService.docs = {
-  description: 'A service to send and receive messages',
-  definitions: {
-    messages: {
-      type: 'object',
-      required: [
-        'text'
-      ],
-      properties: {
-        text: {
-          type: 'string',
-          description: 'The message text'
-        },
-        userId: {
-          type: 'string',
-          description: 'The id of the user that send the message'
-        }
-      }
-    },
-    'messages list': {
-      type: 'array',
-      items: {
-        $ref: `#/definitions/messages`
-      }
-    }
-  }
-};
 
 const serveStatic = require('serve-static');
 const distPath = require.resolve('swagger-ui-dist');
 
-// alternatively point to local file:
-// const uiIndex = path.join(__dirname, 'docs.html')
-const uiIndex = path.join(__dirname, 'docs.html');
+const swaggerV2Definitions = require('./swagger-v2/definitions');
+const swaggerV2DefinitionWithCustomizedSpec = require('./swagger-v2/definitionWithCustomizedSpec');
+const swaggerV2CustomTags = require('./swagger-v2/customTags');
+const swaggerV2Security = require('./swagger-v2/security');
+const swaggerV2CustomMethods = require('./swagger-v2/customMethods');
+
+const openApiV3Definitions = require('./openapi-v3/definitions');
+const openApiV3DefinitionWithCustomizedSpec = require('./openapi-v3/definitionWithCustomizedSpec');
+const openApiV3CustomTags = require('./openapi-v3/customTags');
+const openApiV3Security = require('./openapi-v3/security');
+const openApiV3CustomMethods = require('./openapi-v3/customMethods');
 
 const app = express(feathers())
   .use(express.json())
@@ -48,17 +25,28 @@ const app = express(feathers())
   .use(serveStatic(distPath))
   .configure(express.rest())
 
-  .configure(swagger({
-    docsPath: '/docs',
-    uiIndex,
-    info: {
-      title: 'A test',
-      description: 'A description',
-      version: '1.0.0'
-    }
-  }))
-  .use('/messages', messageService);
+  .get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  })
+  .get('/docs', (req, res) => {
+    res.sendFile(path.join(__dirname, 'docs.html'));
+  })
+  .use(serveStatic(path.dirname(require.resolve('swagger-ui-dist'))))
 
-console.log('Simple feathers-swagger example running on http://localhost:3030/docs/');
+  .configure(swaggerV2Definitions)
+  .configure(swaggerV2DefinitionWithCustomizedSpec)
+  .configure(swaggerV2CustomTags)
+  .configure(swaggerV2Security)
+  .configure(swaggerV2CustomMethods)
+
+  .configure(openApiV3Definitions)
+  .configure(openApiV3DefinitionWithCustomizedSpec)
+  .configure(openApiV3CustomTags)
+  .configure(openApiV3Security)
+  .configure(openApiV3CustomMethods)
+
+  ;
+
+console.log('Simple app with multiple feathers-swagger examples running on http://localhost:3030/');
 
 app.listen(3030);

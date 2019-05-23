@@ -1,0 +1,308 @@
+{
+  "info": {
+    "title": "swagger generator v2 tests",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/message": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Number of results to return",
+            "in": "query",
+            "name": "$limit",
+            "type": "integer"
+          },
+          {
+            "description": "Number of results to skip",
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "description": "Property to sort results",
+            "in": "query",
+            "name": "$sort",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/message_list"
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Retrieves a list of all resources from the service.",
+        "summary": "",
+        "tags": [
+          "message"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": []
+      },
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Creates a new resource with data.",
+        "summary": "",
+        "tags": [
+          "message"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": []
+      }
+    },
+    "/message/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "ID of message to return",
+            "in": "path",
+            "required": true,
+            "name": "id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Retrieves a single resource with the given id from the service.",
+        "summary": "",
+        "tags": [
+          "message"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": []
+      },
+      "put": {
+        "parameters": [
+          {
+            "description": "ID of message to return",
+            "in": "path",
+            "required": true,
+            "name": "id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Updates the resource identified by id using data.",
+        "summary": "",
+        "tags": [
+          "message"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": []
+      },
+      "patch": {
+        "parameters": [
+          {
+            "description": "ID of message to return",
+            "in": "path",
+            "required": true,
+            "name": "id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Updates the resource identified by id using data.",
+        "summary": "",
+        "tags": [
+          "message"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": []
+      },
+      "delete": {
+        "parameters": [
+          {
+            "description": "ID of message to return",
+            "in": "path",
+            "required": true,
+            "name": "id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Removes the resource with id.",
+        "summary": "",
+        "tags": [
+          "message"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": []
+      }
+    }
+  },
+  "definitions": {
+    "message": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "message_list": {
+      "title": "message list",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/message"
+      }
+    }
+  },
+  "swagger": "2.0",
+  "schemes": [
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "message",
+      "description": "A message service"
+    }
+  ],
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ]
+}

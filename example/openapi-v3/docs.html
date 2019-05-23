@@ -74,48 +74,7 @@ window.onload = function() {
   
   // Build a system
   const ui = SwaggerUIBundle({
-    urls: [
-      {
-        url: "http://localhost:3030/v2/definitions.json",
-        name: "Swagger V2 - Definitions Example"
-      },
-      {
-        url: "http://localhost:3030/v2/definition-with-customized-update.json",
-        name: "Swagger V2 - Definition with customized Update Example"
-      },
-      {
-        url: "http://localhost:3030/v2/custom-tags.json",
-        name: "Swagger V2 - Custom Tags Example"
-      },
-      {
-        url: "http://localhost:3030/v2/security.json",
-        name: "Swagger V2 - Security Example"
-      },
-      {
-        url: "http://localhost:3030/v2/custom-methods.json",
-        name: "Swagger V2 - Custom Method and path parameters"
-      },
-      {
-        url: "http://localhost:3030/v3/definitions.json",
-        name: "OpenAPI V3 - Definitions Example"
-      },
-      {
-        url: "http://localhost:3030/v3/definition-with-customized-update.json",
-        name: "OpenAPI V3 - Definition with customized Update Example"
-      },
-      {
-        url: "http://localhost:3030/v3/custom-tags.json",
-        name: "OpenAPI V3 - Custom Tags Example"
-      },
-      {
-        url: "http://localhost:3030/v3/security.json",
-        name: "OpenAPI V3 - Security Example"
-      },
-      {
-        url: "http://localhost:3030/v3/custom-methods.json",
-        name: "OpenAPI V3 - Custom Method and path parameters"
-      },
-    ],
+    url: "http://localhost:3030/v3/definitions",
     dom_id: '#swagger-ui',
     deepLinking: true,
     presets: [
