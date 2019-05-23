@@ -1,5 +1,22 @@
 # Change Log
 
+## [v1.0.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.0.0) (2019-05-23)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.3...v1.0.0)
+
+**Closed issues:**
+
+- Add support to use either swagger 2.0 or openapi 3.0 [\#137](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/137)
+- Add Typescript definitions [\#121](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/121)
+- Same swagger definition is used for CREATE and GET, but differs in practice. [\#116](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/116)
+- Plural routes lead to unwanted model names [\#112](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/112)
+- Space in name leads to non RFC3986-compliant percent-encoded URI [\#109](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/109)
+- Disabling methods [\#63](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/63)
+- Add support for service groups [\#24](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/24)
+
+**Merged pull requests:**
+
+- Refactor lib to add support for OpenAPI v3 [\#140](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/140) ([Mairu](https://github.com/Mairu))
+
 ## [v0.7.3](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.3) (2019-04-15)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.2...v0.7.3)
 
