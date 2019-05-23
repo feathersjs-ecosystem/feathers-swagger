@@ -1,7 +1,7 @@
 {
   "name": "feathers-swagger",
   "description": "Add documentation to your Featherjs services and feed them to Swagger UI.",
-  "version": "0.7.3",
+  "version": "1.0.0",
   "homepage": "https://github.com/feathersjs-ecosystem/feathers-swagger",
   "main": "lib/",
   "keywords": [
