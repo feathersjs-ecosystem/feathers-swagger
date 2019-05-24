@@ -155,6 +155,7 @@ Here's an example of a Feathers server that uses `feathers-swagger`.
 const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
 const memory = require('feathers-memory');
+const swagger = require('feathers-swagger');
 
 const messageService = memory();
 
@@ -250,6 +251,7 @@ const path = require('path');
 const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
 const memory = require('feathers-memory');
+const swagger = require('feathers-swagger');
 
 const messageService = memory();
 
@@ -502,7 +504,7 @@ app.listen(3030);
 
 ## Migration
 
-Version X.X.X introduces some breaking changes to previous 0.7.x versions. These changes and ways to migrate to the new release will be described here.
+Version 1.0.0 introduces some breaking changes to previous 0.7.x versions. These changes and ways to migrate to the new release will be described here.
 
 ### Introduction of specs option
 
@@ -593,12 +595,14 @@ swagger({
 swagger({
   // ...
   defaults: {
-    find: {
-      'parameters[-]': {
-        description: 'My custom query parameter',
-        in: 'query',
-        name: '$custom',
-        type: 'string'
+    operations: {
+      find: {
+        'parameters[-]': {
+          description: 'My custom query parameter',
+          in: 'query',
+          name: '$custom',
+          type: 'string'
+        }
       }
     }
   }
@@ -666,9 +670,7 @@ If you used them extract them from an old version or use other packages which pr
 const { definition } = 'feathers-swagger';
 
 messageService.docs = {
-  definition: {
-    message: definition(Model),
-  }
+  definition: definition(Model),
 };
 ```
 
@@ -677,9 +679,7 @@ messageService.docs = {
 const sequelizeJsonSchema = require('sequelize-json-schema');
 
 messageService.docs = {
-  definition: {
-    message: sequelizeJsonSchema(Model),
-  }
+  definition: sequelizeJsonSchema(Model),
 };
 ```
 
