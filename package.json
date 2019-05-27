@@ -34,7 +34,7 @@
     "lint": "semistandard --fix",
     "dtslint": "dtslint types",
     "mocha": "mocha --opts mocha.opts",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
+    "coverage": "nyc --check-coverage npm run mocha",
     "test": "npm run lint && npm run coverage && npm run dtslint",
     "start": "node example/app"
   },
@@ -67,8 +67,8 @@
     "cors": "^2.8.5",
     "dtslint": "^0.7.6",
     "feathers-memory": "^3.0.2",
-    "istanbul": "^1.1.0-alpha.1",
     "mocha": "^6.1.4",
+    "nyc": "^14.1.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "semistandard": "^13.0.1",
