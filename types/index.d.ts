@@ -1,4 +1,4 @@
-// TypeScript Version: 2.7
+// TypeScript Version: 2.8
 
 import { Request, Response } from 'express';
 import { Service } from '@feathersjs/feathers';
