@@ -160,6 +160,12 @@ declare namespace feathersSwagger {
     model?: string;
     modelName?: string;
     idType?: string;
+    idNames?: {
+      get?: string;
+      update?: string;
+      patch?: string;
+      remove?: string;
+    };
     securities?: Securities;
     refs?: OperationRefs;
     pathParams?: {

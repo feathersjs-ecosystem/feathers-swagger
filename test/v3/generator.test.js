@@ -953,6 +953,27 @@ describe('openopi v3 generator', function () {
       expect(specs.paths['/message/{slug}'].get.parameters[0].schema.type).to.equal('string');
     });
 
+    it('idNames should be consumed', function () {
+      service.id = 'other'; // will be overruled by idNames
+      service.docs.idNames = {
+        get: 'slug',
+        update: 'uid',
+        patch: 'pid',
+        remove: 'rid'
+      };
+
+      service.update = function () {};
+      service.patch = function () {};
+      service.remove = function () {};
+
+      gen.addService(service, 'message');
+
+      expect(specs.paths['/message/{slug}'].get.parameters[0].name).to.equal('slug');
+      expect(specs.paths['/message/{uid}'].put.parameters[0].name).to.equal('uid');
+      expect(specs.paths['/message/{pid}'].patch.parameters[0].name).to.equal('pid');
+      expect(specs.paths['/message/{rid}'].delete.parameters[0].name).to.equal('rid');
+    });
+
     describe('overwriteTagSpec', function () {
       it('nothing should be overwritten by default', function () {
         specs.tags = [

@@ -18,6 +18,7 @@ const openApiV3CustomTags = require('./openapi-v3/customTags');
 const openApiV3Security = require('./openapi-v3/security');
 const openApiV3CustomMethods = require('./openapi-v3/customMethods');
 const openApiV3Multi = require('./openapi-v3/multi');
+const openApiV3IdNames = require('./openapi-v3/idNames');
 
 const app = express(feathers())
   .use(express.json())
@@ -48,6 +49,7 @@ const app = express(feathers())
   .configure(openApiV3Security)
   .configure(openApiV3CustomMethods)
   .configure(openApiV3Multi)
+  .configure(openApiV3IdNames)
 
   ;
 

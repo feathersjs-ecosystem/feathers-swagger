@@ -120,6 +120,8 @@ __Options:__
 - `model` (*optional*) - Override model that is parsed from path
 - `modelName` (*optional*) - Override modelName that is parsed from path
 - `idType` (*optional*) - The swagger type of ids used in paths for this service
+- `idNames` (*optional*) - Object with path parameter names, to customize the idName on operation / method level
+  - `get`|`update`|`patch`|`remove` - name of the path parameter for the specific method, use service.id to change it for all
 - `definition`(also `schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
 - `definitions`(also `schemas` for openapi v3) (*optional*) - Swagger definitions that will merged in the global definitions
 - `securities` (*optional*) - Array of operation names that are secured by global security definition, use `'all'` to enable security for all operations of the service

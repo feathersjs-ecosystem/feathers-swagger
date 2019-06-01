@@ -178,6 +178,12 @@ const service: ServiceSwaggerAddon = {
     model: 'custom-model',
     modelName: 'Nice name of my Model',
     idType: 'string',
+    idNames: {
+      get: 'id',
+      update: 'id',
+      patch: 'id',
+      remove: 'id',
+    },
     definition: {
       type: 'string'
     },
@@ -226,7 +232,7 @@ const service: ServiceSwaggerAddon = {
   }
 };
 
-// test empty refs + disabled methods
+// test empty refs, idNames + disabled methods
 const serviceEmptyRefs: ServiceSwaggerAddon = {
   docs: {
     operations: {
@@ -242,6 +248,7 @@ const serviceEmptyRefs: ServiceSwaggerAddon = {
       customMethod: false,
     },
     refs: {},
+    idNames: {},
   }
 };
 
