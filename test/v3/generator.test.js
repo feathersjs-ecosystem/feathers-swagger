@@ -40,6 +40,28 @@ describe('openopi v3 generator', function () {
     expect(specs).to.deep.equal(require('./expected-memory-spec.json'));
   });
 
+  it('should generate expected specification for multi operations of memory service', function () {
+    const specs = {};
+    const gen = new OpenApi3Generator(specs, swaggerOptions);
+    const service = memory({ multi: true });
+    service.docs = {
+      definition: messageDefinition,
+      multi: ['update', 'patch', 'remove'],
+      operations: {
+        find: false,
+        get: false,
+        create: false,
+        update: false,
+        patch: false,
+        remove: false
+      }
+    };
+
+    gen.addService(service, 'message');
+
+    expect(specs).to.deep.equal(require('./expected-memory-spec-multi-only.json'));
+  });
+
   describe('swaggerOptions', function () {
     let service;
     let specs;
@@ -359,9 +381,16 @@ describe('openopi v3 generator', function () {
               createResponse: 'message',
               updateRequest: 'message',
               updateResponse: 'message',
+              updateMultiRequest: 'message_list',
+              updateMultiResponse: 'message_list',
               patchRequest: 'message',
               patchResponse: 'message',
-              removeResponse: 'message'
+              patchMultiRequest: 'message',
+              patchMultiResponse: 'message_list',
+              removeResponse: 'message',
+              removeMultiResponse: 'message_list',
+              filterParameter: 'message',
+              sortParameter: ''
             });
             expect(options.service).to.equal(service);
             expect(options.config.defaults.operationGenerators.find)
@@ -539,7 +568,7 @@ describe('openopi v3 generator', function () {
 
           gen.addService(service, 'message');
 
-          expect(specs.paths['/message'].get.parameters[3]).to.deep.equal(headerParam);
+          expect(specs.paths['/message'].get.parameters[4]).to.deep.equal(headerParam);
           expect(specs.paths['/message/{id}'].get.parameters[1]).to.deep.equal(headerParam);
         });
       });
@@ -805,6 +834,17 @@ describe('openopi v3 generator', function () {
         .to.equal('#/components/schemas/otherRef');
       expect(specs.paths['/message/{id}'].get.responses[200].content['application/json'].schema.$ref)
         .to.equal('#/components/schemas/getMessage');
+    });
+
+    it('refs.sortParameter should be consumed when not empty', function () {
+      service.docs.refs = {
+        sortParameter: 'message_sort'
+      };
+
+      gen.addService(service, 'message');
+
+      expect(specs.paths['/message'].get.parameters[2].schema.$ref)
+        .to.equal('#/components/schemas/message_sort');
     });
 
     it('pathParams should be consumed for path parameter', function () {

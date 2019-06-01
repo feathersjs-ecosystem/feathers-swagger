@@ -1,0 +1,159 @@
+{
+  "info": {
+    "title": "openapi generator v3 tests",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/message": {
+      "put": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_list"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Updates multiple resources.",
+        "summary": "",
+        "tags": [
+          "message"
+        ],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/message_list"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          {
+            "description": "Query parameters to filter",
+            "in": "query",
+            "name": "filter",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/message"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_list"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Updates multiple resources queried by given filters.",
+        "summary": "",
+        "tags": [
+          "message"
+        ],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/message"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "description": "Query parameters to filter",
+            "in": "query",
+            "name": "filter",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/message"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_list"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Removes multiple resources queried by given filters.",
+        "summary": "",
+        "tags": [
+          "message"
+        ],
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "message": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string"
+          }
+        }
+      },
+      "message_list": {
+        "title": "message list",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/message"
+        }
+      }
+    }
+  },
+  "openapi": "3.0.2",
+  "tags": [
+    {
+      "name": "message",
+      "description": "A message service"
+    }
+  ]
+}

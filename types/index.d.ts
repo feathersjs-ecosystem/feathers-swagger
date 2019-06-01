@@ -29,9 +29,14 @@ interface OperationRefs {
   createResponse?: string;
   updateRequest?: string;
   updateResponse?: string;
+  updateMultiRequest?: string;
+  updateMultiResponse?: string;
   patchRequest?: string;
   patchResponse?: string;
+  patchMultiRequest?: string;
+  patchMultiResponse?: string;
   removeResponse?: string;
+  removeMultiResponse?: string;
   [customMethodRef: string]: string | undefined;
 }
 
@@ -70,7 +75,9 @@ interface ExternalDocs {
   url: string;
 }
 
-type Securities = Array<'find' | 'get' | 'create' | 'update' | 'patch' | 'remove' | 'all' | string>;
+type Securities = Array<'find' | 'get' | 'create' | 'update' | 'patch' | 'remove' | 'updateMulti' | 'patchMulti'
+  | 'removeMulti' | 'all' | string>;
+type MultiOperations = Array<'update' | 'patch' | 'remove' | 'all'>;
 
 declare function feathersSwagger(config: feathersSwagger.SwaggerInitOptions): () => void;
 
@@ -109,6 +116,9 @@ declare namespace feathersSwagger {
         update?: FnOperationSpecsGenerator;
         patch?: FnOperationSpecsGenerator;
         remove?: FnOperationSpecsGenerator;
+        updateMulti?: FnOperationSpecsGenerator;
+        patchMulti?: FnOperationSpecsGenerator;
+        removeMulti?: FnOperationSpecsGenerator;
         custom?: FnCustomOperationSpecsGenerator;
       }
       operations?: {
@@ -118,9 +128,13 @@ declare namespace feathersSwagger {
         update?: UnknownObject;
         patch?: UnknownObject;
         remove?: UnknownObject;
+        updateMulti?: UnknownObject;
+        patchMulti?: UnknownObject;
+        removeMulti?: UnknownObject;
         all?: UnknownObject;
         [customMethod: string]: UnknownObject | undefined;
       }
+      multi?: MultiOperations;
     };
   }
 
@@ -142,7 +156,7 @@ declare namespace feathersSwagger {
       [paramName: string]: UnknownObject;
     };
     overwriteTagSpec?: boolean;
-
+    multi?: MultiOperations;
     operations?: {
       find?: UnknownObject | false;
       get?: UnknownObject | false;
@@ -150,6 +164,9 @@ declare namespace feathersSwagger {
       update?: UnknownObject | false;
       patch?: UnknownObject | false;
       remove?: UnknownObject | false;
+      updateMulti?: UnknownObject | false;
+      patchMulti?: UnknownObject | false;
+      removeMulti?: UnknownObject | false;
       all?: UnknownObject;
       [customOperation: string]: UnknownObject | false | undefined;
     };

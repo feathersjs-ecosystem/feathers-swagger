@@ -57,6 +57,9 @@ swagger({
       update() { return {}; },
       patch() { return {}; },
       remove() { return {}; },
+      updateMulti() { return {}; },
+      patchMulti() { return {}; },
+      removeMulti() { return {}; },
       custom(
         {
           config,
@@ -86,12 +89,16 @@ swagger({
       update: {},
       patch: {},
       remove: {},
+      updateMulti: {},
+      patchMulti: {},
+      removeMulti: {},
       customMethod: {},
       all: {
         'some.path.to.update': 'text',
         anObject: {}
       },
     },
+    multi: ['update', 'remove', 'patch', 'all'],
   },
   docsJsonPath: '/swagger.json',
   docsPath: '/swagger',
@@ -175,6 +182,7 @@ const service: ServiceSwaggerAddon = {
       }
     },
     securities: ['create', 'find', 'get', 'update', 'remove', 'patch', 'all', 'customMethod'],
+    multi: ['update', 'remove', 'patch', 'all'],
     operations: {
       find: { any: 'key' },
       get: { any: 'key' },
@@ -182,6 +190,9 @@ const service: ServiceSwaggerAddon = {
       update: { any: 'key' },
       patch: { any: 'key' },
       remove: { any: 'key' },
+      updateMulti: { any: 'key' },
+      patchMulti: { any: 'key' },
+      removeMulti: { any: 'key' },
       all: { any: 'key' },
       customMethod: { any: 'key' },
     },
@@ -192,9 +203,14 @@ const service: ServiceSwaggerAddon = {
       getResponse: 'model',
       patchRequest: 'model',
       patchResponse: 'model',
+      patchMultiRequest: 'model',
+      patchMultiResponse: 'model',
       removeResponse: 'model',
+      removeMultiResponse: 'model',
       updateRequest: 'model',
       updateResponse: 'model',
+      updateMultiRequest: 'model',
+      updateMultiResponse: 'model',
       customMethodRequest: 'model',
       customMethodResponse: 'model',
     },
@@ -215,6 +231,9 @@ const serviceEmptyRefs: ServiceSwaggerAddon = {
       update: false,
       patch: false,
       remove: false,
+      updateMulti: false,
+      patchMulti: false,
+      removeMulti: false,
       customMethod: false,
     },
     refs: {},
@@ -248,7 +267,12 @@ tag('name', { description: 'test' });
 // $ExpectError
 tag([]);
 
-security('find', ['get', 'all', 'find', 'create', 'patch', 'update', 'remove', 'customMethod'], [{ any: 'thing' }]);
+security(
+  'find',
+  ['get', 'all', 'find', 'create', 'patch', 'update', 'remove', 'patchMulti', 'updateMulti', 'removeMulti',
+    'customMethod'],
+  [{any: 'thing'}]
+);
 // $ExpectError
 security([], [], [{ any: 'thing' }]);
 // $ExpectError

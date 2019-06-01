@@ -71,10 +71,13 @@ __Options:__
   - `getOperationsRefs(model, service)` - method to generate refs that the methods for operations will consume, see service.docs.refs option
   - `operationGenerators` - generator functions to fully customize specification generation for operations
     - `find`|`get`|`create`|`update`|`patch`|`remove` - generator function for the specific operation
+    - `updateMulti`|`patchMulti`|`removeMulti` - generator function for the "multi mode" version of the specific operation
     - `custom` - generator function for all custom operations
   - `operations` - objects with defaults for the operations, with [path support to update nested structures](#path-support-to-update-nested-structures)
     - `find`|`get`|`create`|`update`|`patch`|`remove`|`nameOfCustomMethod` - to change defaults of a specific operation
+    - `updateMulti`|`patchMulti`|`removeMulti` - to change defaults for "multi mode" of a specific operation
     - `all` - to change defaults of all operations
+  - `multi` - array with operations that should also be available in "multi mode", use `'all'` to enable for all operations that support it
 
 ### `service.id`
 
@@ -118,9 +121,11 @@ __Options:__
 - `idType` (*optional*) - The swagger type of ids used in paths for this service
 - `definition`(also `schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)
 - `definitions`(also `schemas` for openapi v3) (*optional*) - Swagger definitions that will merged in the global definitions
-- `securities` (*optional*) - Array of operation names that are secured by global security definition, use `all` to enable security for all operations of the service
+- `securities` (*optional*) - Array of operation names that are secured by global security definition, use `'all'` to enable security for all operations of the service
+- `multi` (*optional*) - Array of operation names that will also be available in "multi mode" (without id path parameter to operate on multiple resources), use `'all'` to enable it for all operations that support it
 - `operations` (*optional*) - Object with specifications for the operations / methods of the service. [Support path keys to update specific nested structures](#path-support-to-update-nested-structures).
   - `find`|`get`|`create`|`update`|`patch`|`remove`|`nameOfCustomMethod` - Custom (parts of the) specification for the operation, can alternatively be set as doc property of the method. To disable the generation set to false.
+  - `updateMulti`|`patchMulti`|`removeMulti` - if "multi mode" is enabled for the specific method, custom parts of the specification can be overwritten. To disable the generation set to false.
   - `all` - Custom (parts of the) specification for all operations.
 - `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse, {customMethodName[Request|Response]}
 - `pathParams` (*optional*) - Object with param name as key and the definition as value, should be used when using "global" path parameters

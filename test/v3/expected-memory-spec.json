@@ -48,8 +48,19 @@
             "description": "Property to sort results",
             "in": "query",
             "name": "$sort",
+            "style": "deepObject",
             "schema": {
-              "type": "string"
+              "type": "object"
+            }
+          },
+          {
+            "description": "Query parameters to filter",
+            "in": "query",
+            "name": "filter",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/message"
             }
           }
         ],
@@ -120,7 +131,7 @@
         "description": "Removes the resource with id.",
         "parameters": [
           {
-            "description": "ID of message to return",
+            "description": "ID of message to remove",
             "in": "path",
             "name": "id",
             "required": true,
@@ -200,7 +211,7 @@
         "description": "Updates the resource identified by id using data.",
         "parameters": [
           {
-            "description": "ID of message to return",
+            "description": "ID of message to update",
             "in": "path",
             "name": "id",
             "required": true,
@@ -250,7 +261,7 @@
         "description": "Updates the resource identified by id using data.",
         "parameters": [
           {
-            "description": "ID of message to return",
+            "description": "ID of message to update",
             "in": "path",
             "name": "id",
             "required": true,

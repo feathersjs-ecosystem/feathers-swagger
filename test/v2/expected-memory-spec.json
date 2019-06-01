@@ -184,7 +184,7 @@
       "patch": {
         "parameters": [
           {
-            "description": "ID of message to return",
+            "description": "ID of message to update",
             "in": "path",
             "required": true,
             "name": "id",
@@ -232,7 +232,7 @@
       "delete": {
         "parameters": [
           {
-            "description": "ID of message to return",
+            "description": "ID of message to remove",
             "in": "path",
             "required": true,
             "name": "id",
