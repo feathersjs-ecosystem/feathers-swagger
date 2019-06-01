@@ -44,6 +44,15 @@ interface FnGetOperationRefs {
   (model: string, service: feathersSwagger.SwaggerService<any>): OperationRefs;
 }
 
+interface FnSchemasGenerator {
+  (
+    service: feathersSwagger.SwaggerService<any>,
+    model: string,
+    modelName: string,
+    schemas: UnknownObject,
+  ): UnknownObject;
+}
+
 type FnOperationSpecsGeneratorOptions = {
   tag: string,
   tags: [string],
@@ -109,6 +118,7 @@ declare namespace feathersSwagger {
     defaults?: {
       getOperationArgs?: FnGetOperationArgs;
       getOperationRefs?: FnGetOperationRefs;
+      schemasGenerator?: FnSchemasGenerator;
       operationGenerators?: {
         find?: FnOperationSpecsGenerator;
         get?: FnOperationSpecsGenerator;

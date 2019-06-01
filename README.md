@@ -69,6 +69,7 @@ __Options:__
 - `defaults` (*optional*) - Object to customize the defaults for generation of the specification
   - `getOperationArgs({ service, path, config, apiPath, version })` - method to generate args that the methods for operations will consume, can also customize default tag and model generation
   - `getOperationsRefs(model, service)` - method to generate refs that the methods for operations will consume, see service.docs.refs option
+  - `schemasGenerator(service, model, modelName, schemas)` - method to generate the json schemas for a service
   - `operationGenerators` - generator functions to fully customize specification generation for operations
     - `find`|`get`|`create`|`update`|`patch`|`remove` - generator function for the specific operation
     - `updateMulti`|`patchMulti`|`removeMulti` - generator function for the "multi mode" version of the specific operation

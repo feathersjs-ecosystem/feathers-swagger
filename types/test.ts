@@ -35,6 +35,11 @@ swagger({
         customRequest: 'model',
       };
     },
+    schemasGenerator(service: SwaggerService<any>, model: string, modelName: string, schemas: {}) {
+      return {
+        some: 'schemas',
+      };
+    },
     operationGenerators: {
       find(
         {

@@ -4,6 +4,7 @@
  * - just define the model with definition option of service.docs
  * - use service with multi: true and define multi option
  * - use refs.sortParameter
+ * - use schemasGenerator
  */
 
 const memory = require('feathers-memory');
@@ -12,27 +13,28 @@ const swagger = require('../../lib');
 module.exports = (app) => {
   const messageService = memory({ multi: true });
 
+  messageService.model = {
+    type: 'object',
+    required: [
+      'text'
+    ],
+    properties: {
+      text: {
+        type: 'string',
+        description: 'The message text'
+      },
+      userId: {
+        type: 'string',
+        description: 'The id of the user that send the message'
+      }
+    }
+  };
+
   messageService.docs = {
     description: 'A service to send and receive messages',
-    definition: {
-      type: 'object',
-      required: [
-        'text'
-      ],
-      properties: {
-        text: {
-          type: 'string',
-          description: 'The message text'
-        },
-        userId: {
-          type: 'string',
-          description: 'The id of the user that send the message'
-        }
-      }
-    },
     multi: ['patch', 'remove'],
     refs: {
-      sortParameter: 'message_sort_filter'
+      sortParameter: 'messages_sort_filter'
     }
   };
 
@@ -47,10 +49,25 @@ module.exports = (app) => {
         title: 'A test',
         description: 'A description',
         version: '1.0.0'
-      },
-      components: {
-        schemas: {
-          message_sort_filter: {
+      }
+    },
+    include: {
+      paths: ['v3/multi/messages']
+    },
+    defaults: {
+      schemasGenerator (service, model, modelName) {
+        // here you could transform an orm model to json schema for example
+        // we simply reuse the schema
+
+        return {
+          [model]: service.model,
+          [`${model}_list`]: {
+            title: `${modelName} list`,
+            type: 'array',
+            items: { $ref: `#/components/schemas/${model}` }
+          },
+          [`${model}_sort_filter`]: {
+            title: `${modelName} sorting parameter`,
             type: 'object',
             properties: {
               text: {
@@ -63,11 +80,8 @@ module.exports = (app) => {
               }
             }
           }
-        }
+        };
       }
-    },
-    include: {
-      paths: ['v3/multi/messages']
     }
   }))
     .use('/v3/multi/messages', messageService);

@@ -358,6 +358,39 @@ describe('openopi v3 generator', function () {
           .to.equal('#/components/schemas/message');
       });
 
+      it('schemasGenerator result should be merged into components.schemas', function () {
+        const swaggerConfig = {
+          defaults: {
+            schemasGenerator (service, model, modelName, schemas) {
+              expect(service).to.equal(service);
+              expect(model).to.equal('message');
+              expect(modelName).to.equal('message');
+              expect(schemas.alreadyThere).to.equal('should_stay');
+
+              return {
+                newSchema: 'schema1',
+                alreadyThere2: 'schema2'
+              };
+            }
+          }
+        };
+        specs.components = {
+          schemas: {
+            alreadyThere: 'should_stay',
+            alreadyThere2: 'will_be_overwritten'
+          }
+        };
+        const gen = new OpenApi3Generator(specs, swaggerConfig);
+
+        gen.addService(service, 'message');
+
+        expect(specs.components.schemas).to.deep.equal({
+          alreadyThere: 'should_stay',
+          alreadyThere2: 'schema2',
+          newSchema: 'schema1'
+        });
+      });
+
       describe('operationGenerators', function () {
         it('generator should get object as options argument', function () {
           service.docs.securities = ['find'];

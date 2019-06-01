@@ -76,6 +76,53 @@ describe('swagger v2 generator', function () {
   });
 
   // contains only tests that are v2 specific, tests that test "abstract" generator are part of v3 tests
+  describe('swaggerOptions', function () {
+    let service;
+    let specs;
+
+    beforeEach(() => {
+      service = {
+        find () {},
+        get () {},
+        docs: {}
+      };
+
+      specs = {};
+    });
+
+    it('defaults.schemasGenerator result should be merged into definitions', function () {
+      const swaggerConfig = {
+        defaults: {
+          schemasGenerator (service, model, modelName, schemas) {
+            expect(service).to.equal(service);
+            expect(model).to.equal('message');
+            expect(modelName).to.equal('message');
+            expect(schemas.alreadyThere).to.equal('should_stay');
+
+            return {
+              newSchema: 'schema1',
+              alreadyThere2: 'schema2'
+            };
+          }
+        }
+      };
+      specs.definitions = {
+        alreadyThere: 'should_stay',
+        alreadyThere2: 'will_be_overwritten'
+      };
+      const gen = new OpenApi2Generator(specs, swaggerConfig);
+
+      gen.addService(service, 'message');
+
+      expect(specs.definitions).to.deep.equal({
+        alreadyThere: 'should_stay',
+        alreadyThere2: 'schema2',
+        newSchema: 'schema1'
+      });
+    });
+  });
+
+  // contains only tests that are v2 specific, tests that test "abstract" generator are part of v3 tests
   describe('service.docs options', function () {
     let service;
     let gen;
