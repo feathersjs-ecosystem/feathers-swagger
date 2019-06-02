@@ -7,6 +7,8 @@
 .vscode/
 test/
 coverage/
+.nyc_output
+.nycrc.json
 mocha.opts
 .github/
 types/test.ts

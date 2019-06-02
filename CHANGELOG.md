@@ -1,5 +1,38 @@
 # Change Log
 
+## [v1.1.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.1.0) (2019-06-02)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.0.0...v1.1.0)
+
+**Closed issues:**
+
+- Feature: Add possibility to generate definition / schema from service [\#148](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/148)
+- Feature: Add support for update, patch and remove without id [\#147](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/147)
+- path/{template} per service -\> per method [\#46](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/46)
+- An in-range update of @types/feathersjs\_\_feathers is breaking the build 🚨 [\#145](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/145)
+- An in-range update of dtslint is breaking the build 🚨 [\#141](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/141)
+
+_(without code changes:)_
+- Path is not working [\#144](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/144)
+- Authorize not working properly [\#135](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/135)
+- feathers-plus cli generated code [\#124](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/124)
+- FeatherJS and SwaggerUI: Could not resolve pointer: /definitions/messages [\#113](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/113)
+- Code generated using feathers cli, unable to use swagger with authentication [\#107](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/107)
+- generate documentation json from js docs [\#98](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/98)
+- Can't read from file /docs [\#97](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/97)
+- discussion: introspect services for pre and post hooks, and other routes [\#81](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/81)
+- Automatic swagger conf [\#62](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/62)
+- Work with Swagger Editor & YAMLconfig files [\#59](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/59)
+- bug: resourceId not set as literal [\#37](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/37)
+- Where to set security scheme to enable auth token to be sent [\#36](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/36)
+- Authorization input [\#35](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/35)
+- Add documantation for customization of path object  [\#25](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/25)
+- docs ignored when path already exists [\#23](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/23)
+
+**Merged pull requests:**
+
+- chore: Replace istanbul with nyc [\#143](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/143) ([Mairu](https://github.com/Mairu))
+- Greenkeeper/dtslint 0.7.6 [\#142](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/142) ([Mairu](https://github.com/Mairu))
+
 ## [v1.0.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.0.0) (2019-05-23)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.3...v1.0.0)
 
