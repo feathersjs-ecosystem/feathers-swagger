@@ -1,13 +1,15 @@
 ### Summary
 
 (If you have not already please refer to the contributing guideline as [described
-here](https://github.com/feathersjs/feathers/blob/master/.github/contributing.md#pull-requests))
+here](https://github.com/feathersjs-ecosystem/feathers-swagger/blob/master/.github/contributing.md#pull-requests))
 
 - [ ] Tell us about the problem your pull request is solving.
 - [ ] Are there any open issues that are related to this?
 - [ ] Is this PR dependent on PRs in other repos?
 
 If so, please mention them to keep the conversations linked together.
+
+Pull requests should contain updates to documentation, tests and typescript types when necessary.
 
 ### Other Information
 
