@@ -47,7 +47,7 @@ module.exports = (app) => {
     specs: {
       info: {
         title: 'A test',
-        description: 'A description',
+        description: 'An example with "multi mode" service',
         version: '1.0.0'
       }
     },

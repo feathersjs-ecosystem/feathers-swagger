@@ -58,7 +58,7 @@ module.exports = (app) => {
     specs: {
       info: {
         title: 'A test',
-        description: 'An example using custom tags and model',
+        description: 'An example using security definitions',
         version: '1.0.0'
       },
       securityDefinitions: {

@@ -52,7 +52,7 @@ module.exports = (app) => {
     specs: {
       info: {
         title: 'A test',
-        description: 'A description',
+        description: 'An example with different id names',
         version: '1.0.0'
       }
     },

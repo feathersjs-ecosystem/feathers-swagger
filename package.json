@@ -61,6 +61,7 @@
   "devDependencies": {
     "@feathersjs/express": "^4.0.0-pre.2",
     "@feathersjs/feathers": "^3.3.1",
+    "@mairu/swagger-ui-apikey-auth-form": "^1.0.0",
     "@types/express": "^4.16.1",
     "@types/feathersjs__feathers": "^3.1.5",
     "chai": "^4.2.0",
