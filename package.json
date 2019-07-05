@@ -67,7 +67,7 @@
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "dtslint": "^0.8.0",
-    "feathers-memory": "^3.0.2",
+    "feathers-memory": "^4.0.0",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "request": "^2.88.0",
