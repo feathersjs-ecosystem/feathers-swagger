@@ -20,7 +20,7 @@ npm install feathers-swagger --save
 
 ### `swagger(options)`
 
-Initializes the module. Should be provided to app.configure before the registration of services. 
+Initializes the module. Should be provided to app.configure before the registration of services.
 
 ```js
 const feathers = require('@feathersjs/feathers');
@@ -132,7 +132,7 @@ __Options:__
   - `all` - Custom (parts of the) specification for all operations.
 - `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse, {customMethodName[Request|Response]}
 - `pathParams` (*optional*) - Object with param name as key and the definition as value, should be used when using "global" path parameters
-- `overwriteTagSpec` (*optional*, default: `false`) - If tag is already defined in the specs, should be overwritten from this service 
+- `overwriteTagSpec` (*optional*, default: `false`) - If tag is already defined in the specs, should be overwritten from this service
 
 ### Path support to update nested structures
 
@@ -144,7 +144,7 @@ Valid push syntax:
   - `path[]`
   - `path[+]`
   - `path[+D]` with D being digits (needed to be able to define more than one element to push, the digits does not refer to a position)
-  
+
 Valid unshift syntax:
   - `path[-]`
   - `path[-D]` with D being digits (needed to be able to define more than one element to unshift, the digits does not refer to a position)
@@ -510,6 +510,17 @@ const app = express(feathers())
 app.listen(3030);
 ```
 
+## Model Schemas
+
+Please note that feathers-swagger does not generate model schemas so you might
+encounter errors similar to the one below when initially using the Swagger UI.
+
+> Could not resolve reference: Could not resolve pointer: /components/schemas/<some-model> does not exist in document
+
+To resolve, either manually define your model schemas or consider automated alternatives like:
+
+- [sequelize-to-json-schemas](https://github.com/alt3/sequelize-to-json-schemas)
+
 ## Migration
 
 Version 1.0.0 introduces some breaking changes to previous 0.7.x versions. These changes and ways to migrate to the new release will be described here.
@@ -581,7 +592,7 @@ messageService.docs = {
 ### Remove of findQueryParameters option
 
 This option was very specific to add (prepend) parameters to all find operations.
-With the introduced option to customize defaults you can also add more default find parameters. 
+With the introduced option to customize defaults you can also add more default find parameters.
 
 #### Before
 ```js
