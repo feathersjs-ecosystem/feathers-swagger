@@ -1,18 +1,45 @@
-# Change Log
+# Changelog
+
+## [v1.1.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.1.1) (2020-03-03)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.1.0...v1.1.1)
+
+**Fixed bugs:**
+
+- Bug: Wrong typings for SwaggerInitOptions defaults.getOperationsRef [\#185](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/185)
+
+**Closed issues:**
+
+- An in-range update of @feathersjs/express is breaking the build 🚨 [\#174](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/174)
+- Updating to 1.0.0 from 0.7.3 breaks docs page [\#146](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/146)
+- How to add POST /authentication to create the JWT? [\#136](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/136)
+
+**Merged pull requests:**
+
+- Update nyc to the latest version 🚀 [\#178](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/178) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Greenkeeper/@feathersjs/express 4.4.1 [\#175](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/175) ([daffl](https://github.com/daffl))
+- Greenkeeper/dtslint 2.0.2 [\#172](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/172) ([daffl](https://github.com/daffl))
+- Update dtslint to version 1.0.2  [\#170](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/170) ([daffl](https://github.com/daffl))
+- docs: add section about model schemas to readme [\#165](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/165) ([bravo-kernel](https://github.com/bravo-kernel))
+- Update @feathersjs/feathers to the latest version 🚀 [\#164](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/164) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update dtslint to the latest version 🚀 [\#159](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/159) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update feathers-memory to the latest version 🚀 [\#158](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/158) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update swagger-parser to the latest version 🚀 [\#152](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/152) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update swagger-parser to the latest version 🚀 [\#151](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/151) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update dtslint to the latest version 🚀 [\#150](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/150) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Add multiple issue templates, update contribution guidelines [\#149](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/149) ([Mairu](https://github.com/Mairu))
 
 ## [v1.1.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.1.0) (2019-06-02)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.0.0...v1.1.0)
 
 **Closed issues:**
 
 - Feature: Add possibility to generate definition / schema from service [\#148](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/148)
 - Feature: Add support for update, patch and remove without id [\#147](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/147)
-- path/{template} per service -\> per method [\#46](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/46)
 - An in-range update of @types/feathersjs\_\_feathers is breaking the build 🚨 [\#145](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/145)
-- An in-range update of dtslint is breaking the build 🚨 [\#141](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/141)
-
-_(without code changes:)_
 - Path is not working [\#144](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/144)
+- An in-range update of dtslint is breaking the build 🚨 [\#141](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/141)
 - Authorize not working properly [\#135](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/135)
 - feathers-plus cli generated code [\#124](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/124)
 - FeatherJS and SwaggerUI: Could not resolve pointer: /definitions/messages [\#113](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/113)
@@ -22,6 +49,7 @@ _(without code changes:)_
 - discussion: introspect services for pre and post hooks, and other routes [\#81](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/81)
 - Automatic swagger conf [\#62](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/62)
 - Work with Swagger Editor & YAMLconfig files [\#59](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/59)
+- path/{template} per service -\> per method [\#46](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/46)
 - bug: resourceId not set as literal [\#37](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/37)
 - Where to set security scheme to enable auth token to be sent [\#36](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/36)
 - Authorization input [\#35](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/35)
@@ -34,6 +62,7 @@ _(without code changes:)_
 - Greenkeeper/dtslint 0.7.6 [\#142](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/142) ([Mairu](https://github.com/Mairu))
 
 ## [v1.0.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.0.0) (2019-05-23)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.3...v1.0.0)
 
 **Closed issues:**
@@ -51,6 +80,7 @@ _(without code changes:)_
 - Refactor lib to add support for OpenAPI v3 [\#140](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/140) ([Mairu](https://github.com/Mairu))
 
 ## [v0.7.3](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.3) (2019-04-15)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.2...v0.7.3)
 
 **Implemented enhancements:**
@@ -80,6 +110,7 @@ _(without code changes:)_
 - Update debug to the latest version 🚀 [\#119](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/119) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v0.7.2](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.2) (2018-07-24)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.1...v0.7.2)
 
 **Closed issues:**
@@ -92,6 +123,7 @@ _(without code changes:)_
 - added findQueryParameters [\#114](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/114) ([xFuryMaxHD](https://github.com/xFuryMaxHD))
 
 ## [v0.7.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.1) (2018-06-04)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.7.0...v0.7.1)
 
 **Closed issues:**
@@ -104,9 +136,11 @@ _(without code changes:)_
 - fix\(documentation\): Codeclimate badges [\#105](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/105) ([andys8](https://github.com/andys8))
 
 ## [v0.7.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.7.0) (2018-05-29)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.5.1...v0.7.0)
 
 ## [v0.5.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.5.1) (2018-05-29)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.6.0...v0.5.1)
 
 **Closed issues:**
@@ -128,6 +162,7 @@ _(without code changes:)_
 - Update feathers-memory to the latest version 🚀 [\#86](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/86) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v0.6.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.6.0) (2017-11-08)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.5.0...v0.6.0)
 
 **Closed issues:**
@@ -147,38 +182,42 @@ _(without code changes:)_
 - Update debug to the latest version 🚀 [\#77](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/77) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - adding another example to readme [\#75](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/75) ([paul42](https://github.com/paul42))
 - add link and comment about what is being defined [\#74](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/74) ([jamesjnadeau](https://github.com/jamesjnadeau))
+- Quality of life [\#68](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/68) ([christopherjbaker](https://github.com/christopherjbaker))
 
 ## [v0.5.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.5.0) (2017-06-08)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.4.0...v0.5.0)
 
 **Merged pull requests:**
 
 - Update sequelize to the latest version 🚀 [\#71](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/71) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Fix: docs ignored when path already exists \#23 [\#69](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/69) ([psi-4ward](https://github.com/psi-4ward))
-- Quality of life [\#68](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/68) ([christopherjbaker](https://github.com/christopherjbaker))
 - Update chai to the latest version 🚀 [\#66](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/66) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update feathers-sequelize to the latest version 🚀 [\#60](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/60) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v0.4.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.4.0) (2017-04-26)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.3.5...v0.4.0)
 
 **Merged pull requests:**
 
 - Don't add empty paths [\#58](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/58) ([cpsubrian](https://github.com/cpsubrian))
 - Update semistandard to the latest version 🚀 [\#57](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/57) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
-- Update dependencies to enable Greenkeeper 🌴 [\#56](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/56) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Allow each method of a service to define docs. [\#52](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/52) ([cpsubrian](https://github.com/cpsubrian))
 - Fixes a couple defaults that should be objects, not arrays. [\#49](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/49) ([cpsubrian](https://github.com/cpsubrian))
 
 ## [v0.3.5](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.3.5) (2017-04-01)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.3.4...v0.3.5)
 
 **Merged pull requests:**
 
+- Update dependencies to enable Greenkeeper 🌴 [\#56](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/56) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Fix extra whitespace if no versionPrefix is passed in config. [\#48](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/48) ([cpsubrian](https://github.com/cpsubrian))
 - Fix 'text/html' redirect not respecting mountpath [\#47](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/47) ([cpsubrian](https://github.com/cpsubrian))
 
 ## [v0.3.4](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.3.4) (2017-03-23)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.3.3...v0.3.4)
 
 **Closed issues:**
@@ -190,6 +229,7 @@ _(without code changes:)_
 - Added config option to support api prefixing and versioning \(fix \#39\) [\#41](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/41) ([sinedied](https://github.com/sinedied))
 
 ## [v0.3.3](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.3.3) (2017-03-15)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.3.2...v0.3.3)
 
 **Closed issues:**
@@ -204,6 +244,7 @@ _(without code changes:)_
 - Update feathers-authentication to version 1.0.2 🚀 [\#34](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/34) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
 ## [v0.3.2](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.3.2) (2016-12-12)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.3.1...v0.3.2)
 
 **Merged pull requests:**
@@ -211,6 +252,7 @@ _(without code changes:)_
 - Fix definition [\#27](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/27) ([daffl](https://github.com/daffl))
 
 ## [v0.3.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.3.1) (2016-11-23)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.3.0...v0.3.1)
 
 **Closed issues:**
@@ -224,9 +266,13 @@ _(without code changes:)_
 - Redirect HTML page to always trailing slash and use require.resolve to find UI [\#22](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/22) ([daffl](https://github.com/daffl))
 
 ## [v0.3.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.3.0) (2016-11-22)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v0.1.0...v0.3.0)
 
 ## [v0.1.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.1.0) (2016-11-22)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/9d19783e8a2d5e5ad243e6b8484dd3f5dc0ce615...v0.1.0)
+
 **Implemented enhancements:**
 
 - Use swagger-node-express [\#5](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/5)
@@ -258,4 +304,4 @@ _(without code changes:)_
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
