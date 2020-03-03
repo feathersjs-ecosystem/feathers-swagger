@@ -107,7 +107,7 @@ module.exports = (app) => {
         },
         'responses.200': {
           description: 'Use find to do a normal GET',
-          schema: { $ref: `#/definitions/custom_response` }
+          schema: { $ref: '#/definitions/custom_response' }
         }
       },
       customPost: {

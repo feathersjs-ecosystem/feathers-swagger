@@ -1,4 +1,4 @@
-// TypeScript Version: 2.9
+// TypeScript Version: 3.0
 
 import { Request, Response } from 'express';
 import { Service } from '@feathersjs/feathers';

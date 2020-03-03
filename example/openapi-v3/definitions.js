@@ -34,10 +34,10 @@ module.exports = (app) => {
           }
         }
       },
-      'messages_list': {
+      messages_list: {
         type: 'array',
         items: {
-          $ref: `#/components/schemas/messages`
+          $ref: '#/components/schemas/messages'
         }
       }
     },
@@ -83,7 +83,7 @@ module.exports = (app) => {
       components: {
         parameters: {
           customHeaderBefore: {
-            description: `My custom header before all other parameters`,
+            description: 'My custom header before all other parameters',
             in: 'header',
             required: false,
             name: 'X-Custom-Header-Before',
@@ -92,7 +92,7 @@ module.exports = (app) => {
             }
           },
           customHeaderAfter: {
-            description: `My custom header after all other parameters`,
+            description: 'My custom header after all other parameters',
             in: 'header',
             required: true,
             name: 'X-Custom-Header-After',

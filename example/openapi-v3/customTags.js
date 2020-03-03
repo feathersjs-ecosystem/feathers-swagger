@@ -44,7 +44,7 @@ module.exports = (app) => {
         title: 'List of Messages',
         type: 'array',
         items: {
-          $ref: `#/components/schemas/custom_message`
+          $ref: '#/components/schemas/custom_message'
         }
       }
     }

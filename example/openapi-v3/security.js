@@ -39,7 +39,7 @@ module.exports = (app) => {
         title: 'List of Messages',
         type: 'array',
         items: {
-          $ref: `#/components/schemas/messages`
+          $ref: '#/components/schemas/messages'
         }
       }
     },

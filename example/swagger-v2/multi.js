@@ -34,7 +34,7 @@ module.exports = (app) => {
     operations: {
       find: {
         'parameters[+]': {
-          description: `UserId to find messages for`,
+          description: 'UserId to find messages for',
           in: 'query',
           required: false,
           name: 'userId',
@@ -43,7 +43,7 @@ module.exports = (app) => {
       },
       patchMulti: {
         'parameters[-]': {
-          description: `UserId to update messages for`,
+          description: 'UserId to update messages for',
           in: 'query',
           required: true,
           name: 'userId',
@@ -52,7 +52,7 @@ module.exports = (app) => {
       },
       removeMulti: {
         'parameters[-]': {
-          description: `UserId to delete messages for`,
+          description: 'UserId to delete messages for',
           in: 'query',
           required: true,
           name: 'userId',

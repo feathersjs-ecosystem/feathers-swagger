@@ -22,18 +22,18 @@ describe('feathers-swagger', () => {
       messageService.docs = {
         description: 'A service to send and receive messages',
         definition: {
-          'type': 'object',
-          'required': [
+          type: 'object',
+          required: [
             'text'
           ],
-          'properties': {
-            'text': {
-              'type': 'string',
-              'description': 'The message text'
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The message text'
             },
-            'userId': {
-              'type': 'string',
-              'description': 'The id of the user that sent the message'
+            userId: {
+              type: 'string',
+              description: 'The id of the user that sent the message'
             }
           }
         }
@@ -109,18 +109,18 @@ describe('feathers-swagger', () => {
       messageService.docs = {
         description: 'A service to send and receive messages',
         definition: {
-          'type': 'object',
-          'required': [
+          type: 'object',
+          required: [
             'text'
           ],
-          'properties': {
-            'text': {
-              'type': 'string',
-              'description': 'The message text'
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The message text'
             },
-            'userId': {
-              'type': 'string',
-              'description': 'The id of the user that sent the message'
+            userId: {
+              type: 'string',
+              description: 'The id of the user that sent the message'
             }
           }
         }
@@ -273,18 +273,18 @@ describe('feathers-swagger', () => {
       messageService.docs = {
         description: 'A service to send and receive messages',
         definition: {
-          'type': 'object',
-          'required': [
+          type: 'object',
+          required: [
             'text'
           ],
-          'properties': {
-            'text': {
-              'type': 'string',
-              'description': 'The message text'
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The message text'
             },
-            'userId': {
-              'type': 'string',
-              'description': 'The id of the user that sent the message'
+            userId: {
+              type: 'string',
+              description: 'The id of the user that sent the message'
             }
           }
         }
@@ -301,7 +301,7 @@ describe('feathers-swagger', () => {
       const responseContent = await rp({
         url: 'http://localhost:6776/docs',
         headers: {
-          'Accept': 'text/html'
+          Accept: 'text/html'
         }
       });
 
@@ -331,7 +331,7 @@ describe('feathers-swagger', () => {
       const responseContent = await rp({
         url: 'http://localhost:6776/docs/',
         headers: {
-          'Accept': 'text/html'
+          Accept: 'text/html'
         },
         followRedirect (response) {
           expect(response.statusCode).to.equal(302);
@@ -356,7 +356,7 @@ describe('feathers-swagger', () => {
       const responseContent = await rp({
         url: 'http://localhost:6776/docs',
         headers: {
-          'Accept': 'text/html'
+          Accept: 'text/html'
         }
       });
 
@@ -376,7 +376,7 @@ describe('feathers-swagger', () => {
       const responseContent = await rp({
         url: 'http://localhost:6776/docs',
         headers: {
-          'Accept': 'text/html'
+          Accept: 'text/html'
         }
       });
 

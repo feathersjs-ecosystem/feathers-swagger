@@ -36,7 +36,7 @@ module.exports = (app) => {
         title: 'List of Messages',
         type: 'array',
         items: {
-          $ref: `#/definitions/messages`
+          $ref: '#/definitions/messages'
         }
       }
     },

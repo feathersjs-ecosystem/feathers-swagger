@@ -582,7 +582,7 @@ describe('openopi v3 generator', function () {
           const headerParam = {
             name: 'X-CUSTOM-HEADER',
             in: 'header',
-            description: `My custom header`,
+            description: 'My custom header',
             required: false,
             schema: {
               type: 'string'

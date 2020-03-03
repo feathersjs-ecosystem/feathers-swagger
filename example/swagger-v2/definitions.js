@@ -33,10 +33,10 @@ module.exports = (app) => {
           }
         }
       },
-      'messages_list': {
+      messages_list: {
         type: 'array',
         items: {
-          $ref: `#/definitions/messages`
+          $ref: '#/definitions/messages'
         }
       }
     },
@@ -78,14 +78,14 @@ module.exports = (app) => {
       },
       definitions: {
         customHeaderBefore: {
-          description: `My custom header before all other parameters`,
+          description: 'My custom header before all other parameters',
           in: 'header',
           required: false,
           name: 'X-Custom-Header-Before',
           type: 'string'
         },
         customHeaderAfter: {
-          description: `My custom header after all other parameters`,
+          description: 'My custom header after all other parameters',
           in: 'header',
           required: true,
           name: 'X-Custom-Header-After',

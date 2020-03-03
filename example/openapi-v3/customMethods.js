@@ -119,7 +119,7 @@ module.exports = (app) => {
         },
         'responses.200': {
           description: 'Use find to do a normal GET',
-          ...contentSchema({ $ref: `#/components/schemas/custom_response` })
+          ...contentSchema({ $ref: '#/components/schemas/custom_response' })
         }
       },
       customPost: {
