@@ -20,7 +20,7 @@ swagger({
   appProperty: 'docs',
   defaults: {
     getOperationArgs({ service, config, apiPath, path, version }: GetOperationArgsOptions) { return {}; },
-    getOperationRefs(model: string, service: SwaggerService<any>) {
+    getOperationsRefs(model: string, service: SwaggerService<any>) {
       return {
         createRequest: 'model',
         createResponse: 'model',

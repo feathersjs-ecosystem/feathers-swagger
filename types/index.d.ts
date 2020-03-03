@@ -40,7 +40,7 @@ interface OperationRefs {
   [customMethodRef: string]: string | undefined;
 }
 
-interface FnGetOperationRefs {
+interface FnGetOperationsRefs {
   (model: string, service: feathersSwagger.SwaggerService<any>): OperationRefs;
 }
 
@@ -117,7 +117,7 @@ declare namespace feathersSwagger {
     appProperty?: string;
     defaults?: {
       getOperationArgs?: FnGetOperationArgs;
-      getOperationRefs?: FnGetOperationRefs;
+      getOperationsRefs?: FnGetOperationsRefs;
       schemasGenerator?: FnSchemasGenerator;
       operationGenerators?: {
         find?: FnOperationSpecsGenerator;
