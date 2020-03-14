@@ -72,6 +72,6 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "semistandard": "^14.2.0",
-    "swagger-parser": "^8.0.0"
+    "swagger-parser": "^9.0.0"
   }
 }
