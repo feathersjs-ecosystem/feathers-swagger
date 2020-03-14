@@ -728,6 +728,6 @@ the `overwriteTagSpec` was introduced. It defaults to false, which is a breaking
 
 ## License
 
-Copyright (c) 2016 - 2019
+Copyright (c) 2016 - 2020
 
 Licensed under the [MIT license](LICENSE).

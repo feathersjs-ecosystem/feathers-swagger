@@ -33,7 +33,7 @@
     "changelog": "github_changelog_generator -u feathersjs-ecosystem -p feathers-swagger && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "lint": "semistandard --fix",
     "dtslint": "dtslint types",
-    "mocha": "mocha --opts mocha.opts",
+    "mocha": "mocha",
     "coverage": "nyc --check-coverage npm run mocha",
     "test": "npm run lint && npm run coverage && npm run dtslint",
     "start": "node example/app"

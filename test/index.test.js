@@ -43,6 +43,7 @@ describe('feathers-swagger', () => {
         .configure(express.rest())
         .configure(
           swagger({
+            openApiVersion: 2,
             docsPath: '/docs',
             idType: 'string',
             specs: {
@@ -130,7 +131,6 @@ describe('feathers-swagger', () => {
         .configure(express.rest())
         .configure(
           swagger({
-            openApiVersion: 3,
             docsPath: '/docs',
             docsJsonPath: '/docs.json',
             idType: 'string',
@@ -307,7 +307,7 @@ describe('feathers-swagger', () => {
 
       const docs = JSON.parse(responseContent);
 
-      expect(docs.swagger).to.equal('2.0');
+      expect(docs.openapi).to.equal('3.0.2');
       expect(docs.info.title).to.equal('A test');
       expect(docs.info.description).to.equal('A description');
       expect(docs.paths['/messages']).to.exist;
