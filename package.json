@@ -56,7 +56,7 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "serve-static": "^1.14.1",
-    "swagger-ui-dist": "^3.22.1"
+    "swagger-ui-dist": "^3.25.0"
   },
   "devDependencies": {
     "@feathersjs/express": "^4.4.1",
