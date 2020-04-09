@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 const { expect } = require('chai');
-const { operation, tag, security } = require('../lib/utils');
+const { operation, tag, security, idPathParameters } = require('../lib/utils');
 
 describe('util tests', () => {
   describe('operation', () => {
@@ -129,6 +129,24 @@ describe('util tests', () => {
 
     it('should return security definitions array when all methods should be secured', () => {
       expect(security('create', ['all'], securityDefinitions)).to.equals(securityDefinitions);
+    });
+  });
+
+  describe('idPathParameters', () => {
+    it('should return id path parameters when idName is string', () => {
+      expect(idPathParameters('id', ',')).to.deep.equals('{id}');
+    });
+
+    it('should return id path parameters when idName is array', () => {
+      expect(idPathParameters(['id'], ',')).to.deep.equals('{id}');
+    });
+
+    it('should return id path parameters when idName is array with multiple items', () => {
+      expect(idPathParameters(['firstId', 'secondId'], ',')).to.deep.equals('{firstId},{secondId}');
+    });
+
+    it('should return id path parameters when idName is array with multiple items and custom idSeparator', () => {
+      expect(idPathParameters(['firstId', 'secondId'], '|')).to.deep.equals('{firstId}|{secondId}');
     });
   });
 });

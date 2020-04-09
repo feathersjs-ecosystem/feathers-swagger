@@ -974,6 +974,55 @@ describe('openopi v3 generator', function () {
       expect(specs.paths['/message/{rid}'].delete.parameters[0].name).to.equal('rid');
     });
 
+    describe('array service.id', function () {
+      it('array service.id should be consumed', function () {
+        const specs = {};
+        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const service = memory();
+        service.options.id = ['firstId', 'secondId'];
+        service.docs = {
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[0].schema.type).to.equal('integer');
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[1].schema.type).to.equal('integer');
+      });
+
+      it('array service.id should be consumed', function () {
+        const specs = {};
+        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const service = memory();
+        service.options.id = ['firstId', 'secondId'];
+        service.docs = {
+          idType: ['string', 'integer'],
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[0].schema.type).to.equal('string');
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[1].schema.type).to.equal('integer');
+      });
+
+      it('array service.id with custom service.idSeparator should be consumed', function () {
+        const specs = {};
+        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const service = memory();
+        service.options.id = ['firstId', 'secondId'];
+        service.options.idSeparator = '|';
+        service.docs = {
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId}|{secondId}'].get.parameters[0].schema.type).to.equal('integer');
+        expect(specs.paths['/message/{firstId}|{secondId}'].get.parameters[1].schema.type).to.equal('integer');
+      });
+    });
+
     describe('overwriteTagSpec', function () {
       it('nothing should be overwritten by default', function () {
         specs.tags = [

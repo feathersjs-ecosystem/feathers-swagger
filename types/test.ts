@@ -252,6 +252,13 @@ const serviceEmptyRefs: ServiceSwaggerAddon = {
   }
 };
 
+// array idType
+const serviceIdTypeArray: ServiceSwaggerAddon = {
+  docs: {
+    idType: ['string'],
+  }
+};
+
 // empty docs object
 const serviceEmpty: ServiceSwaggerAddon = {
   docs: {}

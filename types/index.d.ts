@@ -159,7 +159,7 @@ declare namespace feathersSwagger {
     tags?: string[];
     model?: string;
     modelName?: string;
-    idType?: string;
+    idType?: string | string[];
     idNames?: {
       get?: string;
       update?: string;
