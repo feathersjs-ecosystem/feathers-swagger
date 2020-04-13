@@ -16,7 +16,7 @@ interface UiIndexFn {
 interface FnGetOperationArgs {
   (options: feathersSwagger.GetOperationArgsOptions): {
     tag?: string,
-    tags?: [string],
+    tags?: string[],
     model?: string,
     modelName?: string,
   } & UnknownObject;
@@ -55,12 +55,12 @@ interface FnSchemasGenerator {
 
 type FnOperationSpecsGeneratorOptions = {
   tag: string,
-  tags: [string],
+  tags: string[],
   model: string,
   modelName: string,
-  idName: string,
-  idType: string,
-  security: [any],
+  idName: string | string[],
+  idType: string | string[],
+  security: any[],
   securities: Securities,
   refs: OperationRefs,
   service: feathersSwagger.SwaggerService<any>,
@@ -159,12 +159,12 @@ declare namespace feathersSwagger {
     tags?: string[];
     model?: string;
     modelName?: string;
-    idType?: string;
+    idType?: string | string[];
     idNames?: {
-      get?: string;
-      update?: string;
-      patch?: string;
-      remove?: string;
+      get?: string | string[];
+      update?: string | string[];
+      patch?: string | string[];
+      remove?: string | string[];
     };
     securities?: Securities;
     refs?: OperationRefs;
@@ -216,6 +216,8 @@ declare namespace feathersSwagger {
   }): void;
 
   function security(method: string, securities: Securities, security: UnknownObject[]): UnknownObject[];
+
+  function idPathParameters(idName: string | string[], idSeparator: string): string;
 }
 
 declare module '@feathersjs/adapter-commons' {

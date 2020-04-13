@@ -4,7 +4,7 @@ import swagger, {
   GetOperationArgsOptions,
   operation,
   tag,
-  security,
+  security, idPathParameters,
 } from 'feathers-swagger';
 
 // complete
@@ -252,6 +252,19 @@ const serviceEmptyRefs: ServiceSwaggerAddon = {
   }
 };
 
+// array idType
+const serviceIdTypeArray: ServiceSwaggerAddon = {
+  docs: {
+    idType: ['string', 'integer'],
+    idNames: {
+      get: ['firstName', 'secondName'],
+      patch: ['firstName', 'secondName'],
+      remove: ['firstName', 'secondName'],
+      update: ['firstName', 'secondName'],
+    }
+  }
+};
+
 // empty docs object
 const serviceEmpty: ServiceSwaggerAddon = {
   docs: {}
@@ -289,3 +302,12 @@ security(
 security([], [], [{ any: 'thing' }]);
 // $ExpectError
 security('find', [], ['wrong']);
+
+idPathParameters('id', ',');
+idPathParameters(['first', 'second'], ',');
+// $ExpectError
+idPathParameters(12, ',');
+// $ExpectError
+idPathParameters([12, 13], ',');
+// $ExpectError
+idPathParameters('id', 12);

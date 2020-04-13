@@ -974,6 +974,73 @@ describe('openopi v3 generator', function () {
       expect(specs.paths['/message/{rid}'].delete.parameters[0].name).to.equal('rid');
     });
 
+    describe('array service.id', function () {
+      it('array service.id should be consumed', function () {
+        const specs = {};
+        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const service = memory({ id: ['firstId', 'secondId'] });
+        service.docs = {
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[0].schema.type).to.equal('integer');
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[1].schema.type).to.equal('integer');
+      });
+
+      it('array service.id should be consumed with custom idTypes', function () {
+        const specs = {};
+        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const service = memory({ id: ['firstId', 'secondId'] });
+        service.docs = {
+          idType: ['string', 'integer'],
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[0].schema.type).to.equal('string');
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[1].schema.type).to.equal('integer');
+      });
+
+      it('array service.id should be consumed with custom idNames', function () {
+        const specs = {};
+        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const service = memory({ id: ['firstId', 'secondId'] });
+        service.docs = {
+          idType: ['string', 'integer'],
+          idNames: {
+            update: ['otherId', 'additionalId']
+          },
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[0].schema.type).to.equal('string');
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[1].schema.type).to.equal('integer');
+        expect(specs.paths['/message/{otherId},{additionalId}'].put.parameters[0].schema.type).to.equal('string');
+        expect(specs.paths['/message/{otherId},{additionalId}'].put.parameters[1].schema.type).to.equal('integer');
+      });
+
+      it('array service.id with custom service.idSeparator should be consumed', function () {
+        const specs = {};
+        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const service = memory();
+        service.options.id = ['firstId', 'secondId'];
+        service.options.idSeparator = '|';
+        service.docs = {
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId}|{secondId}'].get.parameters[0].schema.type).to.equal('integer');
+        expect(specs.paths['/message/{firstId}|{secondId}'].get.parameters[1].schema.type).to.equal('integer');
+      });
+    });
+
     describe('overwriteTagSpec', function () {
       it('nothing should be overwritten by default', function () {
         specs.tags = [
@@ -1085,6 +1152,18 @@ describe('openopi v3 generator', function () {
             type: 'integer'
           }
         });
+    });
+
+    it('should handle :__feathersId in path for service.id as array', function () {
+      addCustomMethod(service, { path: '/:__feathersId/custom' });
+
+      service.id = ['firstId', 'secondId'];
+      service.docs.idType = ['integer', 'string'];
+
+      gen.addService(service, 'message');
+
+      expect(specs.paths['/message/{firstId},{secondId}/custom'].post.parameters[0].schema.type).to.equal('integer');
+      expect(specs.paths['/message/{firstId},{secondId}/custom'].post.parameters[1].schema.type).to.equal('string');
     });
 
     it('custom path parameters should be handled', function () {
