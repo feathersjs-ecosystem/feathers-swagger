@@ -83,6 +83,8 @@ __Options:__
 ### `service.id`
 
 Defines the name of the id in the swagger path, by default it is `'id'`;
+This can also be an array, if multiple ids are used. For example with feathers-objection or feathers-cassandra.
+For services that extend adapter-commons this is set as parameter in the options when initializing the service.
 
 ### `service.docs`
 
@@ -119,7 +121,7 @@ __Options:__
 - `tags` (*optional*) - Give multiple tags
 - `model` (*optional*) - Override model that is parsed from path
 - `modelName` (*optional*) - Override modelName that is parsed from path
-- `idType` (*optional*) - The swagger type of ids used in paths for this service. value can be an array of types when `service.id` is set to array.
+- `idType` (*optional*) - The swagger type of ids used in paths for this service. Value can be an array of types when `service.id` is set as an array.
 - `idNames` (*optional*) - Object with path parameter names, to customize the idName on operation / method level
   - `get`|`update`|`patch`|`remove` - name of the path parameter for the specific method, use service.id to change it for all
 - `definition`(also `schema` for openapi v3) (*optional*) - Swagger definition of the model of the service, will be merged into global definitions (with all additional generated definitions)

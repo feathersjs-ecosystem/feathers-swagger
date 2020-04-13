@@ -239,6 +239,65 @@ describe('swagger v2 generator', function () {
       expect(specs.paths['/message'].get.responses[200].schema.$ref).to.equal('#/definitions/otherRef');
       expect(specs.paths['/message/{id}'].get.responses[200].schema.$ref).to.equal('#/definitions/getMessage');
     });
+
+    describe('array service.id', function () {
+      it('array service.id should be consumed', function () {
+        const service = memory({ id: ['firstId', 'secondId'] });
+        service.docs = {
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[0].type).to.equal('integer');
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[1].type).to.equal('integer');
+      });
+
+      it('array service.id should be consumed with custom idTypes', function () {
+        const service = memory({ id: ['firstId', 'secondId'] });
+        service.docs = {
+          idType: ['string', 'integer'],
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[0].type).to.equal('string');
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[1].type).to.equal('integer');
+      });
+
+      it('array service.id should be consumed with custom idNames', function () {
+        const service = memory({ id: ['firstId', 'secondId'] });
+        service.docs = {
+          idType: ['string', 'integer'],
+          idNames: {
+            update: ['otherId', 'additionalId']
+          },
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[0].type).to.equal('string');
+        expect(specs.paths['/message/{firstId},{secondId}'].get.parameters[1].type).to.equal('integer');
+        expect(specs.paths['/message/{otherId},{additionalId}'].put.parameters[0].type).to.equal('string');
+        expect(specs.paths['/message/{otherId},{additionalId}'].put.parameters[1].type).to.equal('integer');
+      });
+
+      it('array service.id with custom service.idSeparator should be consumed', function () {
+        const service = memory();
+        service.options.id = ['firstId', 'secondId'];
+        service.options.idSeparator = '|';
+        service.docs = {
+          definition: messageDefinition
+        };
+
+        gen.addService(service, 'message');
+
+        expect(specs.paths['/message/{firstId}|{secondId}'].get.parameters[0].type).to.equal('integer');
+        expect(specs.paths['/message/{firstId}|{secondId}'].get.parameters[1].type).to.equal('integer');
+      });
+    });
   });
 
   // contains only tests that are v2 specific, tests that test "abstract" generator are part of v3 tests
@@ -300,6 +359,18 @@ describe('swagger v2 generator', function () {
           required: true,
           type: 'integer'
         });
+    });
+
+    it('should handle :__feathersId in path for service.id as array', function () {
+      addCustomMethod(service, { path: '/:__feathersId/custom' });
+
+      service.id = ['firstId', 'secondId'];
+      service.docs.idType = ['integer', 'string'];
+
+      gen.addService(service, 'message');
+
+      expect(specs.paths['/message/{firstId},{secondId}/custom'].post.parameters[0].type).to.equal('integer');
+      expect(specs.paths['/message/{firstId},{secondId}/custom'].post.parameters[1].type).to.equal('string');
     });
 
     it('custom path parameters should be handled', function () {
