@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.2.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.2.0) (2020-04-13)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.1.1...v1.2.0)
+
+**Implemented enhancements:**
+
+- Feature: add support for `service.id` as array of columns [\#194](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/194)
+
+**Merged pull requests:**
+
+- Added support for array `service.id` [\#196](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/196) ([dekelev](https://github.com/dekelev))
+
 ## [v1.1.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.1.1) (2020-03-03)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.1.0...v1.1.1)
@@ -182,7 +194,6 @@
 - Update debug to the latest version 🚀 [\#77](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/77) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - adding another example to readme [\#75](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/75) ([paul42](https://github.com/paul42))
 - add link and comment about what is being defined [\#74](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/74) ([jamesjnadeau](https://github.com/jamesjnadeau))
-- Quality of life [\#68](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/68) ([christopherjbaker](https://github.com/christopherjbaker))
 
 ## [v0.5.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.5.0) (2017-06-08)
 
@@ -192,6 +203,7 @@
 
 - Update sequelize to the latest version 🚀 [\#71](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/71) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Fix: docs ignored when path already exists \#23 [\#69](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/69) ([psi-4ward](https://github.com/psi-4ward))
+- Quality of life [\#68](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/68) ([christopherjbaker](https://github.com/christopherjbaker))
 - Update chai to the latest version 🚀 [\#66](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/66) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update feathers-sequelize to the latest version 🚀 [\#60](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/60) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
@@ -203,6 +215,7 @@
 
 - Don't add empty paths [\#58](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/58) ([cpsubrian](https://github.com/cpsubrian))
 - Update semistandard to the latest version 🚀 [\#57](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/57) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update dependencies to enable Greenkeeper 🌴 [\#56](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/56) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Allow each method of a service to define docs. [\#52](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/52) ([cpsubrian](https://github.com/cpsubrian))
 - Fixes a couple defaults that should be objects, not arrays. [\#49](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/49) ([cpsubrian](https://github.com/cpsubrian))
 
@@ -212,7 +225,6 @@
 
 **Merged pull requests:**
 
-- Update dependencies to enable Greenkeeper 🌴 [\#56](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/56) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Fix extra whitespace if no versionPrefix is passed in config. [\#48](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/48) ([cpsubrian](https://github.com/cpsubrian))
 - Fix 'text/html' redirect not respecting mountpath [\#47](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/47) ([cpsubrian](https://github.com/cpsubrian))
 
