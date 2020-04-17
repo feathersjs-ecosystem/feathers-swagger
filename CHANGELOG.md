@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.2.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.2.1) (2020-04-17)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.2.0...v1.2.1)
+
+**Merged pull requests:**
+
+- \[Snyk\] Upgrade lodash from 4.17.11 to 4.17.15 [\#198](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/198) ([snyk-bot](https://github.com/snyk-bot))
+
 ## [v1.2.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.2.0) (2020-04-13)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.1.1...v1.2.0)

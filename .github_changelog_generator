@@ -1,0 +1,4 @@
+user=feathersjs-ecosystem
+project=feathers-swagger
+future-release=v2.0.0
+release-branch=master
