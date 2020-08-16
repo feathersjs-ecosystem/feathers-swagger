@@ -54,7 +54,7 @@
     ]
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "serve-static": "^1.13.2",
     "swagger-ui-dist": "^3.22.1"
   },
