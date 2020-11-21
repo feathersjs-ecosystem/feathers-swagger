@@ -319,7 +319,7 @@ Create a `docs.html` page like this:
   <title>Swagger UI - Simple</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700"
     rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="./swagger-ui.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.36.2/swagger-ui.css">
   <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
   <style>
@@ -384,12 +384,12 @@ Create a `docs.html` page like this:
   </svg>
 
   <div id="swagger-ui"></div>
-
-  <script src="./swagger-ui-bundle.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.36.2/swagger-ui-bundle.js">
 
 
   </script>
-  <script src="./swagger-ui-standalone-preset.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.36.2/swagger-ui-standalone-preset.js">
 
 
   </script>
