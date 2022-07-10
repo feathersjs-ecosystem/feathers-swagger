@@ -1,9 +1,6 @@
 # feathers-swagger
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/feathersjs-ecosystem/feathers-swagger.svg)](https://greenkeeper.io/)
-
-[![Build Status](https://travis-ci.org/feathersjs-ecosystem/feathers-swagger.png?branch=master)](https://travis-ci.org/feathersjs-ecosystem/feathers-swagger)
-[![Dependency Status](https://img.shields.io/david/feathersjs-ecosystem/feathers-swagger.svg?style=flat-square)](https://david-dm.org/feathersjs-ecosystem/feathers-swagger)
+[![CI](https://github.com/feathersjs-ecosystem/feathers-swagger/actions/workflows/ci.yml/badge.svg)](https://github.com/feathersjs-ecosystem/feathers-swagger/actions/workflows/ci.yml)
 [![Download Status](https://img.shields.io/npm/dm/feathers-swagger.svg?style=flat-square)](https://www.npmjs.com/package/feathers-swagger)
 
 > Add documentation to your Featherjs services and show them in the Swagger UI.
