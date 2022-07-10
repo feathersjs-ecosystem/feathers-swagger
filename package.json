@@ -23,7 +23,7 @@
     "url": "https://github.com/feathersjs-ecosystem/feathers-swagger/issues"
   },
   "engines": {
-    "node": ">= 6"
+    "node": ">= 14"
   },
   "scripts": {
     "publish": "git push origin --tags && npm run changelog && git push origin",
@@ -33,7 +33,7 @@
     "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"chore: Update changelog\"",
     "lint": "semistandard --fix",
     "dtslint": "dtslint types",
-    "mocha": "mocha --opts mocha.opts",
+    "mocha": "mocha",
     "coverage": "nyc --check-coverage npm run mocha",
     "test": "npm run lint && npm run coverage && npm run dtslint",
     "start": "node example/app"
@@ -48,31 +48,25 @@
     "lib": "lib"
   },
   "types": "types",
-  "greenkeeper": {
-    "ignore": [
-      "swagger-ui-dist"
-    ]
-  },
   "dependencies": {
     "lodash": "^4.17.21",
     "serve-static": "^1.15.0",
     "swagger-ui-dist": "^3.52.5"
   },
   "devDependencies": {
-    "@feathersjs/express": "^4.5.14",
-    "@feathersjs/feathers": "^4.5.12",
+    "@feathersjs/express": "^4.5.15",
+    "@feathersjs/feathers": "^4.5.15",
+    "@types/serve-static": "^1.13.10",
     "@mairu/swagger-ui-apikey-auth-form": "^1.2.1",
-    "@types/express": "^4.17.13",
     "chai": "^4.3.6",
     "cors": "^2.8.5",
     "dtslint": "^4.2.1",
-    "typescript": "^3.9.4",
     "feathers-memory": "^4.1.0",
-    "mocha": "^6.2.3",
+    "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "semistandard": "^13.0.1",
-    "swagger-parser": "^8.0.4"
+    "semistandard": "^16.0.1",
+    "swagger-parser": "^10.0.3"
   }
 }

@@ -17,7 +17,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
+      - name: install npm@8
+        if: matrix.node-version == '14.x'
+        run: npm i -g npm@8
+      - run: npm ci
       - run: npm test
         env:
           CI: true
