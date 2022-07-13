@@ -11,6 +11,6 @@ coverage/
 .nycrc.json
 mocha.opts
 .github/
-types/test.ts
+types/index.test-d.ts
 types/tsconfig.json
 example

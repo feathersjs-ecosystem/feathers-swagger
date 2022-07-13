@@ -1,16 +1,11 @@
 // TypeScript Version: 3.0
 
-import { Request, Response } from 'express';
-import { Service } from '@feathersjs/feathers';
+import { Application, Service } from '@feathersjs/feathers';
 
 export = feathersSwagger;
 
 interface UnknownObject {
   [propName: string]: any;
-}
-
-interface UiIndexFn {
-  (req: Request, res: Response): any;
 }
 
 interface FnGetOperationArgs {
@@ -90,19 +85,23 @@ type MultiOperations = Array<'update' | 'patch' | 'remove' | 'all'>;
 
 declare function feathersSwagger(config: feathersSwagger.SwaggerInitOptions): () => void;
 
+type SpecsObject = {
+  info: {
+    title: string;
+    description?: string;
+    version: string;
+  } & UnknownObject;
+} & UnknownObject;
+
+type OpenApiVersion = 2 | 3;
+
 declare namespace feathersSwagger {
   interface SwaggerInitOptions {
-    specs: {
-      info: {
-        title: string;
-        description?: string;
-        version: string;
-      } & UnknownObject;
-    } & UnknownObject;
-    openApiVersion?: 2 | 3;
+    specs: SpecsObject;
+    openApiVersion?: OpenApiVersion;
     docsPath?: string;
     docsJsonPath?: string;
-    uiIndex?: boolean | string | UiIndexFn;
+    ui?: FnUiInit;
     idType?: 'string' | 'integer';
     prefix?: string | RegExp;
     versionPrefix?: RegExp;
@@ -188,6 +187,10 @@ declare namespace feathersSwagger {
     };
   }
 
+  interface FnUiInit {
+    (app: Application, config: { specs: SpecsObject, docsJsonPath: string, openApiVersion: OpenApiVersion }): void;
+  }
+
   interface ServiceSwaggerAddon {
     docs: ServiceSwaggerOptions;
   }
@@ -201,6 +204,19 @@ declare namespace feathersSwagger {
     apiPath: string;
     version: string;
   }
+
+  // swagger ui dist
+  function swaggerUI(
+    options: {
+      docsPath?: string;
+      indexFile?: string;
+      getSwaggerInitializerScript?: (options: {
+        docsPath: string;
+        docsJsonPath: string;
+        specs: SpecsObject;
+      }) => string;
+    }
+  ): FnUiInit;
 
   // Utils
   function operation(
@@ -223,7 +239,7 @@ declare namespace feathersSwagger {
 declare module '@feathersjs/adapter-commons' {
   interface AdapterService<T = any> {
     /**
-     * Docs for Swagger specfications generation.
+     * Docs for Swagger specification generation
      */
     docs: feathersSwagger.ServiceSwaggerOptions;
   }

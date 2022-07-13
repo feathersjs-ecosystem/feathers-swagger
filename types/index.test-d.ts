@@ -1,15 +1,17 @@
+import { expectType } from 'tsd';
 import swagger, {
   ServiceSwaggerAddon,
   SwaggerService,
   GetOperationArgsOptions,
   operation,
   tag,
-  security, idPathParameters,
-} from 'feathers-swagger';
+  security,
+  idPathParameters,
+  swaggerUI, FnUiInit,
+} from './index';
 
 // complete
-// $ExpectType () => void
-swagger({
+expectType<() => void>(swagger({
   specs: {
     info: {
       description: 'My test description',
@@ -111,7 +113,7 @@ swagger({
   openApiVersion: 2,
   prefix: 'api',
   versionPrefix: /v\d+/,
-  uiIndex: false,
+  ui: () => {},
   ignore: {
     paths: ['api/message', /api\/ab*/],
     tags: ['tagname', 'tag2'],
@@ -120,7 +122,7 @@ swagger({
     paths: ['api/message', /api\/ab*/],
     tags: ['tagname', 'tag3'],
   },
-});
+}));
 
 // only the required options
 swagger({
@@ -133,7 +135,7 @@ swagger({
   },
 });
 
-// alternative uiIndex string, apiVersion 3
+// apiVersion 3
 swagger({
   specs: {
     info: {
@@ -143,10 +145,9 @@ swagger({
     }
   },
   openApiVersion: 3,
-  uiIndex: 'path/to/index.html',
 });
 
-// alternative uiIndex function, empty sub objects
+// empty sub objects
 swagger({
   specs: {
     info: {
@@ -155,14 +156,12 @@ swagger({
       version: '1.0.0'
     }
   },
-  uiIndex(req, res) {
-  },
   ignore: {},
   include: {},
   defaults: {},
 });
 
-// $ExpectError
+// @ts-expect-error
 swagger({});
 
 // test all
@@ -270,8 +269,19 @@ const serviceEmpty: ServiceSwaggerAddon = {
   docs: {}
 };
 
-// $ExpectError
+// @ts-expect-error
 const wrongService: ServiceSwaggerAddon = {};
+
+/**
+ * Swagger UI tests
+ */
+expectType<FnUiInit>(swaggerUI({}));
+
+expectType<FnUiInit>(swaggerUI({
+  docsPath: '/path',
+  indexFile: '/path/to/file',
+  getSwaggerInitializerScript: (options) => 'string',
+}));
 
 /*
  * Utils tests
@@ -280,16 +290,16 @@ const swaggerService: SwaggerService<any> = {} as any as SwaggerService<any>;
 
 operation('find', swaggerService, { any: 'thing' });
 operation('create', swaggerService, {}, { any: 'thing' });
-// $ExpectError
+// @ts-expect-error
 operation([]);
-// $ExpectError
+// @ts-expect-error
 operation('name', {}, {});
-// $ExpectError
+// @ts-expect-error
 operation('name', swaggerService, 'wrong');
 
 tag('name');
 tag('name', { description: 'test' });
-// $ExpectError
+// @ts-expect-error
 tag([]);
 
 security(
@@ -298,16 +308,16 @@ security(
     'customMethod'],
   [{any: 'thing'}]
 );
-// $ExpectError
+// @ts-expect-error
 security([], [], [{ any: 'thing' }]);
-// $ExpectError
+// @ts-expect-error
 security('find', [], ['wrong']);
 
 idPathParameters('id', ',');
 idPathParameters(['first', 'second'], ',');
-// $ExpectError
+// @ts-expect-error
 idPathParameters(12, ',');
-// $ExpectError
+// @ts-expect-error
 idPathParameters([12, 13], ',');
-// $ExpectError
+// @ts-expect-error
 idPathParameters('id', 12);

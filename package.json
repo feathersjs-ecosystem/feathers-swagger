@@ -32,10 +32,10 @@
     "release:major": "npm version major && npm publish",
     "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"chore: Update changelog\"",
     "lint": "semistandard --fix",
-    "dtslint": "dtslint types",
+    "test:types": "tsd",
     "mocha": "mocha",
     "coverage": "nyc --check-coverage npm run mocha",
-    "test": "npm run lint && npm run coverage && npm run dtslint",
+    "test": "npm run lint && npm run coverage && npm run test:types",
     "start": "node example/app"
   },
   "semistandard": {
@@ -47,26 +47,26 @@
   "directories": {
     "lib": "lib"
   },
-  "types": "types",
+  "types": "types/index.d.ts",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "serve-static": "^1.15.0",
-    "swagger-ui-dist": "^3.52.5"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@feathersjs/express": "^4.5.15",
     "@feathersjs/feathers": "^4.5.15",
-    "@types/serve-static": "^1.13.10",
     "@mairu/swagger-ui-apikey-auth-form": "^1.2.1",
+    "@types/serve-static": "^1.13.10",
     "chai": "^4.3.6",
     "cors": "^2.8.5",
-    "dtslint": "^4.2.1",
     "feathers-memory": "^4.1.0",
     "mocha": "^10.0.0",
+    "mock-require": "^3.0.3",
     "nyc": "^15.1.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "semistandard": "^16.0.1",
-    "swagger-parser": "^10.0.3"
+    "swagger-parser": "^10.0.3",
+    "swagger-ui-dist": "^4.12.0",
+    "tsd": "^0.22.0"
   }
 }
