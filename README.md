@@ -39,6 +39,7 @@ app.configure(swagger({
       description: 'A description',
       version: '1.0.0',
     },
+    schemes: ['http', 'https'] // Optionally set the protocol schema used (sometimes required when host on https)
   }
 }));
 // now you can register feathers services

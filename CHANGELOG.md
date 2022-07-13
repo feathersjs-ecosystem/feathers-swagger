@@ -1,5 +1,28 @@
 # Changelog
 
+## [v1.2.2](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.2.2) (2022-05-11)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.2.1...v1.2.2)
+
+**Closed issues:**
+
+- An in-range update of @types/express is breaking the build 🚨 [\#184](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/184)
+- Spoofing attack in swagger-ui-dist [\#231](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/231)
+
+**Merged pull requests:**
+
+- \[Snyk\] Security upgrade lodash from 4.17.20 to 4.17.21 [\#220](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/220) ([Mairu](https://github.com/Mairu))
+- Add scheme note [\#219](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/219) ([bitflower](https://github.com/bitflower))
+- \[Snyk\] Security upgrade lodash from 4.17.15 to 4.17.20 [\#215](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/215) ([snyk-bot](https://github.com/snyk-bot))
+
+## [v1.2.1](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.2.1) (2020-04-17)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.2.0...v1.2.1)
+
+**Merged pull requests:**
+
+- \[Snyk\] Upgrade lodash from 4.17.11 to 4.17.15 [\#198](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/198) ([snyk-bot](https://github.com/snyk-bot))
+
 ## [v1.2.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.2.0) (2020-04-13)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.1.1...v1.2.0)
@@ -28,7 +51,6 @@
 
 **Merged pull requests:**
 
-- Update nyc to the latest version 🚀 [\#178](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/178) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Greenkeeper/@feathersjs/express 4.4.1 [\#175](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/175) ([daffl](https://github.com/daffl))
 - Greenkeeper/dtslint 2.0.2 [\#172](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/172) ([daffl](https://github.com/daffl))
 - Update dtslint to version 1.0.2  [\#170](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/170) ([daffl](https://github.com/daffl))
@@ -40,6 +62,7 @@
 - Update swagger-parser to the latest version 🚀 [\#151](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/151) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update dtslint to the latest version 🚀 [\#150](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/150) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Add multiple issue templates, update contribution guidelines [\#149](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/149) ([Mairu](https://github.com/Mairu))
+- Update nyc to the latest version 🚀 [\#178](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/178) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v1.1.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.1.0) (2019-06-02)
 
@@ -172,6 +195,13 @@
 - Update semistandard to the latest version 🚀 [\#88](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/88) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update feathers-sequelize to the latest version 🚀 [\#87](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/87) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update feathers-memory to the latest version 🚀 [\#86](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/86) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update to new plugin infrastructure and fix test and examples [\#85](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/85) ([daffl](https://github.com/daffl))
+- Fix: Adding support for Buzzard provider syntax \(\#83\) [\#84](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/84) ([alexisabril](https://github.com/alexisabril))
+- Update mocha to the latest version 🚀 [\#80](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/80) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Support for Swagger UI 3.x [\#79](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/79) ([kristianmandrup](https://github.com/kristianmandrup))
+- Update debug to the latest version 🚀 [\#77](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/77) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- adding another example to readme [\#75](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/75) ([paul42](https://github.com/paul42))
+- add link and comment about what is being defined [\#74](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/74) ([jamesjnadeau](https://github.com/jamesjnadeau))
 
 ## [v0.6.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.6.0) (2017-11-08)
 
@@ -184,16 +214,6 @@
 - Swagger 3.x compatible version [\#78](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/78)
 - Did it working with last swagger 3.0 [\#61](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/61)
 - \[How to\] add documentation for the /auth/xxx endpoints [\#54](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/54)
-
-**Merged pull requests:**
-
-- Update to new plugin infrastructure and fix test and examples [\#85](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/85) ([daffl](https://github.com/daffl))
-- Fix: Adding support for Buzzard provider syntax \(\#83\) [\#84](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/84) ([alexisabril](https://github.com/alexisabril))
-- Update mocha to the latest version 🚀 [\#80](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/80) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
-- Support for Swagger UI 3.x [\#79](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/79) ([kristianmandrup](https://github.com/kristianmandrup))
-- Update debug to the latest version 🚀 [\#77](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/77) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
-- adding another example to readme [\#75](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/75) ([paul42](https://github.com/paul42))
-- add link and comment about what is being defined [\#74](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/74) ([jamesjnadeau](https://github.com/jamesjnadeau))
 
 ## [v0.5.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v0.5.0) (2017-06-08)
 

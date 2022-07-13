@@ -1,7 +1,7 @@
 {
   "name": "feathers-swagger",
   "description": "Add documentation to your Featherjs services and feed them to Swagger UI.",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "homepage": "https://github.com/feathersjs-ecosystem/feathers-swagger",
   "main": "lib/",
   "keywords": [
@@ -23,17 +23,17 @@
     "url": "https://github.com/feathersjs-ecosystem/feathers-swagger/issues"
   },
   "engines": {
-    "node": ">= 8"
+    "node": ">= 6"
   },
   "scripts": {
     "publish": "git push origin --tags && npm run changelog && git push origin",
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
     "release:major": "npm version major && npm publish",
-    "changelog": "github_changelog_generator -u feathersjs-ecosystem -p feathers-swagger && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
+    "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"chore: Update changelog\"",
     "lint": "semistandard --fix",
     "dtslint": "dtslint types",
-    "mocha": "mocha",
+    "mocha": "mocha --opts mocha.opts",
     "coverage": "nyc --check-coverage npm run mocha",
     "test": "npm run lint && npm run coverage && npm run dtslint",
     "start": "node example/app"
@@ -54,24 +54,25 @@
     ]
   },
   "dependencies": {
-    "lodash": "^4.17.15",
-    "serve-static": "^1.14.1",
-    "swagger-ui-dist": "^3.22.1"
+    "lodash": "^4.17.21",
+    "serve-static": "^1.15.0",
+    "swagger-ui-dist": "^3.52.5"
   },
   "devDependencies": {
-    "@feathersjs/express": "^4.4.1",
-    "@feathersjs/feathers": "^4.3.0",
-    "@mairu/swagger-ui-apikey-auth-form": "^1.0.0",
-    "@types/express": "^4.16.1",
-    "chai": "^4.2.0",
+    "@feathersjs/express": "^4.5.14",
+    "@feathersjs/feathers": "^4.5.12",
+    "@mairu/swagger-ui-apikey-auth-form": "^1.2.1",
+    "@types/express": "^4.17.13",
+    "chai": "^4.3.6",
     "cors": "^2.8.5",
-    "dtslint": "^3.3.0",
-    "feathers-memory": "^4.0.0",
-    "mocha": "^7.0.1",
-    "nyc": "^15.0.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4",
-    "semistandard": "^14.2.0",
-    "swagger-parser": "^9.0.0"
+    "dtslint": "^4.2.1",
+    "typescript": "^3.9.4",
+    "feathers-memory": "^4.1.0",
+    "mocha": "^6.2.3",
+    "nyc": "^15.1.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "semistandard": "^13.0.1",
+    "swagger-parser": "^8.0.4"
   }
 }
