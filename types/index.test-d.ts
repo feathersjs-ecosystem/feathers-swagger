@@ -1,4 +1,4 @@
-import { expectType } from 'tsd';
+import { expectType, expectError } from 'tsd';
 import swagger, {
   ServiceSwaggerAddon,
   SwaggerService,
@@ -135,7 +135,7 @@ swagger({
   },
 });
 
-// apiVersion 3
+// apiVersion 3, operations default with false
 swagger({
   specs: {
     info: {
@@ -145,7 +145,49 @@ swagger({
     }
   },
   openApiVersion: 3,
+  defaults: {
+    operations: {
+      find: false,
+      get: false,
+      create: false,
+      patch: false,
+      update: false,
+      remove: false,
+      patchMulti: false,
+      updateMulti: false,
+      removeMulti: false,
+      customMethod: false,
+    },
+    operationGenerators: {
+      find() { return false },
+      get() { return false },
+      create() { return false },
+      patch() { return false },
+      update() { return false },
+      remove() { return false },
+      patchMulti() { return false },
+      updateMulti() { return false },
+      removeMulti() { return false },
+      custom() { return false },
+    }
+  }
 });
+
+// operation default for all not allowed with false
+expectError(swagger({
+  specs: {
+    info: {
+      description: 'My test description',
+      title: 'Title of Tests',
+      version: '1.0.0'
+    }
+  },
+  defaults: {
+    operations: {
+      all: false,
+    }
+  }
+}));
 
 // empty sub objects
 swagger({

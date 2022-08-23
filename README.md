@@ -63,13 +63,13 @@ __Options:__
   - `getOperationArgs({ service, path, config, apiPath, version })` - method to generate args that the methods for operations will consume, can also customize default tag and model generation
   - `getOperationsRefs(model, service)` - method to generate refs that the methods for operations will consume, see service.docs.refs option
   - `schemasGenerator(service, model, modelName, schemas)` - method to generate the json schemas for a service
-  - `operationGenerators` - generator functions to fully customize specification generation for operations
-    - `find`|`get`|`create`|`update`|`patch`|`remove` - generator function for the specific operation
+  - `operationGenerators` - generator functions to fully customize specification generation for operations. To disable the generation of a method return false.
+    - `find`|`get`|`create`|`update`|`patch`|`remove` - generator function for the specific operation.
     - `updateMulti`|`patchMulti`|`removeMulti` - generator function for the "multi mode" version of the specific operation
     - `custom` - generator function for all custom operations
   - `operations` - objects with defaults for the operations, with [path support to update nested structures](#path-support-to-update-nested-structures)
-    - `find`|`get`|`create`|`update`|`patch`|`remove`|`nameOfCustomMethod` - to change defaults of a specific operation
-    - `updateMulti`|`patchMulti`|`removeMulti` - to change defaults for "multi mode" of a specific operation
+    - `find`|`get`|`create`|`update`|`patch`|`remove`|`nameOfCustomMethod` - to change defaults of a specific operation. To disable the generation set to false.
+    - `updateMulti`|`patchMulti`|`removeMulti` - to change defaults for "multi mode" of a specific operation. To disable the generation set to false.
     - `all` - to change defaults of all operations
   - `multi` - array with operations that should also be available in "multi mode", use `'all'` to enable for all operations that support it
 
