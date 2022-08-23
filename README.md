@@ -60,18 +60,18 @@ __Options:__
   - `paths` - Array of paths (string or regex) for that no service documentation will be generated, Notice: paths don't start with /
 - `appProperty` (*optional*, default: `docs`) - Property of the feathers app object that the generated specification will be saved to, allows custom post-processing; set empty to disable
 - `defaults` (*optional*) - Object to customize the defaults for generation of the specification
-  - `getOperationArgs({ service, path, config, apiPath, version })` - method to generate args that the methods for operations will consume, can also customize default tag and model generation
-  - `getOperationsRefs(model, service)` - method to generate refs that the methods for operations will consume, see service.docs.refs option
-  - `schemasGenerator(service, model, modelName, schemas)` - method to generate the json schemas for a service
-  - `operationGenerators` - generator functions to fully customize specification generation for operations. To disable the generation of a method return false.
-    - `find`|`get`|`create`|`update`|`patch`|`remove` - generator function for the specific operation.
-    - `updateMulti`|`patchMulti`|`removeMulti` - generator function for the "multi mode" version of the specific operation
-    - `custom` - generator function for all custom operations
-  - `operations` - objects with defaults for the operations, with [path support to update nested structures](#path-support-to-update-nested-structures)
+  - `getOperationArgs({ service, path, config, apiPath, version })` - Function to generate args that the methods for operations will consume, can also customize default tag and model generation
+  - `getOperationsRefs(model, service)` - Function to generate refs that the methods for operations will consume, see service.docs.refs option
+  - `schemasGenerator(service, model, modelName, schemas)` - Function to generate the json schemas for a service
+  - `operationGenerators` - Generator functions to fully customize specification generation for operations. To disable the generation of a method return false.
+    - `find`|`get`|`create`|`update`|`patch`|`remove` - Generator function for the specific operation.
+    - `updateMulti`|`patchMulti`|`removeMulti` - Generator function for the "multi mode" version of the specific operation
+    - `custom` - Generator function for all custom operations
+  - `operations` - Objects with defaults for the operations, with [path support to update nested structures](#path-support-to-update-nested-structures)
     - `find`|`get`|`create`|`update`|`patch`|`remove`|`nameOfCustomMethod` - to change defaults of a specific operation. To disable the generation set to false.
     - `updateMulti`|`patchMulti`|`removeMulti` - to change defaults for "multi mode" of a specific operation. To disable the generation set to false.
     - `all` - to change defaults of all operations
-  - `multi` - array with operations that should also be available in "multi mode", use `'all'` to enable for all operations that support it
+  - `multi` - Array with operations that should also be available in "multi mode", use `'all'` to enable for all operations that support it
 
 ### `swagger.swaggerUI(options)`
 
@@ -81,8 +81,8 @@ __Options:__
 
 - `docsPath` (*optional*, default: `/docs`) - Path where Swagger UI is served
 - `indexFile` - (*optional*) - Path to a file which is served instead of default Swagger UI index file
-- `getSwaggerInitializerScript` (*optional*) - Function to create the script that will be served as swagger-initializer.js instead of the default one from Swagger UI
-  - function takes one options argument `({ docsPath, docsJsonPath, specs })` and should return a string that contains valid JS
+- `getSwaggerInitializerScript({ docsPath, docsJsonPath, specs })` (*optional*) - Function to create the script that will be served as swagger-initializer.js instead of the default one from Swagger UI
+  - The function takes one options and should return a string that contains valid JS
 
 ### `service.id`
 
@@ -143,7 +143,7 @@ __Options:__
 ### Path support to update nested structures
 
 To be able to set only parts of a nested structure the keys of a specification object (used to define operation specifications) can be the path that should be updated.
-For that the [`set`](https://lodash.com/docs/4.17.11#set) method of lodash is used with additional support to push and unshift for arrays. Also setting undefined will remove the value at the given path.
+For that the [`set`](https://lodash.com/docs/4.17.15#set) method of lodash is used with additional support to push and unshift for arrays. Also setting undefined will remove the value at the given path.
 Take into account that the order of defined keys matters!
 
 Valid push syntax:
