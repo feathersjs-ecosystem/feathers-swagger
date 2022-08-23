@@ -128,6 +128,26 @@ describe('openopi v3 generator', function () {
         expect(specs.paths['/message']).to.be.undefined;
         expect(specs.paths['/text']).to.not.be.undefined;
       });
+
+      it('services should be ignored by filter function not ignoring paths', function () {
+        const gen = new OpenApi3Generator(specs, {
+          ignore: {
+            paths: ['user'],
+            filter: (matcherServiceArg, path) => {
+              expect(matcherServiceArg).to.be.equal(service);
+              return path === 'text';
+            }
+          }
+        });
+
+        gen.addService(service, 'message');
+        gen.addService(service, 'text');
+        gen.addService(service, 'user');
+
+        expect(specs.paths['/message']).to.not.be.undefined;
+        expect(specs.paths['/text']).to.be.undefined;
+        expect(specs.paths['/user']).to.be.undefined;
+      });
     });
 
     describe('include', function () {
@@ -171,6 +191,26 @@ describe('openopi v3 generator', function () {
 
         expect(specs.paths['/message']).to.not.be.undefined;
         expect(specs.paths['/text']).to.be.undefined;
+      });
+
+      it('services should be included by filter function not ignoring paths', function () {
+        const gen = new OpenApi3Generator(specs, {
+          include: {
+            paths: ['user'],
+            filter: (matcherServiceArg, path) => {
+              expect(matcherServiceArg).to.be.equal(service);
+              return path === 'message';
+            }
+          }
+        });
+
+        gen.addService(service, 'message');
+        gen.addService(service, 'text');
+        gen.addService(service, 'user');
+
+        expect(specs.paths['/message']).to.not.be.undefined;
+        expect(specs.paths['/text']).to.be.undefined;
+        expect(specs.paths['/user']).to.not.be.undefined;
       });
     });
 

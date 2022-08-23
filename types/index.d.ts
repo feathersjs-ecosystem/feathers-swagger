@@ -110,10 +110,12 @@ declare namespace feathersSwagger {
     include?: {
       tags?: string[];
       paths?: Array<string | RegExp>;
+      filter?: (service: Service<any>, path: string) => boolean;
     };
     ignore?: {
       tags?: string[];
       paths?: Array<string | RegExp>;
+      filter?: (service: Service<any>, path: string) => boolean;
     };
     appProperty?: string;
     defaults?: {

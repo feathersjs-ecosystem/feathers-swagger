@@ -1,4 +1,5 @@
 import { expectType, expectError } from 'tsd';
+import { Service } from '@feathersjs/feathers';
 import swagger, {
   ServiceSwaggerAddon,
   SwaggerService,
@@ -117,10 +118,12 @@ expectType<() => void>(swagger({
   ignore: {
     paths: ['api/message', /api\/ab*/],
     tags: ['tagname', 'tag2'],
+    filter: (service: Service<any>, path: string) => true,
   },
   include: {
     paths: ['api/message', /api\/ab*/],
     tags: ['tagname', 'tag3'],
+    filter: (service: Service<any>, path: string) => false,
   },
 }));
 
