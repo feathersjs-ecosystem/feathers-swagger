@@ -63,7 +63,7 @@ type FnOperationSpecsGeneratorOptions = {
 } & UnknownObject;
 
 interface FnOperationSpecsGenerator {
-  (options: FnOperationSpecsGeneratorOptions): UnknownObject;
+  (options: FnOperationSpecsGeneratorOptions): OperationConfig;
 }
 
 interface FnCustomOperationSpecsGenerator {
@@ -71,7 +71,7 @@ interface FnCustomOperationSpecsGenerator {
     method: string,
     httpMethod: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options' | 'connect' | 'trace',
     withId: boolean,
-  }): UnknownObject;
+  }): OperationConfig;
 }
 
 interface ExternalDocs {
@@ -94,6 +94,8 @@ type SpecsObject = {
 } & UnknownObject;
 
 type OpenApiVersion = 2 | 3;
+
+type OperationConfig = UnknownObject | false;
 
 declare namespace feathersSwagger {
   interface SwaggerInitOptions {
@@ -131,17 +133,17 @@ declare namespace feathersSwagger {
         custom?: FnCustomOperationSpecsGenerator;
       }
       operations?: {
-        find?: UnknownObject;
-        get?: UnknownObject;
-        create?: UnknownObject;
-        update?: UnknownObject;
-        patch?: UnknownObject;
-        remove?: UnknownObject;
-        updateMulti?: UnknownObject;
-        patchMulti?: UnknownObject;
-        removeMulti?: UnknownObject;
+        find?: OperationConfig;
+        get?: OperationConfig;
+        create?: OperationConfig;
+        update?: OperationConfig;
+        patch?: OperationConfig;
+        remove?: OperationConfig;
+        updateMulti?: OperationConfig;
+        patchMulti?: OperationConfig;
+        removeMulti?: OperationConfig;
         all?: UnknownObject;
-        [customMethod: string]: UnknownObject | undefined;
+        [customMethod: string]: OperationConfig | undefined;
       }
       multi?: MultiOperations;
     };
@@ -173,17 +175,17 @@ declare namespace feathersSwagger {
     overwriteTagSpec?: boolean;
     multi?: MultiOperations;
     operations?: {
-      find?: UnknownObject | false;
-      get?: UnknownObject | false;
-      create?: UnknownObject | false;
-      update?: UnknownObject | false;
-      patch?: UnknownObject | false;
-      remove?: UnknownObject | false;
-      updateMulti?: UnknownObject | false;
-      patchMulti?: UnknownObject | false;
-      removeMulti?: UnknownObject | false;
+      find?: OperationConfig;
+      get?: OperationConfig;
+      create?: OperationConfig;
+      update?: OperationConfig;
+      patch?: OperationConfig;
+      remove?: OperationConfig;
+      updateMulti?: OperationConfig;
+      patchMulti?: OperationConfig;
+      removeMulti?: OperationConfig;
       all?: UnknownObject;
-      [customOperation: string]: UnknownObject | false | undefined;
+      [customOperation: string]: OperationConfig | undefined;
     };
   }
 

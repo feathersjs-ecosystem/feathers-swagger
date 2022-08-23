@@ -505,6 +505,9 @@ describe('openopi v3 generator', function () {
                     description: 'Only description'
                   };
                 },
+                get (options) {
+                  return false;
+                },
                 custom (options) {
                   return {
                     description: 'Only custom description'
@@ -524,6 +527,7 @@ describe('openopi v3 generator', function () {
             tags: [],
             security: []
           });
+          expect(specs.paths['/message/{id}']).to.not.exist;
           expect(specs.paths['/message/custom'].post).to.deep.equal({
             parameters: [],
             responses: {},
@@ -545,6 +549,7 @@ describe('openopi v3 generator', function () {
                 find: {
                   description: 'Other description for find'
                 },
+                get: false,
                 customMethod: {
                   description: 'Description for specific custom method'
                 }
@@ -555,6 +560,7 @@ describe('openopi v3 generator', function () {
           gen.addService(service, 'message');
 
           expect(specs.paths['/message'].get.description).to.equal('Other description for find');
+          expect(specs.paths['/message/{id}']).to.not.exist;
           expect(specs.paths['/message/custom'].post.description).to.equal('Description for specific custom method');
         });
 
