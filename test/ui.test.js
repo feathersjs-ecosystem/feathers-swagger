@@ -8,8 +8,8 @@ const readFile = util.promisify(fs.readFile);
 
 const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
+const axios = require('axios').default;
 const memory = require('feathers-memory');
-const rp = require('request-promise');
 const mock = require('mock-require');
 const swagger = require('../lib');
 const swaggerUI = require('../lib/swagger-ui-dist');
@@ -77,24 +77,24 @@ describe('feathers-swagger ui option', () => {
         { encoding: 'utf8' }
       );
 
-      const responseContent = await rp({
-        url: 'http://localhost:6776/docs/',
-        headers: {
-          Accept: 'text/html'
+      const { data: responseContent } = await axios.get(
+        'http://localhost:6776/docs/',
+        {
+          headers: {
+            Accept: 'text/html'
+          }
         }
-      });
+      );
 
       expect(responseContent).to.equal(expectedResponse);
       // check json path is set in initializer script
-      const initializerContent = await rp({
-        url: 'http://localhost:6776/docs/swagger-initializer.js'
-      });
+      const { data: initializerContent } = await axios.get('http://localhost:6776/docs/swagger-initializer.js');
 
       expect(initializerContent).contains('url: "/swagger.json"');
 
       // check some static assets of SwaggerUI
-      expect(await rp({ url: 'http://localhost:6776/docs/swagger-ui.css' })).to.exist;
-      expect(await rp({ url: 'http://localhost:6776/docs/swagger-ui-bundle.js' })).to.exist;
+      expect((await axios.get('http://localhost:6776/docs/swagger-ui.css')).status).to.equal(200);
+      expect((await axios.get('http://localhost:6776/docs/swagger-ui-bundle.js')).status).to.equal(200);
     });
 
     it('should serve default SwaggerUI under /customPath', async () => {
@@ -105,17 +105,19 @@ describe('feathers-swagger ui option', () => {
         { encoding: 'utf8' }
       );
 
-      const responseContent = await rp({
-        url: 'http://localhost:6776/customPath/',
-        headers: {
-          Accept: 'text/html'
+      const { data: responseContent } = await axios.get(
+        'http://localhost:6776/customPath/',
+        {
+          headers: {
+            Accept: 'text/html'
+          }
         }
-      });
+      );
 
       expect(responseContent).to.equal(expectedResponse);
       // check some static assets of SwaggerUI
-      expect(await rp({ url: 'http://localhost:6776/customPath/swagger-ui.css' })).to.exist;
-      expect(await rp({ url: 'http://localhost:6776/customPath/swagger-ui-bundle.js' })).to.exist;
+      expect((await axios.get('http://localhost:6776/customPath/swagger-ui.css')).status).to.equal(200);
+      expect((await axios.get('http://localhost:6776/customPath/swagger-ui-bundle.js')).status).to.equal(200);
     });
 
     it('should serve provided indexFile', async () => {
@@ -125,17 +127,19 @@ describe('feathers-swagger ui option', () => {
 
       const expectedResponse = await readFile(docFilePath, { encoding: 'utf8' });
 
-      const responseContent = await rp({
-        url: 'http://localhost:6776/docs',
-        headers: {
-          Accept: 'text/html'
+      const { data: responseContent } = await axios.get(
+        'http://localhost:6776/docs/',
+        {
+          headers: {
+            Accept: 'text/html'
+          }
         }
-      });
+      );
 
       expect(responseContent).to.equal(expectedResponse);
       // check some static assets of SwaggerUI
-      expect(await rp({ url: 'http://localhost:6776/docs/swagger-ui.css' })).to.exist;
-      expect(await rp({ url: 'http://localhost:6776/docs/swagger-ui-bundle.js' })).to.exist;
+      expect((await axios.get('http://localhost:6776/docs/swagger-ui.css')).status).to.equal(200);
+      expect((await axios.get('http://localhost:6776/docs/swagger-ui-bundle.js')).status).to.equal(200);
     });
 
     it('should use custom initializer', async () => {
@@ -150,14 +154,12 @@ describe('feathers-swagger ui option', () => {
 
       await startServiceWithUi(swaggerUI({ getSwaggerInitializerScript }));
 
-      const initializerContent = await rp({
-        url: 'http://localhost:6776/docs/swagger-initializer.js'
-      });
+      const { data: initializerContent } = await axios.get('http://localhost:6776/docs/swagger-initializer.js');
 
       expect(initializerContent).to.equal('custom initializer js');
       // check some static assets of SwaggerUI
-      expect(await rp({ url: 'http://localhost:6776/docs/swagger-ui.css' })).to.exist;
-      expect(await rp({ url: 'http://localhost:6776/docs/swagger-ui-bundle.js' })).to.exist;
+      expect((await axios.get('http://localhost:6776/docs/swagger-ui.css')).status).to.equal(200);
+      expect((await axios.get('http://localhost:6776/docs/swagger-ui-bundle.js')).status).to.equal(200);
     });
   });
 
