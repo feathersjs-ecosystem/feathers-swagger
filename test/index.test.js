@@ -3,8 +3,8 @@ const { expect } = require('chai');
 
 const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
+const axios = require('axios').default;
 const memory = require('feathers-memory');
-const rp = require('request-promise');
 const SwaggerParser = require('swagger-parser');
 const swagger = require('../lib');
 
@@ -57,10 +57,7 @@ describe('feathers-swagger', () => {
     after(done => server.close(done));
 
     it('supports basic functionality with a simple app', () => {
-      return rp({
-        url: 'http://localhost:6776/swagger.json',
-        json: true
-      }).then(docs => {
+      return axios.get('http://localhost:6776/swagger.json').then(({ data: docs }) => {
         expect(docs.swagger).to.equal('2.0');
         expect(docs.info.title).to.equal('A test');
         expect(docs.info.description).to.equal('A description');
@@ -69,10 +66,7 @@ describe('feathers-swagger', () => {
     });
 
     it('supports id types in config', () => {
-      return rp({
-        url: 'http://localhost:6776/swagger.json',
-        json: true
-      }).then(docs => {
+      return axios.get('http://localhost:6776/swagger.json').then(({ data: docs }) => {
         const messagesIdParam = docs.paths['/messages/{id}'].get.parameters[0];
         expect(messagesIdParam.type).to.equal('string');
       });
@@ -80,10 +74,7 @@ describe('feathers-swagger', () => {
 
     it('check swagger document validity', () => {
       let swaggerSpec;
-      return rp({
-        url: 'http://localhost:6776/swagger.json',
-        json: true
-      }).then(docs => {
+      return axios.get('http://localhost:6776/swagger.json').then(({ data: docs }) => {
         swaggerSpec = docs;
         return SwaggerParser.validate(docs);
       })
@@ -144,10 +135,7 @@ describe('feathers-swagger', () => {
     after(done => server.close(done));
 
     it('serves json specification at docJsonPath', () => {
-      return rp({
-        url: 'http://localhost:6776/docs.json'
-      }).then(response => {
-        const docs = JSON.parse(response);
+      return axios.get('http://localhost:6776/docs.json').then(({ data: docs }) => {
         expect(docs.openapi).to.equal('3.0.2');
         expect(docs.info.title).to.equal('A test');
         expect(docs.info.description).to.equal('A description');
@@ -156,10 +144,7 @@ describe('feathers-swagger', () => {
     });
 
     it('supports id types in config', () => {
-      return rp({
-        url: 'http://localhost:6776/docs.json',
-        json: true
-      }).then(docs => {
+      return axios.get('http://localhost:6776/docs.json').then(({ data: docs }) => {
         const messagesIdParam = docs.paths['/messages/{id}'].get.parameters[0];
         expect(messagesIdParam.schema.type).to.equal('string');
       });
@@ -167,10 +152,7 @@ describe('feathers-swagger', () => {
 
     it('check swagger document validity', () => {
       let swaggerSpec;
-      return rp({
-        url: 'http://localhost:6776/docs.json',
-        json: true
-      }).then(docs => {
+      return axios.get('http://localhost:6776/docs.json').then(({ data: docs }) => {
         swaggerSpec = docs;
         return SwaggerParser.validate(docs);
       })
