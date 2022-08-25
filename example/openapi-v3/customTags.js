@@ -52,10 +52,9 @@ module.exports = (app) => {
 
   app.configure(swagger({
     openApiVersion: 3,
-    docsPath: '/v3/custom-tags',
     prefix: 'v3/custom-tags/',
     docsJsonPath: '/v3/custom-tags.json',
-    uiIndex: true,
+    ui: swagger.swaggerUI({ docsPath: '/v3/custom-tags' }),
     specs: {
       info: {
         title: 'A test',

@@ -33,10 +33,9 @@ module.exports = (app) => {
   };
 
   app.configure(swagger({
-    docsPath: '/v2/definition-with-customized-update',
     prefix: 'v2/definition-with-customized-update/',
     docsJsonPath: '/v2/definition-with-customized-update.json',
-    uiIndex: true,
+    ui: swagger.swaggerUI({ docsPath: '/v2/definition-with-customized-update' }),
     specs: {
       info: {
         title: 'A test',

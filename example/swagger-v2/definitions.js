@@ -12,7 +12,7 @@ const swagger = require('../../lib');
 
 module.exports = (app) => {
   const messageService = memory();
-  const uiIndex = path.join(__dirname, 'docs.html');
+  const uiIndexFile = path.join(__dirname, 'docs.html');
 
   messageService.docs = {
     description: 'A service to send and receive messages',
@@ -54,10 +54,9 @@ module.exports = (app) => {
   };
 
   app.configure(swagger({
-    docsPath: '/v2/definitions',
     prefix: 'v2/definitions/',
     docsJsonPath: '/v2/definitions.json',
-    uiIndex,
+    ui: swagger.swaggerUI({ docsPath: '/v2/definitions', indexFile: uiIndexFile }),
     defaults: {
       operations: {
         find: {

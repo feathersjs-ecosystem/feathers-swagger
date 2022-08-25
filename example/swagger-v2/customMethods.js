@@ -141,10 +141,9 @@ module.exports = (app) => {
 
   app.configure(swagger({
     openApiVersion: 2,
-    docsPath: '/v2/custom-methods',
     prefix: 'v2/custom-methods/',
     docsJsonPath: '/v2/custom-methods.json',
-    uiIndex: true,
+    ui: swagger.swaggerUI({ docsPath: '/v2/custom-methods' }),
     specs: {
       info: {
         title: 'A test',

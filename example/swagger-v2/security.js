@@ -51,10 +51,9 @@ module.exports = (app) => {
   };
 
   app.configure(swagger({
-    docsPath: '/v2/security',
     prefix: 'v2/security/',
     docsJsonPath: '/v2/security.json',
-    uiIndex: true,
+    ui: swagger.swaggerUI({ docsPath: '/v2/security' }),
     specs: {
       info: {
         title: 'A test',

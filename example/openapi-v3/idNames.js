@@ -45,10 +45,9 @@ module.exports = (app) => {
 
   app.configure(swagger({
     openApiVersion: 3,
-    docsPath: '/v3/id-names',
     prefix: 'v3/id-names/',
     docsJsonPath: '/v3/id-names.json',
-    uiIndex: true,
+    ui: swagger.swaggerUI({ docsPath: '/v3/id-names' }),
     specs: {
       info: {
         title: 'A test',

@@ -64,10 +64,9 @@ module.exports = (app) => {
 
   app.configure(swagger({
     openApiVersion: 2,
-    docsPath: '/v2/multi',
     prefix: 'v2/multi/',
     docsJsonPath: '/v2/multi.json',
-    uiIndex: true,
+    ui: swagger.swaggerUI({ docsPath: '/v2/multi' }),
     specs: {
       info: {
         title: 'A test',

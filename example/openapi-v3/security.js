@@ -7,13 +7,11 @@
  * - use Swagger UI plugin @mairu/swagger-ui-apikey-auth-form for convenient bearer token usage
  */
 
-const path = require('path');
 const memory = require('feathers-memory');
 const swagger = require('../../lib');
 
 module.exports = (app) => {
   const messageService = memory();
-  const uiIndex = path.join(__dirname, 'security.html');
 
   messageService.docs = {
     description: 'A service to send and receive messages',
@@ -58,10 +56,57 @@ module.exports = (app) => {
   });
   app.configure(swagger({
     openApiVersion: 3,
-    docsPath: '/v3/security',
     prefix: 'v3/security/',
     docsJsonPath: '/v3/security.json',
-    uiIndex,
+    ui: swagger.swaggerUI({
+      docsPath: '/v3/security',
+      getSwaggerInitializerScript: ({ docsJsonPath }) => {
+        // language=JavaScript
+        return `
+          window.onload = function() {
+            var script = document.createElement('script');
+            script.onload = function () {
+              window.ui = SwaggerUIBundle({
+                url: "${docsJsonPath}",
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                  SwaggerUIBundle.presets.apis,
+                  SwaggerUIStandalonePreset,
+                  SwaggerUIApiKeyAuthFormPlugin,
+                ],
+                plugins: [
+                  SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                layout: "StandaloneLayout",
+                configs: {
+                  apiKeyAuthFormPlugin: {
+                    forms: {
+                      BearerAuth: {
+                        authCallback(values, callback) {
+                          // mimic logic process
+                          if (values.username === 'user' && values.password === 'secret') {
+                            callback(null, 'secret-key');
+                          } else {
+                            callback('invalid credentials');
+                          }
+                        },
+                      }
+                    },
+                    localStorage: {
+                      BearerAuth: {}
+                    }
+                  }
+                }
+              });
+            };
+
+            script.src = '/v3/security/swagger-ui-apikey-auth-form.js';
+            document.head.appendChild(script)
+          };
+        `;
+      }
+    }),
     specs: {
       info: {
         title: 'A test',
