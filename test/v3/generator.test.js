@@ -46,7 +46,6 @@ describe('openopi v3 generator', function () {
     const service = memory({ multi: true });
     service.docs = {
       definition: messageDefinition,
-      multi: ['update', 'patch', 'remove'],
       operations: {
         find: false,
         get: false,
@@ -944,6 +943,28 @@ describe('openopi v3 generator', function () {
 
       expect(specs.paths['/{globalId}/message'].get.parameters[0]).to.deep.equal(pathParam);
       expect(specs.paths['/{globalId}/message/{id}'].get.parameters[0]).to.deep.equal(pathParam);
+    });
+
+    it('multi option should overwrite determined defaults', () => {
+      const specs = {};
+      const gen = new OpenApi3Generator(specs, swaggerOptions);
+      const multiService = memory({ multi: true });
+      multiService.docs = {
+        definition: messageDefinition,
+        multi: ['remove'],
+        operations: {
+          find: false,
+          get: false,
+          create: false,
+          update: false,
+          patch: false,
+          remove: false
+        }
+      };
+
+      gen.addService(multiService, 'message');
+
+      expect(specs.paths['/message']).to.have.all.keys(['delete']);
     });
 
     describe('operations', function () {

@@ -1,6 +1,6 @@
 /**
  * Example for openapi v3
- * - using default swagger ui with uiIndex: true
+ * - using default swagger ui with ui option
  * - just define the model with definition option of service.docs
  * - use service with multi: true and define multi option
  * - use refs.sortParameter

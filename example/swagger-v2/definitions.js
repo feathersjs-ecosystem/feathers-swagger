@@ -1,7 +1,7 @@
 /**
  * Example for swagger v2
  * - using definitions option of service.docs to define all needed definitions
- * - using a custom uiIndex file
+ * - using swagger ui with a custom indexFile
  * - add parameter to find (globally)
  * - set specific values and sub values for a operation
  */
