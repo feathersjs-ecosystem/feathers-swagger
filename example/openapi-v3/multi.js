@@ -32,7 +32,7 @@ module.exports = (app) => {
 
   messageService.docs = {
     description: 'A service to send and receive messages',
-    multi: ['patch', 'remove'],
+    multi: ['patch', 'remove', 'create'],
     refs: {
       sortParameter: 'messages_sort_filter'
     }

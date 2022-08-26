@@ -254,6 +254,8 @@ const service: ServiceSwaggerAddon = {
     refs: {
       createRequest: 'model',
       createResponse: 'model',
+      createMultiRequest: 'model',
+      createMultiResponse: 'model',
       findResponse: 'model',
       getResponse: 'model',
       patchRequest: 'model',
@@ -296,7 +298,7 @@ const serviceEmptyRefs: ServiceSwaggerAddon = {
   }
 };
 
-// array idType
+// array idType, operation refs with multiple schemas
 const serviceIdTypeArray: ServiceSwaggerAddon = {
   docs: {
     idType: ['string', 'integer'],
@@ -305,6 +307,26 @@ const serviceIdTypeArray: ServiceSwaggerAddon = {
       patch: ['firstName', 'secondName'],
       remove: ['firstName', 'secondName'],
       update: ['firstName', 'secondName'],
+    },
+    refs: {
+      createRequest: { refs: ['model', 'model2'], type: 'oneOf', discriminator: { propertyName: 'test' } },
+      createResponse: { refs: ['model', 'model2'], type: 'allOf' },
+      createMultiRequest: { refs: ['model', 'model2'], type: 'oneOf' },
+      createMultiResponse: { refs: ['model', 'model2'], type: 'oneOf' },
+      findResponse: { refs: ['model', 'model2'], type: 'anyOf' },
+      getResponse: { refs: ['model', 'model2'], type: 'oneOf' },
+      patchRequest: { refs: ['model', 'model2'], type: 'oneOf' },
+      patchResponse: { refs: ['model', 'model2'], type: 'oneOf' },
+      patchMultiRequest: { refs: ['model', 'model2'], type: 'oneOf' },
+      patchMultiResponse: { refs: ['model', 'model2'], type: 'oneOf' },
+      removeResponse: { refs: ['model', 'model2'], type: 'oneOf' },
+      removeMultiResponse: { refs: ['model', 'model2'], type: 'oneOf' },
+      updateRequest: { refs: ['model', 'model2'], type: 'oneOf' },
+      updateResponse: { refs: ['model', 'model2'], type: 'oneOf' },
+      updateMultiRequest: { refs: ['model', 'model2'], type: 'oneOf' },
+      updateMultiResponse: { refs: ['model', 'model2'], type: 'oneOf' },
+      customMethodRequest: { refs: ['model', 'model2'], type: 'oneOf' },
+      customMethodResponse: { refs: ['model', 'model2'], type: 'oneOf' },
     }
   }
 };

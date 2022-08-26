@@ -17,22 +17,34 @@ interface FnGetOperationArgs {
   } & UnknownObject;
 }
 
+interface SchemaMultiRef {
+  refs: string[];
+  type: 'oneOf' | 'allOf' | 'anyOf';
+  discriminator?: {
+    propertyName: string;
+  }
+}
+
+type SchemaRef = string | SchemaMultiRef;
+
 interface OperationRefs {
-  findResponse?: string;
-  getResponse?: string;
-  createRequest?: string;
-  createResponse?: string;
-  updateRequest?: string;
-  updateResponse?: string;
-  updateMultiRequest?: string;
-  updateMultiResponse?: string;
-  patchRequest?: string;
-  patchResponse?: string;
-  patchMultiRequest?: string;
-  patchMultiResponse?: string;
-  removeResponse?: string;
-  removeMultiResponse?: string;
-  [customMethodRef: string]: string | undefined;
+  findResponse?: SchemaRef;
+  getResponse?: SchemaRef;
+  createRequest?: SchemaRef;
+  createResponse?: SchemaRef;
+  createMultiRequest?: SchemaRef;
+  createMultiResponse?: SchemaRef;
+  updateRequest?: SchemaRef;
+  updateResponse?: SchemaRef;
+  updateMultiRequest?: SchemaRef;
+  updateMultiResponse?: SchemaRef;
+  patchRequest?: SchemaRef;
+  patchResponse?: SchemaRef;
+  patchMultiRequest?: SchemaRef;
+  patchMultiResponse?: SchemaRef;
+  removeResponse?: SchemaRef;
+  removeMultiResponse?: SchemaRef;
+  [customMethodRef: string]: SchemaRef | undefined;
 }
 
 interface FnGetOperationsRefs {
@@ -81,7 +93,7 @@ interface ExternalDocs {
 
 type Securities = Array<'find' | 'get' | 'create' | 'update' | 'patch' | 'remove' | 'updateMulti' | 'patchMulti'
   | 'removeMulti' | 'all' | string>;
-type MultiOperations = Array<'update' | 'patch' | 'remove' | 'all'>;
+type MultiOperations = Array<'update' | 'patch' | 'remove' | 'create' | 'all'>;
 
 declare function feathersSwagger(config: feathersSwagger.SwaggerInitOptions): () => void;
 

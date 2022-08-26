@@ -82,7 +82,7 @@ __Options:__
 - `docsPath` (*optional*, default: `/docs`) - Path where Swagger UI is served
 - `indexFile` - (*optional*) - Path to a file which is served instead of default Swagger UI index file
 - `getSwaggerInitializerScript({ docsPath, docsJsonPath, specs })` (*optional*) - Function to create the script that will be served as swagger-initializer.js instead of the default one from Swagger UI
-  - The function takes one options and should return a string that contains valid JS
+  - The function takes one options object and should return a string that contains valid JS
 
 ### `service.id`
 

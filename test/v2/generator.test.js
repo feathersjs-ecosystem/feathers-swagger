@@ -90,34 +90,59 @@ describe('swagger v2 generator', function () {
       specs = {};
     });
 
-    it('defaults.schemasGenerator result should be merged into definitions', function () {
-      const swaggerConfig = {
-        defaults: {
-          schemasGenerator (service, model, modelName, schemas) {
-            expect(service).to.equal(service);
-            expect(model).to.equal('message');
-            expect(modelName).to.equal('message');
-            expect(schemas.alreadyThere).to.equal('should_stay');
+    describe('defaults', () => {
+      it('getOperationsRefs result should be used as default refs', function () {
+        const swaggerConfig = {
+          defaults: {
+            getOperationsRefs (model, service) {
+              expect(model).to.equal('message');
+              expect(service).to.equal(service);
 
-            return {
-              newSchema: 'schema1',
-              alreadyThere2: 'schema2'
-            };
+              return {
+                findResponse: 'own_ref'
+              };
+            }
           }
-        }
-      };
-      specs.definitions = {
-        alreadyThere: 'should_stay',
-        alreadyThere2: 'will_be_overwritten'
-      };
-      const gen = new OpenApi2Generator(specs, swaggerConfig);
+        };
+        const gen = new OpenApi2Generator(specs, swaggerConfig);
 
-      gen.addService(service, 'message');
+        gen.addService(service, 'message');
 
-      expect(specs.definitions).to.deep.equal({
-        alreadyThere: 'should_stay',
-        alreadyThere2: 'schema2',
-        newSchema: 'schema1'
+        expect(specs.paths['/message'].get.responses[200].schema.$ref)
+          .to.equal('#/definitions/own_ref');
+        expect(specs.paths['/message/{id}'].get.responses[200].schema.$ref)
+          .to.equal('#/definitions/message');
+      });
+
+      it('schemasGenerator result should be merged into definitions', function () {
+        const swaggerConfig = {
+          defaults: {
+            schemasGenerator (service, model, modelName, schemas) {
+              expect(service).to.equal(service);
+              expect(model).to.equal('message');
+              expect(modelName).to.equal('message');
+              expect(schemas.alreadyThere).to.equal('should_stay');
+
+              return {
+                newSchema: 'schema1',
+                alreadyThere2: 'schema2'
+              };
+            }
+          }
+        };
+        specs.definitions = {
+          alreadyThere: 'should_stay',
+          alreadyThere2: 'will_be_overwritten'
+        };
+        const gen = new OpenApi2Generator(specs, swaggerConfig);
+
+        gen.addService(service, 'message');
+
+        expect(specs.definitions).to.deep.equal({
+          alreadyThere: 'should_stay',
+          alreadyThere2: 'schema2',
+          newSchema: 'schema1'
+        });
       });
     });
   });
@@ -238,6 +263,15 @@ describe('swagger v2 generator', function () {
 
       expect(specs.paths['/message'].get.responses[200].schema.$ref).to.equal('#/definitions/otherRef');
       expect(specs.paths['/message/{id}'].get.responses[200].schema.$ref).to.equal('#/definitions/getMessage');
+    });
+
+    it('refs with multiple schemas object should throw error', () => {
+      service.docs.refs = {
+        findResponse: { refs: ['otherRef'], type: 'oneOf' }
+      };
+
+      expect(() => gen.addService(service, 'message'))
+        .to.throw(Error, 'Multiple refs defined as object are only supported with openApiVersion 3');
     });
 
     describe('array service.id', function () {

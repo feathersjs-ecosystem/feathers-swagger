@@ -136,7 +136,7 @@ describe('feathers-swagger', () => {
 
     it('serves json specification at docJsonPath', () => {
       return axios.get('http://localhost:6776/docs.json').then(({ data: docs }) => {
-        expect(docs.openapi).to.equal('3.0.2');
+        expect(docs.openapi).to.equal('3.0.3');
         expect(docs.info.title).to.equal('A test');
         expect(docs.info.description).to.equal('A description');
         expect(docs.paths['/messages']).to.exist;

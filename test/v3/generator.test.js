@@ -49,7 +49,6 @@ describe('openopi v3 generator', function () {
       operations: {
         find: false,
         get: false,
-        create: false,
         update: false,
         patch: false,
         remove: false
@@ -451,6 +450,20 @@ describe('openopi v3 generator', function () {
               getResponse: 'message',
               createRequest: 'message',
               createResponse: 'message',
+              createMultiRequest: {
+                refs: [
+                  'message',
+                  'message_list'
+                ],
+                type: 'oneOf'
+              },
+              createMultiResponse: {
+                refs: [
+                  'message',
+                  'message_list'
+                ],
+                type: 'oneOf'
+              },
               updateRequest: 'message',
               updateResponse: 'message',
               updateMultiRequest: 'message_list',
@@ -923,6 +936,31 @@ describe('openopi v3 generator', function () {
 
       expect(specs.paths['/message'].get.parameters[2].schema.$ref)
         .to.equal('#/components/schemas/message_sort');
+    });
+
+    it('refs object should be allowed for schema refs', function () {
+      service.docs.refs = {
+        findResponse: { refs: ['otherRef', 'getMessage'], type: 'anyOf' },
+        getResponse: { refs: ['otherRef', 'getMessage'], type: 'oneOf', discriminator: { propertyName: 'type' } }
+      };
+
+      gen.addService(service, 'message');
+
+      expect(specs.paths['/message'].get.responses[200].content['application/json'].schema)
+        .to.deep.equal({
+          anyOf: [
+            { $ref: '#/components/schemas/otherRef' },
+            { $ref: '#/components/schemas/getMessage' }
+          ]
+        });
+      expect(specs.paths['/message/{id}'].get.responses[200].content['application/json'].schema)
+        .to.deep.equal({
+          oneOf: [
+            { $ref: '#/components/schemas/otherRef' },
+            { $ref: '#/components/schemas/getMessage' }
+          ],
+          discriminator: { propertyName: 'type' }
+        });
     });
 
     it('pathParams should be consumed for path parameter', function () {

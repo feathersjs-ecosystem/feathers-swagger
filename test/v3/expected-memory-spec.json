@@ -22,7 +22,7 @@
     "title": "openapi generator v3 tests",
     "version": "1.0.0"
   },
-  "openapi": "3.0.2",
+  "openapi": "3.0.3",
   "paths": {
     "/message": {
       "get": {

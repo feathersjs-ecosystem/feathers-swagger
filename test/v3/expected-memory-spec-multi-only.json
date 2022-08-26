@@ -5,6 +5,57 @@
   },
   "paths": {
     "/message": {
+      "post": {
+        "description": "Creates a new resource with data.",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/message"
+                  },
+                  {
+                    "$ref": "#/components/schemas/message_list"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/message"
+                    },
+                    {
+                      "$ref": "#/components/schemas/message_list"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "created"
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "security": [],
+        "summary": "",
+        "tags": [
+          "message"
+        ]
+      },
       "put": {
         "parameters": [],
         "responses": {
@@ -149,7 +200,7 @@
       }
     }
   },
-  "openapi": "3.0.2",
+  "openapi": "3.0.3",
   "tags": [
     {
       "name": "message",
