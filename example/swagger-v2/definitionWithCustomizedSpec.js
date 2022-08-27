@@ -33,6 +33,7 @@ module.exports = (app) => {
   };
 
   app.configure(swagger({
+    openApiVersion: 2,
     prefix: 'v2/definition-with-customized-update/',
     docsJsonPath: '/v2/definition-with-customized-update.json',
     ui: swagger.swaggerUI({ docsPath: '/v2/definition-with-customized-update' }),

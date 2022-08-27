@@ -1,0 +1,110 @@
+{
+  "info": {
+    "title": "swagger generator v2 tests",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/message": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Number of results to return",
+            "in": "query",
+            "name": "$limit",
+            "type": "integer"
+          },
+          {
+            "description": "Number of results to skip",
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "description": "Property to sort results",
+            "in": "query",
+            "name": "$sort",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/message_pagination"
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Retrieves a list of all resources from the service.",
+        "summary": "",
+        "tags": [
+          "message"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": []
+      }
+    }
+  },
+  "definitions": {
+    "message": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "message_list": {
+      "title": "message list",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/message"
+      }
+    },
+    "message_pagination": {
+      "title": "message pagination result",
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "skip": {
+          "type": "integer"
+        },
+        "data": {
+          "$ref": "#/definitions/message_list"
+        }
+      }
+    }
+  },
+  "swagger": "2.0",
+  "schemes": [
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "message",
+      "description": "A message service"
+    }
+  ],
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ]
+}

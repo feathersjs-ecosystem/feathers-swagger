@@ -75,6 +75,33 @@ describe('swagger v2 generator', function () {
     expect(specs).to.deep.equal(require('./expected-memory-spec-multi-only.json'));
   });
 
+  it('should generate expected specification for service with enabled paginationof memory service', () => {
+    const specs = {};
+    const gen = new OpenApi2Generator(specs, swaggerOptions);
+    const service = memory({ paginate: { default: 10 } });
+    service.docs = {
+      definition: {
+        type: 'object',
+        properties: {
+          content: {
+            type: 'string'
+          }
+        }
+      },
+      operations: {
+        get: false,
+        create: false,
+        update: false,
+        patch: false,
+        remove: false
+      }
+    };
+
+    gen.addService(service, 'message');
+
+    expect(specs).to.deep.equal(require('./expected-memory-spec-pagination-find.json'));
+  });
+
   // contains only tests that are v2 specific, tests that test "abstract" generator are part of v3 tests
   describe('swaggerOptions', function () {
     let service;

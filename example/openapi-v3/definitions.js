@@ -1,6 +1,7 @@
 /**
  * Example for openapi v3
  * - using definitions option of service.docs to define all needed definitions
+ * - service with pagination
  * - using swagger ui with a custom indexFile
  * - add parameter to find (globally)
  * - set specific values and sub values for a operation
@@ -12,7 +13,7 @@ const memory = require('feathers-memory');
 const swagger = require('../../lib');
 
 module.exports = (app) => {
-  const messageService = memory();
+  const messageService = memory({ paginate: { default: 10, max: 50 } });
   const uiIndexFile = path.join(__dirname, 'docs.html');
 
   messageService.docs = {

@@ -51,6 +51,7 @@ module.exports = (app) => {
   };
 
   app.configure(swagger({
+    openApiVersion: 3,
     prefix: 'v2/security/',
     docsJsonPath: '/v2/security.json',
     ui: swagger.swaggerUI({ docsPath: '/v2/security' }),
