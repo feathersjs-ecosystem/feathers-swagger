@@ -1,5 +1,32 @@
 # Changelog
 
+## [v2.0.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v2.0.0) (2022-08-27)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.2.2...v2.0.0)
+
+**Breaking changes:**
+
+- Feature: Add support for pagination [\#238](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/238)
+- Feature: Add support for multi create [\#237](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/237)
+- Feature: Recognize `multi: true` option of services [\#236](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/236)
+- Remove SwaggerUI as direct dependency [\#232](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/232)
+- Change default openApiVersion to be 3 instead of 2 [\#188](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/188)
+- Drop support for node v6 [\#187](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/187)
+
+**Implemented enhancements:**
+
+- Feature: Allow disabling of methods from defaults [\#214](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/214)
+- Feature: add function based option to ignore services  [\#192](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/192)
+
+**Merged pull requests:**
+
+- feat: add support for filter functions to include or ignore services [\#235](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/235) ([Mairu](https://github.com/Mairu))
+- Update swagger-parser to the latest version 🚀 [\#189](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/189) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update mocha to the latest version 🚀 [\#180](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/180) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- feat: allow disabling of methods from defaults [\#234](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/234) ([Mairu](https://github.com/Mairu))
+- chore: replace request with axios [\#233](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/233) ([Mairu](https://github.com/Mairu))
+- Added typings for custom Swagger specifications generation. [\#176](https://github.com/feathersjs-ecosystem/feathers-swagger/pull/176) ([deskoh](https://github.com/deskoh))
+
 ## [v1.2.2](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v1.2.2) (2022-05-11)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.2.1...v1.2.2)

@@ -1,6 +1,6 @@
 user=feathersjs-ecosystem
 project=feathers-swagger
-future-release=v2.0.0
+future-release=v3.0.0
 release-branch=master
 issues-of-open-milestones=false
 unreleased=false
