@@ -1,6 +1,6 @@
 # feathers-swagger
 
-[![CI](https://github.com/feathersjs-ecosystem/feathers-swagger/actions/workflows/ci.yml/badge.svg)](https://github.com/feathersjs-ecosystem/feathers-swagger/actions/workflows/ci.yml)
+[![CI](https://github.com/feathersjs-ecosystem/feathers-swagger/actions/workflows/ci.yaml/badge.svg)](https://github.com/feathersjs-ecosystem/feathers-swagger/actions/workflows/ci.yaml)
 [![Download Status](https://img.shields.io/npm/dm/feathers-swagger.svg?style=flat-square)](https://www.npmjs.com/package/feathers-swagger)
 
 > Add documentation to your Feathers services and optionally show them in the Swagger UI.
