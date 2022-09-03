@@ -1,6 +1,7 @@
 const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
 const path = require('path');
+const swagger = require('../lib');
 
 const serveStatic = require('serve-static');
 const distPath = require.resolve('swagger-ui-dist');
@@ -26,6 +27,7 @@ const app = express(feathers())
     extended: true
   }))
   .use(serveStatic(distPath))
+  .configure(swagger.customMethodsHandler)
   .configure(express.rest())
 
   .get('/', (req, res) => {

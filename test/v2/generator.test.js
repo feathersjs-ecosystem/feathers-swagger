@@ -5,7 +5,7 @@ const memory = require('feathers-memory');
 
 const OpenApi2Generator = require('../../lib/v2/generator');
 
-const { addCustomMethod } = require('../helper');
+const { feathers, addCustomMethod } = require('../helper');
 
 const swaggerOptions = {
   specs: {
@@ -26,9 +26,11 @@ const messageDefinition = {
 };
 
 describe('swagger v2 generator', function () {
+  const app = feathers();
+
   it('should generate expected specification for memory service', function () {
     const specs = {};
-    const gen = new OpenApi2Generator(specs, swaggerOptions);
+    const gen = new OpenApi2Generator(app, specs, swaggerOptions);
     const service = memory();
     service.docs = {
       definition: {
@@ -48,7 +50,7 @@ describe('swagger v2 generator', function () {
 
   it('should generate expected specification for multi operations of memory service', function () {
     const specs = {};
-    const gen = new OpenApi2Generator(specs, swaggerOptions);
+    const gen = new OpenApi2Generator(app, specs, swaggerOptions);
     const service = memory();
     service.docs = {
       definition: {
@@ -77,7 +79,7 @@ describe('swagger v2 generator', function () {
 
   it('should generate expected specification for service with enabled paginationof memory service', () => {
     const specs = {};
-    const gen = new OpenApi2Generator(specs, swaggerOptions);
+    const gen = new OpenApi2Generator(app, specs, swaggerOptions);
     const service = memory({ paginate: { default: 10 } });
     service.docs = {
       definition: {
@@ -131,7 +133,7 @@ describe('swagger v2 generator', function () {
             }
           }
         };
-        const gen = new OpenApi2Generator(specs, swaggerConfig);
+        const gen = new OpenApi2Generator(app, specs, swaggerConfig);
 
         gen.addService(service, 'message');
 
@@ -161,7 +163,7 @@ describe('swagger v2 generator', function () {
           alreadyThere: 'should_stay',
           alreadyThere2: 'will_be_overwritten'
         };
-        const gen = new OpenApi2Generator(specs, swaggerConfig);
+        const gen = new OpenApi2Generator(app, specs, swaggerConfig);
 
         gen.addService(service, 'message');
 
@@ -189,7 +191,7 @@ describe('swagger v2 generator', function () {
 
       specs = {};
 
-      gen = new OpenApi2Generator(specs, swaggerOptions);
+      gen = new OpenApi2Generator(app, specs, swaggerOptions);
     });
 
     it('definition should be used for creation of model and list spec schemas', function () {
@@ -375,7 +377,7 @@ describe('swagger v2 generator', function () {
 
       specs = {};
 
-      gen = new OpenApi2Generator(specs, swaggerOptions);
+      gen = new OpenApi2Generator(app, specs, swaggerOptions);
     });
 
     it('httpMethod + activateHooks decorated methods should be registered', function () {

@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-expressions */
 const { expect } = require('chai');
 
-const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
 const axios = require('axios').default;
 const memory = require('feathers-memory');
 const SwaggerParser = require('swagger-parser');
 const swagger = require('../lib');
+const { feathers, startFeathersApp } = require('./helper');
 
 describe('feathers-swagger', () => {
   describe('basic functionality with openapi v2', () => {
@@ -51,7 +51,7 @@ describe('feathers-swagger', () => {
         )
         .use('/messages', messageService);
 
-      server = app.listen(6776, () => done());
+      startFeathersApp(app, 6776, done).then((res) => { server = res; });
     });
 
     after(done => server.close(done));
@@ -129,7 +129,7 @@ describe('feathers-swagger', () => {
         )
         .use('/messages', messageService);
 
-      server = app.listen(6776, () => done());
+      startFeathersApp(app, 6776, done).then((res) => { server = res; });
     });
 
     after(done => server.close(done));

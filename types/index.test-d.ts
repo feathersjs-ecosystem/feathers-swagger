@@ -1,5 +1,5 @@
 import { expectType, expectError } from 'tsd';
-import { Service } from '@feathersjs/feathers';
+import { Service, Application } from '@feathersjs/feathers';
 import swagger, {
   ServiceSwaggerAddon,
   SwaggerService,
@@ -8,7 +8,10 @@ import swagger, {
   tag,
   security,
   idPathParameters,
-  swaggerUI, FnUiInit,
+  swaggerUI,
+  FnUiInit,
+  customMethodsHandler,
+  customMethod,
 } from './index';
 
 // complete
@@ -340,6 +343,18 @@ const serviceEmpty: ServiceSwaggerAddon = {
 const wrongService: ServiceSwaggerAddon = {};
 
 /**
+ * Custom Methods
+ */
+customMethodsHandler({} as Application);
+
+customMethod('POST', '/path');
+customMethod('GET', '/path');
+customMethod('PUT', '/path');
+customMethod('PATCH', '/path');
+customMethod('DELETE', '/path');
+expectError(customMethod('OTHER', '/path'));
+
+/**
  * Swagger UI tests
  */
 expectType<FnUiInit>(swaggerUI({}));
@@ -347,7 +362,7 @@ expectType<FnUiInit>(swaggerUI({}));
 expectType<FnUiInit>(swaggerUI({
   docsPath: '/path',
   indexFile: '/path/to/file',
-  getSwaggerInitializerScript: (options) => 'string',
+  getSwaggerInitializerScript: ({ specs: {}, docsJsonPath, docsPath}) => 'string',
 }));
 
 /*

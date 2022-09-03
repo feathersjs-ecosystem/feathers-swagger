@@ -5,8 +5,6 @@
  *   - with security
  *   - with refs for request and response
  */
-const { activateHooks } = require('@feathersjs/feathers');
-const { httpMethod } = require('@feathersjs/express/rest');
 const swagger = require('../../lib');
 
 const contentSchema = (schema) => ({
@@ -22,19 +20,19 @@ module.exports = (app) => {
     find (params) {
       return Promise.resolve({ method: 'find', params });
     },
-    customPost: httpMethod('POST', '/do-post')(activateHooks(['params', 'data'])((data, params) => {
+    customPost: swagger.customMethod('POST', '/do-post')((data, params) => {
       return Promise.resolve({ method: 'customPost', data, params });
-    })),
-    customPatchWithId: httpMethod('PUT', '/do-patch-with/:__feathersId')(activateHooks(['id', 'params', 'data'])(
-      (id, data, params) => {
+    }),
+    customPatchWithId: swagger.customMethod('PUT', '/do-patch-with/:__feathersId')(
+      (data, params, id) => {
         return Promise.resolve({ method: 'customPatchWithId', id, data, params });
       }
-    )),
-    customGetWithCustomIds: httpMethod('GET', '/do-patch-with/:customId/:customId2')(activateHooks(['params', 'data'])(
+    ),
+    customGetWithCustomIds: swagger.customMethod('GET', '/do-patch-with/:customId/:customId2')(
       (data, params) => {
         return Promise.resolve({ method: 'customGetWithCustomIds', data, params });
       }
-    ))
+    )
   };
 
   service.docs = {
@@ -107,6 +105,7 @@ module.exports = (app) => {
       find: {
         description: 'Do something with a GET method',
         // remove default parameters with nested path 'logic'
+        'parameters[4]': undefined,
         'parameters[3]': undefined,
         'parameters[2]': undefined,
         'parameters[1]': {
@@ -165,7 +164,7 @@ module.exports = (app) => {
     specs: {
       info: {
         title: 'A test',
-        description: 'An example using custom methods of @feathersjs/express v4',
+        description: 'An example using custom methods',
         version: '1.0.0'
       },
       components: {
@@ -188,5 +187,9 @@ module.exports = (app) => {
       paths: ['v3/custom-methods/:pathParamName/service']
     }
   }))
-    .use('/v3/custom-methods/:pathParamName/service', service);
+    .use(
+      '/v3/custom-methods/:pathParamName/service',
+      service,
+      { methods: ['find', 'customPost', 'customPatchWithId', 'customGetWithCustomIds'] }
+    );
 };

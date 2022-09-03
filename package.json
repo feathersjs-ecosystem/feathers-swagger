@@ -52,8 +52,8 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@feathersjs/express": "^4.5.15",
-    "@feathersjs/feathers": "^4.5.15",
+    "@feathersjs/express": "^5.0.0-pre.28",
+    "@feathersjs/feathers": "^5.0.0-pre.28",
     "@mairu/swagger-ui-apikey-auth-form": "^1.2.1",
     "@types/serve-static": "^1.13.10",
     "axios": "^0.27.2",

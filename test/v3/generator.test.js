@@ -6,7 +6,7 @@ const memory = require('feathers-memory');
 
 const OpenApi3Generator = require('../../lib/v3/generator');
 
-const { addCustomMethod } = require('../helper');
+const { addCustomMethod, feathers } = require('../helper');
 
 const swaggerOptions = {
   specs: {
@@ -27,9 +27,11 @@ const messageDefinition = {
 };
 
 describe('openopi v3 generator', function () {
+  const app = feathers();
+
   it('should generate expected specification for memory service', function () {
     const specs = {};
-    const gen = new OpenApi3Generator(specs, swaggerOptions);
+    const gen = new OpenApi3Generator(app, specs, swaggerOptions);
     const service = memory();
     service.docs = {
       definition: messageDefinition
@@ -42,7 +44,7 @@ describe('openopi v3 generator', function () {
 
   it('should generate expected specification for multi operations of memory service', function () {
     const specs = {};
-    const gen = new OpenApi3Generator(specs, swaggerOptions);
+    const gen = new OpenApi3Generator(app, specs, swaggerOptions);
     const service = memory({ multi: true });
     service.docs = {
       definition: messageDefinition,
@@ -62,7 +64,7 @@ describe('openopi v3 generator', function () {
 
   it('should generate expected specification for service with enabled paginationof memory service', () => {
     const specs = {};
-    const gen = new OpenApi3Generator(specs, swaggerOptions);
+    const gen = new OpenApi3Generator(app, specs, swaggerOptions);
     const service = memory({ paginate: { default: 10 } });
     service.docs = {
       schema: {
@@ -102,7 +104,7 @@ describe('openopi v3 generator', function () {
     });
 
     it('idType should be consumed', function () {
-      const gen = new OpenApi3Generator(specs, {
+      const gen = new OpenApi3Generator(app, specs, {
         idType: 'string'
       });
 
@@ -113,7 +115,7 @@ describe('openopi v3 generator', function () {
 
     describe('ignore', function () {
       it('services should be ignored by tags', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           ignore: {
             tags: ['message']
           }
@@ -127,7 +129,7 @@ describe('openopi v3 generator', function () {
       });
 
       it('services should be ignored by string path', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           ignore: {
             paths: ['message']
           }
@@ -141,7 +143,7 @@ describe('openopi v3 generator', function () {
       });
 
       it('services should be ignored by regex path', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           ignore: {
             paths: [/mess.*/]
           }
@@ -155,7 +157,7 @@ describe('openopi v3 generator', function () {
       });
 
       it('services should be ignored by filter function not ignoring paths', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           ignore: {
             paths: ['user'],
             filter: (matcherServiceArg, path) => {
@@ -177,7 +179,7 @@ describe('openopi v3 generator', function () {
 
     describe('include', function () {
       it('services should be included by tags', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           include: {
             tags: ['message']
           }
@@ -191,7 +193,7 @@ describe('openopi v3 generator', function () {
       });
 
       it('services should be included by string path', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           include: {
             paths: ['message']
           }
@@ -205,7 +207,7 @@ describe('openopi v3 generator', function () {
       });
 
       it('services should be included by regex path', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           include: {
             paths: [/mess.*/]
           }
@@ -219,7 +221,7 @@ describe('openopi v3 generator', function () {
       });
 
       it('services should be included by filter function not ignoring paths', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           include: {
             paths: ['user'],
             filter: (matcherServiceArg, path) => {
@@ -240,7 +242,7 @@ describe('openopi v3 generator', function () {
     });
 
     it('ignore and include should not override each other', function () {
-      const gen = new OpenApi3Generator(specs, {
+      const gen = new OpenApi3Generator(app, specs, {
         include: {
           paths: [/mess.*/]
         },
@@ -257,7 +259,7 @@ describe('openopi v3 generator', function () {
 
     describe('tag and model parsing', function () {
       it('should support string prefix', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           prefix: 'api/'
         });
 
@@ -279,7 +281,7 @@ describe('openopi v3 generator', function () {
       });
 
       it('should support regex prefix', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           prefix: /api\/v\d\//
         });
 
@@ -300,7 +302,7 @@ describe('openopi v3 generator', function () {
       });
 
       it('should support regex versionPrefix', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           prefix: /api\/v\d\//,
           versionPrefix: /v\d/
         });
@@ -334,7 +336,7 @@ describe('openopi v3 generator', function () {
       });
 
       it('should be customizable by defaults.getOperationArgs generator', function () {
-        const gen = new OpenApi3Generator(specs, {
+        const gen = new OpenApi3Generator(app, specs, {
           defaults: {
             getOperationArgs () {
               return {
@@ -395,7 +397,7 @@ describe('openopi v3 generator', function () {
             }
           }
         };
-        const gen = new OpenApi3Generator(specs, swaggerConfig);
+        const gen = new OpenApi3Generator(app, specs, swaggerConfig);
 
         gen.addService(service, 'api/v1/message');
       });
@@ -413,7 +415,7 @@ describe('openopi v3 generator', function () {
             }
           }
         };
-        const gen = new OpenApi3Generator(specs, swaggerConfig);
+        const gen = new OpenApi3Generator(app, specs, swaggerConfig);
 
         gen.addService(service, 'message');
 
@@ -445,7 +447,7 @@ describe('openopi v3 generator', function () {
             alreadyThere2: 'will_be_overwritten'
           }
         };
-        const gen = new OpenApi3Generator(specs, swaggerConfig);
+        const gen = new OpenApi3Generator(app, specs, swaggerConfig);
 
         gen.addService(service, 'message');
 
@@ -527,7 +529,7 @@ describe('openopi v3 generator', function () {
               }
             }
           };
-          const gen = new OpenApi3Generator(specs, swaggerConfig);
+          const gen = new OpenApi3Generator(app, specs, swaggerConfig);
 
           gen.addService(service, 'message');
         });
@@ -550,13 +552,13 @@ describe('openopi v3 generator', function () {
               }
             }
           };
-          const gen = new OpenApi3Generator(specs, swaggerConfig);
+          const gen = new OpenApi3Generator(app, specs, swaggerConfig);
 
           gen.addService(service, 'message');
         });
 
         it('options should also include result from getOperationArgs', function () {
-          const gen = new OpenApi3Generator(specs, {
+          const gen = new OpenApi3Generator(app, specs, {
             defaults: {
               getOperationArgs (options) {
                 return { myOwnOption: 'new stuff', tag: 'overridden' };
@@ -576,7 +578,7 @@ describe('openopi v3 generator', function () {
         it('operations defaults should be generated from generator', function () {
           addCustomMethod(service);
 
-          const gen = new OpenApi3Generator(specs, {
+          const gen = new OpenApi3Generator(app, specs, {
             defaults: {
               operationGenerators: {
                 find (options) {
@@ -622,7 +624,7 @@ describe('openopi v3 generator', function () {
         it('should set defaults for methods', function () {
           addCustomMethod(service);
 
-          const gen = new OpenApi3Generator(specs, {
+          const gen = new OpenApi3Generator(app, specs, {
             defaults: {
               operations: {
                 find: {
@@ -646,7 +648,7 @@ describe('openopi v3 generator', function () {
         it('all should set defaults for all methods', function () {
           addCustomMethod(service);
 
-          const gen = new OpenApi3Generator(specs, {
+          const gen = new OpenApi3Generator(app, specs, {
             defaults: {
               operations: {
                 all: {
@@ -674,7 +676,7 @@ describe('openopi v3 generator', function () {
             }
           };
 
-          const gen = new OpenApi3Generator(specs, {
+          const gen = new OpenApi3Generator(app, specs, {
             defaults: {
               operations: {
                 all: {
@@ -707,7 +709,7 @@ describe('openopi v3 generator', function () {
 
       specs = {};
 
-      gen = new OpenApi3Generator(specs, swaggerOptions);
+      gen = new OpenApi3Generator(app, specs, swaggerOptions);
     });
 
     it('should work for services without docs property', function () {
@@ -1012,7 +1014,7 @@ describe('openopi v3 generator', function () {
 
     it('multi option should overwrite determined defaults', () => {
       const specs = {};
-      const gen = new OpenApi3Generator(specs, swaggerOptions);
+      const gen = new OpenApi3Generator(app, specs, swaggerOptions);
       const multiService = memory({ multi: true });
       multiService.docs = {
         definition: messageDefinition,
@@ -1109,7 +1111,7 @@ describe('openopi v3 generator', function () {
     describe('array service.id', function () {
       it('array service.id should be consumed', function () {
         const specs = {};
-        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const gen = new OpenApi3Generator(app, specs, swaggerOptions);
         const service = memory({ id: ['firstId', 'secondId'] });
         service.docs = {
           definition: messageDefinition
@@ -1123,7 +1125,7 @@ describe('openopi v3 generator', function () {
 
       it('array service.id should be consumed with custom idTypes', function () {
         const specs = {};
-        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const gen = new OpenApi3Generator(app, specs, swaggerOptions);
         const service = memory({ id: ['firstId', 'secondId'] });
         service.docs = {
           idType: ['string', 'integer'],
@@ -1138,7 +1140,7 @@ describe('openopi v3 generator', function () {
 
       it('array service.id should be consumed with custom idNames', function () {
         const specs = {};
-        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const gen = new OpenApi3Generator(app, specs, swaggerOptions);
         const service = memory({ id: ['firstId', 'secondId'] });
         service.docs = {
           idType: ['string', 'integer'],
@@ -1158,7 +1160,7 @@ describe('openopi v3 generator', function () {
 
       it('array service.id with custom service.idSeparator should be consumed', function () {
         const specs = {};
-        const gen = new OpenApi3Generator(specs, swaggerOptions);
+        const gen = new OpenApi3Generator(app, specs, swaggerOptions);
         const service = memory();
         service.options.id = ['firstId', 'secondId'];
         service.options.idSeparator = '|';
@@ -1225,19 +1227,21 @@ describe('openopi v3 generator', function () {
 
       specs = {};
 
-      gen = new OpenApi3Generator(specs, swaggerOptions);
+      gen = new OpenApi3Generator(app, specs, swaggerOptions);
     });
 
-    it('should not generate specs for internal functions that are registered with activateHooks', function () {
-      service.methods = { customHooksMethod: ['data', 'params'], unknownMethod: ['params'] }; // emulate activateHooks feathers registration
-      service.customHooksMethod = activateHooks(['data, params'])(function () {});
+    if (typeof activateHooks === 'function') { // feathers v4
+      it('should not generate specs for internal functions that are registered with activateHooks', function () {
+        service.methods = { customHooksMethod: ['data', 'params'], unknownMethod: ['params'] }; // emulate activateHooks feathers registration
+        service.customHooksMethod = activateHooks(['data, params'])(function () {});
 
-      gen.addService(service, 'message');
+        gen.addService(service, 'message');
 
-      expect(Object.keys(specs.paths).length).to.equal(1);
-      expect(Object.keys(specs.paths['/message']).length).to.equal(1);
-      expect(specs.paths['/message'].get).to.not.be.undefined; // find method
-    });
+        expect(Object.keys(specs.paths).length).to.equal(1);
+        expect(Object.keys(specs.paths['/message']).length).to.equal(1);
+        expect(specs.paths['/message'].get).to.not.be.undefined; // find method
+      });
+    }
 
     it('httpMethod + activateHooks decorated methods should be registered and customizable', function () {
       addCustomMethod(service, { name: 'getMethod', httpMethod: 'GET' });

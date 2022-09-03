@@ -8,6 +8,10 @@ interface UnknownObject {
   [propName: string]: any;
 }
 
+interface FnServiceMethod {
+  (data?: any, params?: any): Promise<any>;
+}
+
 interface FnGetOperationArgs {
   (options: feathersSwagger.GetOperationArgsOptions): {
     tag?: string,
@@ -221,16 +225,30 @@ declare namespace feathersSwagger {
     version: string;
   }
 
+  // custom methods
+  function customMethod(
+    verb: 'POST' | 'GET' | 'PATCH' | 'PUT' | 'DELETE',
+    path: string,
+  ): ((method: FnServiceMethod) => FnServiceMethod);
+
+  function customMethodsHandler(
+    app: Application
+  ): void;
+
   // swagger ui dist
+  interface FnSwaggerUiGetInitializerScript {
+    (options: {
+      docsPath: string;
+      docsJsonPath: string;
+      specs: SpecsObject;
+    }): string;
+  }
+
   function swaggerUI(
     options: {
       docsPath?: string;
       indexFile?: string;
-      getSwaggerInitializerScript?: (options: {
-        docsPath: string;
-        docsJsonPath: string;
-        specs: SpecsObject;
-      }) => string;
+      getSwaggerInitializerScript?: FnSwaggerUiGetInitializerScript;
     }
   ): FnUiInit;
 

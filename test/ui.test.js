@@ -6,13 +6,13 @@ const util = require('util');
 
 const readFile = util.promisify(fs.readFile);
 
-const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
 const axios = require('axios').default;
 const memory = require('feathers-memory');
 const mock = require('mock-require');
 const swagger = require('../lib');
 const swaggerUI = require('../lib/swagger-ui-dist');
+const { feathers, startFeathersApp } = require('./helper');
 
 describe('feathers-swagger ui option', () => {
   describe('using swaggerUI', () => {
@@ -37,9 +37,7 @@ describe('feathers-swagger ui option', () => {
         )
         .use('/messages', messageService);
 
-      return new Promise(resolve => {
-        server = app.listen(6776, () => resolve());
-      });
+      return startFeathersApp(app, 6776).then(res => { server = res; });
     };
 
     before(done => {
