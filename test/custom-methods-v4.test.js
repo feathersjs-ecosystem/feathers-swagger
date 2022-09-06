@@ -2,11 +2,11 @@ const express = require('@feathersjs/express');
 const axios = require('axios').default;
 const { expect } = require('chai');
 
-const { feathers, startFeathersApp } = require('./helper');
+const { feathers, startFeathersApp, isFeathers4 } = require('./helper');
 const { customMethod } = require('../lib');
 
 describe('custom http methods - featherjs v4', () => {
-  if (feathers.version[0] !== '4') {
+  if (!isFeathers4) {
     return; // only valid with feathers 4
   }
 

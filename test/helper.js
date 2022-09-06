@@ -1,6 +1,9 @@
 const _ = require('lodash');
 const feathers = require('@feathersjs/feathers');
+const { koa, rest } = require('@feathersjs/koa');
+const express = require('@feathersjs/express');
 const { customMethod } = require('../lib');
+const { versionCompare } = require('../lib/helpers');
 
 if (feathers.version && feathers.version[0] >= '5') {
 // feathers v5
@@ -82,3 +85,23 @@ if (feathers.version && feathers.version[0] >= '5') {
     });
   };
 }
+
+exports.koaApp = (modifierFn) => {
+  const app = koa(exports.feathers());
+  if (typeof modifierFn === 'function') {
+    modifierFn(app);
+  }
+  app.configure(rest());
+  return app;
+};
+
+exports.expressApp = (modifierFn) => {
+  const app = express(exports.feathers());
+  if (typeof modifierFn === 'function') {
+    modifierFn(app);
+  }
+  app.configure(express.rest());
+  return app;
+};
+
+exports.isFeathers4 = versionCompare(exports.feathers.version, '4.99') === -1;

@@ -169,6 +169,6 @@ module.exports = (app) => {
     .use(
       '/v2/custom-methods/:pathParamName/service',
       service,
-      { methods: ['find', 'customPost', 'customPatchWithId', 'customGetWithCustomIds'] },
+      { methods: ['find', 'customPost', 'customPatchWithId', 'customGetWithCustomIds'] }
     );
 };

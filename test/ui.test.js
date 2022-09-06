@@ -6,174 +6,226 @@ const util = require('util');
 
 const readFile = util.promisify(fs.readFile);
 
-const express = require('@feathersjs/express');
 const axios = require('axios').default;
 const memory = require('feathers-memory');
-const mock = require('mock-require');
+const proxyquire = require('proxyquire');
+
 const swagger = require('../lib');
 const swaggerUI = require('../lib/swagger-ui-dist');
-const { feathers, startFeathersApp } = require('./helper');
+const { startFeathersApp, koaApp, expressApp, isFeathers4 } = require('./helper');
 
-describe('feathers-swagger ui option', () => {
-  describe('using swaggerUI', () => {
-    let server;
-    let messageService;
+Object.entries({
+  koa: { initApp: koaApp },
+  express: { initApp: expressApp }
+}).forEach(([type, options]) => {
+  if (type === 'koa' && isFeathers4) {
+    return;
+  }
 
-    const startServiceWithUi = (ui) => {
-      const app = express(feathers())
-        .configure(express.rest())
-        .configure(
-          swagger({
-            docsPath: '/docs',
-            ui,
-            specs: {
-              info: {
-                title: 'A test',
-                description: 'A description',
-                version: '1.0.0'
+  const { initApp } = options;
+  describe(`feathers-swagger ui option with ${type}`, () => {
+    describe('using swaggerUI', () => {
+      let server;
+      let messageService;
+
+      const startServiceWithUi = (ui) => {
+        const app = initApp()
+          .configure(
+            swagger({
+              docsPath: '/docs',
+              ui,
+              specs: {
+                info: {
+                  title: 'A test',
+                  description: 'A description',
+                  version: '1.0.0'
+                }
+              }
+            })
+          )
+          .use('/messages', messageService);
+
+        return startFeathersApp(app, 6776).then(res => { server = res; });
+      };
+
+      before(done => {
+        messageService = memory();
+        messageService.docs = {
+          description: 'A service to send and receive messages',
+          definition: {
+            type: 'object',
+            required: [
+              'text'
+            ],
+            properties: {
+              text: {
+                type: 'string',
+                description: 'The message text'
+              },
+              userId: {
+                type: 'string',
+                description: 'The id of the user that sent the message'
               }
             }
-          })
-        )
-        .use('/messages', messageService);
+          }
+        };
 
-      return startFeathersApp(app, 6776).then(res => { server = res; });
-    };
+        done();
+      });
 
-    before(done => {
-      messageService = memory();
-      messageService.docs = {
-        description: 'A service to send and receive messages',
-        definition: {
-          type: 'object',
-          required: [
-            'text'
-          ],
-          properties: {
-            text: {
-              type: 'string',
-              description: 'The message text'
-            },
-            userId: {
-              type: 'string',
-              description: 'The id of the user that sent the message'
+      afterEach(done => server.close(done));
+
+      ['/docs', '/docs/'].forEach((requestPath) => {
+        it(`should serve default SwaggerUI under ${requestPath}`, async () => {
+          await startServiceWithUi(swaggerUI());
+
+          const expectedResponse = await readFile(
+            path.join(__dirname, '..', 'node_modules', 'swagger-ui-dist', 'index.html'),
+            { encoding: 'utf8' }
+          );
+
+          const { data: responseContent } = await axios.get(
+            `http://localhost:6776${requestPath}`,
+            {
+              headers: {
+                Accept: 'text/html'
+              }
+            }
+          );
+
+          expect(responseContent).to.equal(expectedResponse);
+          // check json path is set in initializer script
+          const { data: initializerContent } = await axios.get('http://localhost:6776/docs/swagger-initializer.js');
+
+          expect(initializerContent).contains('url: "/swagger.json"');
+
+          // check some static assets of SwaggerUI
+          expect((await axios.get('http://localhost:6776/docs/swagger-ui.css')
+          ).status).to.equal(200);
+          expect((await axios.get('http://localhost:6776/docs/swagger-ui-bundle.js')
+          ).status).to.equal(200);
+        });
+      });
+
+      it('should serve default SwaggerUI under /customPath', async () => {
+        await startServiceWithUi(swaggerUI({ docsPath: '/customPath' }));
+
+        const expectedResponse = await readFile(
+          path.join(__dirname, '..', 'node_modules', 'swagger-ui-dist', 'index.html'),
+          { encoding: 'utf8' }
+        );
+
+        const { data: responseContent } = await axios.get(
+          'http://localhost:6776/customPath/',
+          {
+            headers: {
+              Accept: 'text/html'
             }
           }
-        }
-      };
+        );
 
-      done();
-    });
+        expect(responseContent).to.equal(expectedResponse);
+        // check some static assets of SwaggerUI
+        expect((await axios.get('http://localhost:6776/customPath/swagger-ui.css')
+        ).status).to.equal(200);
+        expect((await axios.get('http://localhost:6776/customPath/swagger-ui-bundle.js')
+        ).status).to.equal(200);
+      });
 
-    afterEach(done => server.close(done));
+      it('should serve provided indexFile', async () => {
+        const docFilePath = path.join(__dirname, '..', 'example', 'docs.html');
 
-    it('should serve default SwaggerUI under /docs', async () => {
-      await startServiceWithUi(swaggerUI());
+        await startServiceWithUi(swaggerUI({ indexFile: docFilePath }));
 
-      const expectedResponse = await readFile(
-        path.join(__dirname, '..', 'node_modules', 'swagger-ui-dist', 'index.html'),
-        { encoding: 'utf8' }
-      );
+        const expectedResponse = await readFile(docFilePath, { encoding: 'utf8' });
 
-      const { data: responseContent } = await axios.get(
-        'http://localhost:6776/docs/',
-        {
-          headers: {
-            Accept: 'text/html'
+        const { data: responseContent } = await axios.get(
+          'http://localhost:6776/docs/',
+          {
+            headers: {
+              Accept: 'text/html'
+            }
           }
-        }
-      );
+        );
 
-      expect(responseContent).to.equal(expectedResponse);
-      // check json path is set in initializer script
-      const { data: initializerContent } = await axios.get('http://localhost:6776/docs/swagger-initializer.js');
+        expect(responseContent).to.equal(expectedResponse);
+        // check some static assets of SwaggerUI
+        expect((await axios.get('http://localhost:6776/docs/swagger-ui.css')
+        ).status).to.equal(200);
+        expect((await axios.get('http://localhost:6776/docs/swagger-ui-bundle.js')
+        ).status).to.equal(200);
+      });
 
-      expect(initializerContent).contains('url: "/swagger.json"');
+      it('should use custom initializer', async () => {
+        const getSwaggerInitializerScript = ({ docsPath, docsJsonPath, specs }) => {
+          // check params given to initializer script
+          expect(docsPath).to.exist;
+          expect(docsJsonPath).to.exist;
+          expect(specs).to.exist;
 
-      // check some static assets of SwaggerUI
-      expect((await axios.get('http://localhost:6776/docs/swagger-ui.css')).status).to.equal(200);
-      expect((await axios.get('http://localhost:6776/docs/swagger-ui-bundle.js')).status).to.equal(200);
-    });
+          return 'custom initializer js';
+        };
 
-    it('should serve default SwaggerUI under /customPath', async () => {
-      await startServiceWithUi(swaggerUI({ docsPath: '/customPath' }));
+        await startServiceWithUi(swaggerUI({ getSwaggerInitializerScript }));
 
-      const expectedResponse = await readFile(
-        path.join(__dirname, '..', 'node_modules', 'swagger-ui-dist', 'index.html'),
-        { encoding: 'utf8' }
-      );
+        const { data: initializerContent } = await axios.get('http://localhost:6776/docs/swagger-initializer.js');
 
-      const { data: responseContent } = await axios.get(
-        'http://localhost:6776/customPath/',
-        {
-          headers: {
-            Accept: 'text/html'
-          }
-        }
-      );
-
-      expect(responseContent).to.equal(expectedResponse);
-      // check some static assets of SwaggerUI
-      expect((await axios.get('http://localhost:6776/customPath/swagger-ui.css')).status).to.equal(200);
-      expect((await axios.get('http://localhost:6776/customPath/swagger-ui-bundle.js')).status).to.equal(200);
-    });
-
-    it('should serve provided indexFile', async () => {
-      const docFilePath = path.join(__dirname, '..', 'example', 'docs.html');
-
-      await startServiceWithUi(swaggerUI({ indexFile: docFilePath }));
-
-      const expectedResponse = await readFile(docFilePath, { encoding: 'utf8' });
-
-      const { data: responseContent } = await axios.get(
-        'http://localhost:6776/docs/',
-        {
-          headers: {
-            Accept: 'text/html'
-          }
-        }
-      );
-
-      expect(responseContent).to.equal(expectedResponse);
-      // check some static assets of SwaggerUI
-      expect((await axios.get('http://localhost:6776/docs/swagger-ui.css')).status).to.equal(200);
-      expect((await axios.get('http://localhost:6776/docs/swagger-ui-bundle.js')).status).to.equal(200);
-    });
-
-    it('should use custom initializer', async () => {
-      const getSwaggerInitializerScript = ({ docsPath, docsJsonPath, specs }) => {
-        // check params given to initializer script
-        expect(docsPath).to.exist;
-        expect(docsJsonPath).to.exist;
-        expect(specs).to.exist;
-
-        return 'custom initializer js';
-      };
-
-      await startServiceWithUi(swaggerUI({ getSwaggerInitializerScript }));
-
-      const { data: initializerContent } = await axios.get('http://localhost:6776/docs/swagger-initializer.js');
-
-      expect(initializerContent).to.equal('custom initializer js');
-      // check some static assets of SwaggerUI
-      expect((await axios.get('http://localhost:6776/docs/swagger-ui.css')).status).to.equal(200);
-      expect((await axios.get('http://localhost:6776/docs/swagger-ui-bundle.js')).status).to.equal(200);
+        expect(initializerContent).to.equal('custom initializer js');
+        // check some static assets of SwaggerUI
+        expect((await axios.get('http://localhost:6776/docs/swagger-ui.css')
+        ).status).to.equal(200);
+        expect((await axios.get('http://localhost:6776/docs/swagger-ui-bundle.js')
+        ).status).to.equal(200);
+      });
     });
   });
+});
 
-  describe('swagger-ui-dist not installed', () => {
-    before(() => {
-      mock('swagger-ui-dist', './mock/swagger-ui-dist');
-      mock('swagger-ui-dist/package.json', { version: '4.0.0' });
-    });
+describe('swagger-ui missing koa packages', () => {
+  if (isFeathers4) {
+    return;
+  }
 
-    after(() => {
-      mock.stop('swagger-ui-dist');
-      mock.stop('swagger-ui-dist/package.json');
-    });
+  ['koa-static', 'koa-mount'].forEach((packageName) => {
+    it(`should fail with missing ${packageName} package`, () => {
+      const swaggerUIWithMockedDependencies = proxyquire('../lib/swagger-ui-dist', {
+        './helpers': proxyquire('../lib/helpers', { [packageName]: null }),
+      });
 
-    it('throws error if swagger-ui-dist is not installed', async () => {
-      expect(() => swaggerUI()).to.throw(Error, 'swagger-ui-dist has to be installed in a version >= 4.9.0 when using feathers-swagger.swaggerUI function');
+      const app = koaApp();
+      expect(() => {
+        app.configure(swagger({
+          ui: swaggerUIWithMockedDependencies(),
+          specs: {
+            info: {
+              title: 'A test',
+              description: 'A description',
+              version: '1.0.0'
+            }
+          }
+        }));
+      }).to.throw(
+        Error,
+        `Package ${packageName} has to be installed to use Swagger UI with koa`
+      )
     });
+  });
+});
+
+describe('swagger-ui-dist not installed', () => {
+  const swaggerUIWrongUiDistVersion = proxyquire('../lib/swagger-ui-dist', {
+    'swagger-ui-dist': {
+      getAbsoluteFSPath: () => __dirname
+    },
+    'swagger-ui-dist/package.json': { version: "4.0.0" },
+  });
+
+  it('throws error if swagger-ui-dist is not installed', async () => {
+    expect(() => swaggerUIWrongUiDistVersion())
+      .to
+      .throw(
+        Error,
+        'swagger-ui-dist has to be installed in a version >= 4.9.0 when using feathers-swagger.swaggerUI function'
+      );
   });
 });
