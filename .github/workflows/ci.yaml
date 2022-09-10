@@ -10,7 +10,6 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
-        feathersjs-version: [4, 5]
 
     steps:
       - uses: actions/checkout@v2
@@ -22,9 +21,6 @@ jobs:
         if: matrix.node-version == '14.x'
         run: npm i -g npm@8
       - run: npm ci
-      - name: install feathers packages for version ${{ matrix.feathersjs-version }}
-        if: matrix.feathersjs-version == '4'
-        run: npm i --no-save @feathersjs/feathers@^${{ matrix.feathersjs-version }} @feathersjs/express@^${{ matrix.feathersjs-version }}
-      - run: npm test
+      - run: npm run test:ci
         env:
           CI: true

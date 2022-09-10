@@ -8,53 +8,51 @@ const swagger = require('../lib');
 const { feathers, startFeathersApp, koaApp, expressApp, isFeathers4 } = require('./helper');
 
 describe('feathers-swagger', () => {
-  describe('serve spec file', () => {
-    Object.entries({
-      koa: { initApp: koaApp },
-      express: { initApp: expressApp }
-    }).forEach(([type, options]) => {
-      if (type === 'koa' && isFeathers4) {
-        return;
-      }
+  Object.entries({
+    koa: { initApp: koaApp },
+    express: { initApp: expressApp }
+  }).forEach(([type, options]) => {
+    if (type === 'koa' && isFeathers4) {
+      return;
+    }
 
-      const { initApp } = options;
+    const { initApp } = options;
 
-      describe(`serve openapi json file with ${type}`, () => {
-        let server;
-        let app;
+    describe(`should serve openapi json file with ${type}`, () => {
+      let server;
+      let app;
 
-        const startApp = (swaggerConfig) => {
-          app = initApp();
+      const startApp = (swaggerConfig) => {
+        app = initApp();
 
-          app.configure(swagger({
-            specs: {
-              info: {
-                title: 'A test',
-                description: 'A description',
-                version: '1.0.0'
-              }
-            },
-            ...swaggerConfig
-          }));
+        app.configure(swagger({
+          specs: {
+            info: {
+              title: 'A test',
+              description: 'A description',
+              version: '1.0.0'
+            }
+          },
+          ...swaggerConfig
+        }));
 
-          return startFeathersApp(app, 6776).then((res) => { server = res; });
-        };
+        return startFeathersApp(app, 6776).then((res) => { server = res; });
+      };
 
-        afterEach(done => server.close(done));
+      afterEach(done => server.close(done));
 
-        it('default as /swagger.json', async () => {
-          await startApp({});
+      it('default as /swagger.json', async () => {
+        await startApp({});
 
-          expect((await axios.get('http://localhost:6776/swagger.json')).data).to.deep.equal(app.docs);
-        });
+        expect((await axios.get('http://localhost:6776/swagger.json')).data).to.deep.equal(app.docs);
+      });
 
-        it('use `docsJsonPath` as /docs.json', async () => {
-          await startApp({ docsJsonPath: '/docs.json' });
+      it('use `docsJsonPath` as /docs.json', async () => {
+        await startApp({ docsJsonPath: '/docs.json' });
 
-          expect((await axios.get('http://localhost:6776/docs.json')).data).to.deep.equal(app.docs);
-          await axios.get('http://localhost:6776/swagger.json')
-            .catch(error => expect(error.response).to.have.property('status', 404));
-        });
+        expect((await axios.get('http://localhost:6776/docs.json')).data).to.deep.equal(app.docs);
+        await axios.get('http://localhost:6776/swagger.json')
+          .catch(error => expect(error.response).to.have.property('status', 404));
       });
     });
   });

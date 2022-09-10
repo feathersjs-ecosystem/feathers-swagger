@@ -5,7 +5,7 @@ const { expect } = require('chai');
 const { feathers, startFeathersApp, isFeathers4 } = require('./helper');
 const { customMethod } = require('../lib');
 
-describe('custom http methods - featherjs v4', () => {
+describe('feathers 4 custom http methods', () => {
   if (!isFeathers4) {
     return; // only valid with feathers 4
   }
@@ -26,7 +26,7 @@ describe('custom http methods - featherjs v4', () => {
 
   afterEach(done => server.close(done));
 
-  it('simple post method should be callable', async () => {
+  it('handle simple post method', async () => {
     const customService = {
       async find (params) {
         return { queryParams: params.query };
@@ -53,7 +53,7 @@ describe('custom http methods - featherjs v4', () => {
     });
   });
 
-  it('get method with id should be callable', async () => {
+  it('handle get method with id', async () => {
     const customService = {
       async find (params) {
         return { queryParams: params.query };
@@ -75,7 +75,7 @@ describe('custom http methods - featherjs v4', () => {
     });
   });
 
-  it('get method with feathers id should be callable', async () => {
+  it('handle get method with feathers id', async () => {
     const customService = {
       async find (params) {
         return { queryParams: params.query };
@@ -98,7 +98,7 @@ describe('custom http methods - featherjs v4', () => {
     });
   });
 
-  it('put method with id should be callable', async () => {
+  it('handle put method with id', async () => {
     const customService = {
       async find (params) {
         return { queryParams: params.query };
@@ -123,7 +123,7 @@ describe('custom http methods - featherjs v4', () => {
     });
   });
 
-  it('patch method with id should be callable', async () => {
+  it('handle patch method with id', async () => {
     const customService = {
       async find (params) {
         return { queryParams: params.query };
@@ -148,7 +148,7 @@ describe('custom http methods - featherjs v4', () => {
     });
   });
 
-  it('delete method with id should be callable', async () => {
+  it('handle delete method with id', async () => {
     const customService = {
       async find (params) {
         return { queryParams: params.query };

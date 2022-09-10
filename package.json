@@ -36,6 +36,13 @@
     "mocha": "mocha",
     "coverage": "nyc --check-coverage npm run mocha",
     "test": "npm run lint && npm run coverage && npm run test:types",
+    "test:ci": "npm run lint && npm run coverage:ci && npm run test:types",
+    "test:ci:cleanup": "git reset HEAD package.json package-lock.json && npm ci",
+    "coverage:ci": "npm run coverage:ci:v5 && npm run coverage:ci:v4 && nyc report",
+    "coverage:ci:v5": "nyc --silent npm run mocha",
+    "coverage:ci:v4": "npm run coverage:ci:v4:install && npm run coverage:ci:v4:nyc",
+    "coverage:ci:v4:install": "npm rm @feathersjs/koa @koa/router koa-mount koa-static && npm install @feathersjs/feathers@^4 @feathersjs/express@^4",
+    "coverage:ci:v4:nyc": "nyc --silent --no-clean npm run mocha",
     "start": "node example/app"
   },
   "semistandard": {

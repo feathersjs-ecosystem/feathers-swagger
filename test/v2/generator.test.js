@@ -27,6 +27,8 @@ const messageDefinition = {
 
 describe('swagger v2 generator', function () {
   const app = feathers();
+  // mimic custom methods middleware
+  app._feathers_swagger_custom_method_handler_ = () => {};
 
   it('should generate expected specification for memory service', function () {
     const specs = {};
