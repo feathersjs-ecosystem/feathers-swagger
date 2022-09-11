@@ -1,4 +1,4 @@
-## Migrations for Version 1
+## Migrations for Version 1 <!-- {docsify-ignore} -->
 
 Version 1.0.0 introduces some breaking changes to previous 0.7.x versions. These changes and ways to migrate to the new release will be described here.
 

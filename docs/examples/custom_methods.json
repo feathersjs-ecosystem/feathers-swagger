@@ -1,0 +1,294 @@
+{
+  "info": {
+    "title": "A test",
+    "description": "An example using custom methods",
+    "version": "1.0.0"
+  },
+  "components": {
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      },
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "custom_response": {
+        "title": "Custom service response",
+        "type": "object",
+        "required": [
+          "method"
+        ],
+        "properties": {
+          "method": {
+            "type": "string",
+            "description": "name of the called method"
+          },
+          "data": {
+            "type": "object",
+            "description": "POST data provided to the service method"
+          },
+          "params": {
+            "type": "object",
+            "description": "params provided to the service method"
+          },
+          "id": {
+            "type": "integer",
+            "description": "id provided to the service method"
+          }
+        }
+      },
+      "custom_request": {
+        "title": "Custom service requestBody",
+        "type": "object",
+        "required": [
+          "method"
+        ],
+        "properties": {
+          "string": {
+            "type": "string",
+            "description": "some string data"
+          },
+          "number": {
+            "type": "number",
+            "format": "int32",
+            "description": "a number"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/v3/custom-methods/{pathParamName}/service": {
+      "get": {
+        "parameters": [
+          {
+            "description": "A global path param",
+            "in": "path",
+            "name": "pathParamName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "description": "A defined param",
+            "in": "query",
+            "name": "test",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Use find to do a normal GET",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/custom_response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "Do something with a GET method",
+        "summary": "",
+        "tags": [
+          "custom method service"
+        ],
+        "security": []
+      }
+    },
+    "/v3/custom-methods/{pathParamName}/service/do-post": {
+      "post": {
+        "parameters": [
+          {
+            "description": "A global path param",
+            "in": "path",
+            "name": "pathParamName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "description": "A defined param",
+            "in": "query",
+            "name": "test",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/custom_response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "A custom POST method",
+        "summary": "",
+        "tags": [
+          "custom method service"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/custom_request"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/custom-methods/{pathParamName}/service/do-patch-with/{id}": {
+      "put": {
+        "parameters": [
+          {
+            "description": "A global path param",
+            "in": "path",
+            "name": "pathParamName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID of service",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/custom_response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "A custom customPatchWithId method.",
+        "summary": "",
+        "tags": [
+          "custom method service"
+        ],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/custom_request"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/custom-methods/{pathParamName}/service/do-patch-with/{customId}/{customId2}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "A global path param",
+            "in": "path",
+            "name": "pathParamName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "description": "Custom integer path id",
+            "in": "path",
+            "required": true,
+            "name": "customId",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Custom string path id",
+            "in": "path",
+            "required": true,
+            "name": "customId2",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "general error"
+          }
+        },
+        "description": "A custom GET method",
+        "summary": "",
+        "tags": [
+          "custom method service"
+        ],
+        "security": []
+      }
+    }
+  },
+  "openapi": "3.0.3",
+  "tags": [
+    {
+      "name": "custom method service",
+      "description": "A service with custom methods"
+    }
+  ]
+}

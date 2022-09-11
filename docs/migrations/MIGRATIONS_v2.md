@@ -1,4 +1,4 @@
-## Migrations for Version 2 (from 1)
+## Migrations for Version 2 (from 1) <!-- {docsify-ignore} -->
 
 Version 2.0.0 introduces some breaking changes to previous 1.x.x versions. These changes and ways to migrate to the new release will be described here.
 
