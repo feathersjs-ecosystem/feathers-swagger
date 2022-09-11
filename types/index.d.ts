@@ -8,10 +8,6 @@ interface UnknownObject {
   [propName: string]: any;
 }
 
-interface FnServiceMethod {
-  (data?: any, params?: any): Promise<any>;
-}
-
 interface FnGetOperationArgs {
   (options: feathersSwagger.GetOperationArgsOptions): {
     tag?: string,
@@ -112,6 +108,8 @@ type SpecsObject = {
 type OpenApiVersion = 2 | 3;
 
 type OperationConfig = UnknownObject | false;
+
+type Verb = 'POST' | 'GET' | 'PATCH' | 'PUT' | 'DELETE';
 
 declare namespace feathersSwagger {
   interface SwaggerInitOptions {
@@ -226,10 +224,8 @@ declare namespace feathersSwagger {
   }
 
   // custom methods
-  function customMethod(
-    verb: 'POST' | 'GET' | 'PATCH' | 'PUT' | 'DELETE',
-    path: string,
-  ): ((method: FnServiceMethod) => FnServiceMethod);
+  // only define decorator return type for typescript
+  function customMethod(verb: Verb, path: string): (target: any, memberName: string) => void;
 
   function customMethodsHandler(
     app: Application

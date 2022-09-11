@@ -265,5 +265,4 @@ describe('feathers 5 custom methods', () => {
       expect(app.docs.paths['/service/getVersion']).to.not.exist;
     });
   });
-
 });
