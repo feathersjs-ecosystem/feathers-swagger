@@ -1,6 +1,8 @@
 // TypeScript Version: 3.0
 
 import { Application, Service } from '@feathersjs/feathers';
+import { ExtendableContext } from 'koa';
+import { Request } from 'express';
 
 export = feathersSwagger;
 
@@ -237,6 +239,9 @@ declare namespace feathersSwagger {
       docsPath: string;
       docsJsonPath: string;
       specs: SpecsObject;
+      ctx?: ExtendableContext;
+      req?: Request;
+      app: Application;
     }): string;
   }
 

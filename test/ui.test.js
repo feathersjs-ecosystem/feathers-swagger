@@ -85,12 +85,12 @@ describe('feathers-swagger.swaggerUI', () => {
           );
 
           const { data: responseContent } = await axios.get(
-          `http://localhost:6776${requestPath}`,
-          {
-            headers: {
-              Accept: 'text/html'
-            }
-          }
+            `http://localhost:6776${requestPath}`,
+            {
+              headers: {
+                Accept: 'text/html',
+              },
+            },
           );
 
           expect(responseContent).to.equal(expectedResponse);
@@ -191,6 +191,28 @@ describe('feathers-swagger.swaggerUI', () => {
         // check some static assets of SwaggerUI
         expect((await axios.get('http://localhost:6776/docs/swagger-ui.css')).status).to.equal(200);
         expect((await axios.get('http://localhost:6776/docs/swagger-ui-bundle.js')).status).to.equal(200);
+      });
+
+      it('should respect x-forwarded-prefix header', async () => {
+        const headers = { 'X-FORWARDED-PREFIX': '/redirect-prefix' }
+
+        await startServiceWithUi(swaggerUI());
+
+        // check the redirect using the prefix
+        const axiosResponse = await axios.get('http://localhost:6776/docs', {
+          headers,
+          maxRedirects: 0,
+          validateStatus: (resStatus) => resStatus === 302,
+        });
+        expect(axiosResponse.headers['location']).equals('/redirect-prefix/docs/');
+
+        // check json path is set in initializer script
+        const { data: initializerContent } = await axios.get(
+          'http://localhost:6776/docs/swagger-initializer.js',
+          { headers },
+        );
+
+        expect(initializerContent).contains('url: "/redirect-prefix/swagger.json"');
       });
     });
   });

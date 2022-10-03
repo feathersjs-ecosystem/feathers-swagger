@@ -4,3 +4,4 @@ future-release=v3.0.0
 release-branch=master
 issues-of-open-milestones=false
 unreleased=false
+output=docs/CHANGELOG.md

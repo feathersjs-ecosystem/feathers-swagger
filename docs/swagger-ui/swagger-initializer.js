@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
   const searchParams = new URLSearchParams(window.location.search);
 
   let url = 'https://petstore3.swagger.io/api/v3/openapi.json';
@@ -6,6 +6,7 @@ window.onload = function() {
     url = searchParams.get('url');
   }
 
+  /* global SwaggerUIBundle, SwaggerUIStandalonePreset */
   window.ui = SwaggerUIBundle({
     url,
     dom_id: '#swagger-ui',
@@ -17,6 +18,6 @@ window.onload = function() {
     plugins: [
       SwaggerUIBundle.plugins.DownloadUrl
     ],
-    layout: "StandaloneLayout"
+    layout: 'StandaloneLayout'
   });
 };

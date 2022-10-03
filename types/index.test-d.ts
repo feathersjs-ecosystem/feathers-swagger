@@ -362,7 +362,7 @@ expectType<FnUiInit>(swaggerUI({}));
 expectType<FnUiInit>(swaggerUI({
   docsPath: '/path',
   indexFile: '/path/to/file',
-  getSwaggerInitializerScript: ({ specs: {}, docsJsonPath, docsPath}) => 'string',
+  getSwaggerInitializerScript: ({ specs: {}, docsJsonPath, docsPath, ctx, req, app }) => 'string',
 }));
 
 /*
