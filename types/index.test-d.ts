@@ -175,6 +175,10 @@ swagger({
       updateMulti() { return false },
       removeMulti() { return false },
       custom() { return false },
+    },
+    schemaNames: {
+      list() { return 'string' },
+      pagination() { return 'string' },
     }
   }
 });
@@ -273,6 +277,10 @@ const service: ServiceSwaggerAddon = {
       updateMultiResponse: 'model',
       customMethodRequest: 'model',
       customMethodResponse: 'model',
+    },
+    schemaNames: {
+      list() { return 'string' },
+      pagination() { return 'string' },
     },
     pathParams: {
       testParam: { any: 'key' },

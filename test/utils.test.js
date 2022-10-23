@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-expressions */
+const { Type, querySyntax } = require('@feathersjs/typebox');
+
 const { expect } = require('chai');
-const { operation, tag, security, idPathParameters } = require('../lib/utils');
+const { operation, tag, security, idPathParameters, createSwaggerServiceOptions } = require('../lib/utils');
 
 describe('util tests', () => {
   describe('operation', () => {
@@ -147,6 +149,91 @@ describe('util tests', () => {
 
     it('should return id path parameters when idName is array with multiple items and custom idSeparator', () => {
       expect(idPathParameters(['firstId', 'secondId'], '|')).to.deep.equals('{firstId}|{secondId}');
+    });
+  });
+
+  describe('createSwaggerServiceOptions', () => {
+    const without$Id = (schema) => {
+      const { $id, ...rest } = schema;
+      return rest;
+    };
+
+    describe('should create swaggerServiceOptions for TypeBox (or json) schemas', () => {
+      const messageDataSchema = Type.Object(
+        { message: Type.String() }, { $id: 'MessageData', additionalProperties: false }
+      );
+      const messageSchema = Type.Intersect(
+        [
+          Type.Object({
+            id: Type.Number()
+          }),
+          messageDataSchema
+        ],
+        { $id: 'Message' }
+      );
+      const messageQuerySchema = Type.Intersect([
+        querySyntax(messageSchema),
+        Type.Object({})
+      ]);
+
+      it('with refs and list when all generated schemas are provided', () => {
+        const result = createSwaggerServiceOptions({ schemas: { messageDataSchema, messageSchema, messageQuerySchema } });
+
+        expect(result).to.deep.equal({
+          schemas: {
+            Message: without$Id(messageSchema),
+            MessageData: without$Id(messageDataSchema),
+            MessagePatchData: without$Id(Type.Partial(messageDataSchema)),
+            MessageQuery: Type.Omit(messageQuerySchema, ['$limit', '$skip']),
+            MessageList: {
+              items: {
+                $ref: '#/components/schemas/Message'
+              },
+              type: 'array'
+            }
+          },
+          refs: {
+            createRequest: 'MessageData',
+            updateRequest: 'MessageData',
+            patchRequest: 'MessagePatchData',
+            queryParameters: 'MessageQuery'
+          },
+          model: 'Message'
+        });
+      });
+
+      it('without refs for schemas with id', () => {
+        const result = createSwaggerServiceOptions({
+          schemas: { messageDataSchema, messageQuerySchema },
+          docs: {
+            description: 'My description',
+            definitions: { MySchema: {} },
+            refs: { createResponse: 'MySchema' }
+          }
+        });
+
+        expect(result).to.deep.equal({
+          description: 'My description',
+          refs: { createResponse: 'MySchema' },
+          schemas: {
+            MessageData: without$Id(messageDataSchema),
+            MySchema: {}
+          }
+        });
+      });
+
+      it('with mapped ref for schemas when key is a known refKey', () => {
+        const result = createSwaggerServiceOptions({ schemas: { patchRequest: messageDataSchema } });
+
+        expect(result).to.deep.equal({
+          schemas: {
+            MessageData: without$Id(messageDataSchema)
+          },
+          refs: {
+            patchRequest: 'MessageData'
+          }
+        });
+      });
     });
   });
 });

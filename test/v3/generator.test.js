@@ -270,7 +270,7 @@ describe('openopi v3 generator', function () {
         expect(specs.paths['/api/message'].get.tags).to.deep.equal(['message']);
         expect(specs.paths['/api/message/{id}'].get.tags).to.deep.equal(['message']);
         expect(specs.paths['/api/message'].get.responses[200].content['application/json'].schema.$ref)
-          .to.equal('#/components/schemas/message_list');
+          .to.equal('#/components/schemas/messageList');
         expect(specs.paths['/api/message/{id}'].get.responses[200].content['application/json'].schema.$ref)
           .to.equal('#/components/schemas/message');
 
@@ -292,7 +292,7 @@ describe('openopi v3 generator', function () {
         expect(specs.paths['/api/v1/message'].get.tags).to.deep.equal(['message']);
         expect(specs.paths['/api/v1/message/{id}'].get.tags).to.deep.equal(['message']);
         expect(specs.paths['/api/v1/message'].get.responses[200].content['application/json'].schema.$ref)
-          .to.equal('#/components/schemas/message_list');
+          .to.equal('#/components/schemas/messageList');
         expect(specs.paths['/api/v1/message/{id}'].get.responses[200].content['application/json'].schema.$ref)
           .to.equal('#/components/schemas/message');
         expect(specs.tags).to.deep.equal([
@@ -316,7 +316,7 @@ describe('openopi v3 generator', function () {
         expect(specs.paths['/api/v1/message'].get.tags).to.deep.equal(['message v1']);
         expect(specs.paths['/api/v1/message/{id}'].get.tags).to.deep.equal(['message v1']);
         expect(specs.paths['/api/v1/message'].get.responses[200].content['application/json'].schema.$ref)
-          .to.equal('#/components/schemas/message_v1_list');
+          .to.equal('#/components/schemas/message_v1List');
         expect(specs.paths['/api/v1/message/{id}'].get.responses[200].content['application/json'].schema.$ref)
           .to.equal('#/components/schemas/message_v1');
         expect(specs.tags).to.deep.equal([
@@ -327,7 +327,7 @@ describe('openopi v3 generator', function () {
         ]);
         expect(specs.components.schemas).to.deep.equal({
           message_v1: messageDefinition,
-          message_v1_list: {
+          message_v1List: {
             items: {
               $ref: '#/components/schemas/message_v1'
             },
@@ -358,7 +358,7 @@ describe('openopi v3 generator', function () {
         expect(specs.paths['/api/message'].get.tags).to.deep.equal(['notFromPath']);
         expect(specs.paths['/api/message/{id}'].get.tags).to.deep.equal(['notFromPath']);
         expect(specs.paths['/api/message'].get.responses[200].content['application/json'].schema.$ref)
-          .to.equal('#/components/schemas/custom_list');
+          .to.equal('#/components/schemas/customList');
         expect(specs.paths['/api/message/{id}'].get.responses[200].content['application/json'].schema.$ref)
           .to.equal('#/components/schemas/custom');
 
@@ -371,7 +371,7 @@ describe('openopi v3 generator', function () {
 
         expect(specs.components.schemas).to.deep.equal({
           custom: messageDefinition,
-          custom_list: {
+          customList: {
             items: {
               $ref: '#/components/schemas/custom'
             },
@@ -477,36 +477,37 @@ describe('openopi v3 generator', function () {
             ]);
             expect(options.securities).to.deep.equal(['find']);
             expect(options.refs).to.deep.equal({
-              findResponse: 'message_list',
+              findResponse: 'messageList',
               getResponse: 'message',
               createRequest: 'message',
               createResponse: 'message',
               createMultiRequest: {
                 refs: [
                   'message',
-                  'message_list'
+                  'messageList'
                 ],
                 type: 'oneOf'
               },
               createMultiResponse: {
                 refs: [
                   'message',
-                  'message_list'
+                  'messageList'
                 ],
                 type: 'oneOf'
               },
               updateRequest: 'message',
               updateResponse: 'message',
-              updateMultiRequest: 'message_list',
-              updateMultiResponse: 'message_list',
+              updateMultiRequest: 'messageList',
+              updateMultiResponse: 'messageList',
               patchRequest: 'message',
               patchResponse: 'message',
               patchMultiRequest: 'message',
-              patchMultiResponse: 'message_list',
+              patchMultiResponse: 'messageList',
               removeResponse: 'message',
-              removeMultiResponse: 'message_list',
+              removeMultiResponse: 'messageList',
               filterParameter: 'message',
-              sortParameter: ''
+              sortParameter: '',
+              queryParameters: ''
             });
             expect(options.service).to.equal(service);
             expect(options.config.defaults.operationGenerators.find)
@@ -694,6 +695,28 @@ describe('openopi v3 generator', function () {
           expect(specs.paths['/message/{id}'].get.parameters[1]).to.deep.equal(headerParam);
         });
       });
+
+      it('schemaNames should be used', function () {
+        const gen = new OpenApi3Generator(app, specs, {
+          defaults: {
+            schemaNames: {
+              list: n => `${n}_list`,
+              pagination: n => `${n}_pagination`
+            }
+          }
+        });
+
+        const paginationService = memory({ paginate: { default: 10 } });
+
+        paginationService.docs = { schema: messageDefinition };
+
+        gen.addService(paginationService, 'message');
+
+        expect(specs.components.schemas.messageList).to.be.undefined;
+        expect(specs.components.schemas.message_list).to.not.be.undefined;
+        expect(specs.components.schemas.messagePagination).to.be.undefined;
+        expect(specs.components.schemas.message_pagination).to.not.be.undefined;
+      });
     });
   });
 
@@ -729,7 +752,7 @@ describe('openopi v3 generator', function () {
 
       expect(specs.components.schemas).to.deep.equal({
         message: messageDefinition,
-        message_list: {
+        messageList: {
           items: {
             $ref: '#/components/schemas/message'
           },
@@ -746,7 +769,7 @@ describe('openopi v3 generator', function () {
 
       expect(specs.components.schemas).to.deep.equal({
         message: messageDefinition,
-        message_list: {
+        messageList: {
           items: {
             $ref: '#/components/schemas/message'
           },
@@ -857,9 +880,12 @@ describe('openopi v3 generator', function () {
       });
     });
 
-    it('model should be used for default spec refs and as modelName if not provided', function () {
+    it('model should be used for default spec refs and as modelName if not provided, custom schema name', function () {
       service.docs.model = 'own_message';
       service.docs.definition = messageDefinition;
+      service.docs.schemaNames = {
+        list: (n) => `${n}_list`
+      };
 
       gen.addService(service, 'message');
 
@@ -891,6 +917,9 @@ describe('openopi v3 generator', function () {
       service.docs.model = 'own_message';
       service.docs.modelName = 'MessageNiceName';
       service.docs.definition = messageDefinition;
+      service.docs.schemaNames = {
+        list: (n) => `${n}_list`
+      };
 
       gen.addService(service, 'message');
 
@@ -967,6 +996,17 @@ describe('openopi v3 generator', function () {
 
       expect(specs.paths['/message'].get.parameters[2].schema.$ref)
         .to.equal('#/components/schemas/message_sort');
+    });
+
+    it('refs.queryParameters should be consumed when not empty', function () {
+      service.docs.refs = {
+        queryParameters: 'message_query'
+      };
+
+      gen.addService(service, 'message');
+
+      expect(specs.paths['/message'].get.parameters[2].schema.$ref)
+        .to.equal('#/components/schemas/message_query');
     });
 
     it('refs object should be allowed for schema refs', function () {

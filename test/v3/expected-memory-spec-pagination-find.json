@@ -9,14 +9,14 @@
         },
         "type": "object"
       },
-      "message_list": {
+      "messageList": {
         "items": {
           "$ref": "#/components/schemas/message"
         },
         "title": "message list",
         "type": "array"
       },
-      "message_pagination": {
+      "messagePagination": {
         "title": "message pagination result",
         "type": "object",
         "properties": {
@@ -30,7 +30,7 @@
             "type": "integer"
           },
           "data": {
-            "$ref": "#/components/schemas/message_list"
+            "$ref": "#/components/schemas/messageList"
           }
         }
       }
@@ -87,7 +87,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/message_pagination"
+                  "$ref": "#/components/schemas/messagePagination"
                 }
               }
             },

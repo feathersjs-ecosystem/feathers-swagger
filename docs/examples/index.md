@@ -10,3 +10,5 @@ It contains many configurations and can be start with `npm start` when feathers-
 * [SwaggerUI](/examples/ui.md)
 * [Prefixed Routes](/examples/prefixed_routes.md)
 * [Custom Methods](/examples/custom_methods.md)
+* [Using Schemas of Feathersjs v5 (dove)](/examples/generated_service_v5.md)
+* [Authentication with Feathersjs v5 (dove)](/examples/authentication_v5.md)

@@ -33,7 +33,7 @@ module.exports = (app) => {
           }
         }
       },
-      messages_list: {
+      messagesList: {
         title: 'List of Messages',
         type: 'array',
         items: {

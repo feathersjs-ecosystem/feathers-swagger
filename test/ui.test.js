@@ -88,9 +88,9 @@ describe('feathers-swagger.swaggerUI', () => {
             `http://localhost:6776${requestPath}`,
             {
               headers: {
-                Accept: 'text/html',
-              },
-            },
+                Accept: 'text/html'
+              }
+            }
           );
 
           expect(responseContent).to.equal(expectedResponse);
@@ -194,7 +194,7 @@ describe('feathers-swagger.swaggerUI', () => {
       });
 
       it('should respect x-forwarded-prefix header', async () => {
-        const headers = { 'X-FORWARDED-PREFIX': '/redirect-prefix' }
+        const headers = { 'X-FORWARDED-PREFIX': '/redirect-prefix' };
 
         await startServiceWithUi(swaggerUI());
 
@@ -202,14 +202,14 @@ describe('feathers-swagger.swaggerUI', () => {
         const axiosResponse = await axios.get('http://localhost:6776/docs', {
           headers,
           maxRedirects: 0,
-          validateStatus: (resStatus) => resStatus === 302,
+          validateStatus: (resStatus) => resStatus === 302
         });
-        expect(axiosResponse.headers['location']).equals('/redirect-prefix/docs/');
+        expect(axiosResponse.headers.location).equals('/redirect-prefix/docs/');
 
         // check json path is set in initializer script
         const { data: initializerContent } = await axios.get(
           'http://localhost:6776/docs/swagger-initializer.js',
-          { headers },
+          { headers }
         );
 
         expect(initializerContent).contains('url: "/redirect-prefix/swagger.json"');

@@ -17,7 +17,7 @@
                     "$ref": "#/components/schemas/message"
                   },
                   {
-                    "$ref": "#/components/schemas/message_list"
+                    "$ref": "#/components/schemas/messageList"
                   }
                 ]
               }
@@ -35,7 +35,7 @@
                       "$ref": "#/components/schemas/message"
                     },
                     {
-                      "$ref": "#/components/schemas/message_list"
+                      "$ref": "#/components/schemas/messageList"
                     }
                   ]
                 }
@@ -64,7 +64,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/message_list"
+                  "$ref": "#/components/schemas/messageList"
                 }
               }
             }
@@ -87,7 +87,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/message_list"
+                "$ref": "#/components/schemas/messageList"
               }
             }
           }
@@ -112,7 +112,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/message_list"
+                  "$ref": "#/components/schemas/messageList"
                 }
               }
             }
@@ -160,7 +160,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/message_list"
+                  "$ref": "#/components/schemas/messageList"
                 }
               }
             }
@@ -191,7 +191,7 @@
           }
         }
       },
-      "message_list": {
+      "messageList": {
         "title": "message list",
         "type": "array",
         "items": {

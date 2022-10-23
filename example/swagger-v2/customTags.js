@@ -5,6 +5,7 @@
  * - using custom tags, with one being ignored
  * - using custom model
  * - using externalDocs
+ * - using custom list schemaName
  */
 
 const memory = require('feathers-memory');
@@ -47,6 +48,9 @@ module.exports = (app) => {
           $ref: '#/definitions/custom_message'
         }
       }
+    },
+    schemaNames: {
+      list: () => 'custom_message_list'
     }
   };
 

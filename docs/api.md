@@ -48,6 +48,9 @@ __Options:__
   - `getOperationArgs({ service, path, config, apiPath, version })` - Function to generate args that the methods for operations will consume, can also customize default tag and model generation
   - `getOperationsRefs(model, service)` - Function to generate refs that the methods for operations will consume, see service.docs.refs option
   - `schemasGenerator(service, model, modelName, schemas)` - Function to generate the json schemas for a service
+  - `schemaNames`
+    - `list(model)` - function to return the default name for the list schema, defaults to `${model}List` if not provided
+    - `pagination(model)` - function to return the default name for the list schema, defaults to `${model}Pagination` if not provided 
   - `operationGenerators` - Generator functions to fully customize specification generation for operations. To disable the generation of a method return false.
     - `find`|`get`|`create`|`update`|`patch`|`remove` - Generator function for the specific operation.
     - `updateMulti`|`patchMulti`|`removeMulti` - Generator function for the "multi mode" version of the specific operation
@@ -121,9 +124,49 @@ __Options:__
   - `find`|`get`|`create`|`update`|`patch`|`remove`|`nameOfCustomMethod` - Custom (parts of the) specification for the operation, can alternatively be set as doc property of the method. To disable the generation set to false.
   - `updateMulti`|`patchMulti`|`removeMulti` - if "multi mode" is enabled for the specific method, custom parts of the specification can be overwritten. To disable the generation set to false.
   - `all` - Custom (parts of the) specification for all operations.
-- `refs` (*optional*) - Change the refs that are used for different operations: findResponse, getResponse, createRequest, createResponse, updateRequest, updateResponse, patchRequest, patchResponse, removeResponse, {customMethodName[Request|Response]}
+- `refs` (*optional*) - Object with mapping of refs that are used for different operations, by setting the schema name
+  - `findResponse`
+  - `getResponse`
+  - `createRequest`
+  - `createResponse`
+  - `createMultiRequest` - only with `openApiVersion` 3
+  - `createMultiResponse` - only with `openApiVersion` 3
+  - `updateRequest`
+  - `updateResponse`
+  - `updateMultiRequest`
+  - `updateMultiResponse`
+  - `patchRequest`
+  - `patchResponse`
+  - `patchMultiRequest`
+  - `patchMultiResponse`
+  - `removeResponse`
+  - `removeMultiResponse`
+  - `filterParameter`
+  - `sortParameter`
+  - `queryParameters` - only with `openApiVersion` 3
+  - `{customMethodName[Request|Response]}`
+- `schemaNames` (*optional*) - Adjust the automatic generation of schema names
+  - `list(model)` - Function to return the name for the list schema, defaults to `${model}List` if not provided
+  - `pagination(model)` - Function to return the name for the list schema, defaults to `${model}Pagination` if not provided
 - `pathParams` (*optional*) - Object with param name as key and the definition as value, should be used when using "global" path parameters
 - `overwriteTagSpec` (*optional*, default: `false`) - If tag is already defined in the specs, should be overwritten from this service
+
+### `swagger.createSwaggerServiceOptions(options)`
+
+Helper function to create a `service.docs` object, based on the provided schemas.
+Only the `schemas`, `refs` and `model` properties will be generated.
+
+__Options:__
+- `schemas` - Object with TypeBox or json schemas
+  - Provide the generated schemas with `xxxSchema`, `xxxDataSchema` and `xxxQuerySchema` naming schema
+    - This will generate the `schemas` and `refs` and `model` based on the provided schemas
+  - Provide any schema that has an `$id` with any name
+    - This will just add the schema that can be consumed in refs or customized operations specifications
+  - Provide any schema that has an `$id` with a ref as key, check `service.docs.refs` for allowed refs
+    - This will add the schema and use it for the given ref
+- `docs` - Any service.docs options that will be merged into the resulting object and would overwrite anything that will be generated
+- `sanitizeSchema` - A function that sanitizes the schema from properties that are not allowed in an OpenApi specification.
+   If not provided a default implementation will be used. 
 
 ### Path support to update nested structures
 
@@ -140,7 +183,7 @@ Valid unshift syntax:
 - `path[-]`
 - `path[-D]` with D being digits (needed to be able to define more than one element to unshift, the digits does not refer to a position)
 
-### `swaggerUI.customMethod(verb, path)`
+### `swagger.customMethod(verb, path)`
 
 To define the rest method of a custom method it has to be wrapped/annotated with `customMethod`.
 For Feathers 5 the custom method has to be added to the methods when registering the service.

@@ -9,7 +9,7 @@
         },
         "type": "object"
       },
-      "message_list": {
+      "messageList": {
         "items": {
           "$ref": "#/components/schemas/message"
         },
@@ -69,7 +69,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/message_list"
+                  "$ref": "#/components/schemas/messageList"
                 }
               }
             },

@@ -71,7 +71,7 @@
 <script src="./swagger-ui-standalone-preset.js"> </script>
 <script>
 window.onload = function() {
-  
+
   // Build a system
   const ui = SwaggerUIBundle({
     urls: [
@@ -126,6 +126,10 @@ window.onload = function() {
       {
         url: "http://localhost:3030/v3/id-names.json",
         name: "OpenAPI V3 - With different id names per method"
+      },
+      {
+        url: "http://localhost:3030/v3/dove-schemas.json",
+        name: "OpenAPI V3 - Example using schemas introduced with dove (feathersjs v5)"
       },
     ],
     dom_id: '#swagger-ui',

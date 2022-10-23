@@ -20,6 +20,7 @@ const openApiV3Security = require('./openapi-v3/security');
 const openApiV3CustomMethods = require('./openapi-v3/customMethods');
 const openApiV3Multi = require('./openapi-v3/multi');
 const openApiV3IdNames = require('./openapi-v3/idNames');
+const openApiV3DoveSchemas = require('./openapi-v3/doveSchemas');
 
 const app = express(feathers())
   .use(express.json())
@@ -52,9 +53,11 @@ const app = express(feathers())
   .configure(openApiV3CustomMethods)
   .configure(openApiV3Multi)
   .configure(openApiV3IdNames)
+  .configure(openApiV3DoveSchemas)
 
   ;
 
-console.log('Simple app with multiple feathers-swagger examples running on http://localhost:3030/');
+const port = process.env.PORT || 3030;
+console.log(`Simple app with multiple feathers-swagger examples running on http://localhost:${port}/`);
 
-app.listen(process.env.PORT || 3030);
+app.listen(port);

@@ -5,3 +5,4 @@
 * Migrations
 * * [Migrations for Version 1](/migrations/MIGRATIONS_v1.md)
 * * [Migrations for Version 2](/migrations/MIGRATIONS_v2.md)
+* * [Migrations for version 3](/migrations/MIGRATIONS_v3.md)

@@ -5,6 +5,7 @@
  * - use service with multi: true and define multi option
  * - use refs.sortParameter
  * - use schemasGenerator
+ * - use custom default schemaName for list
  */
 
 const memory = require('feathers-memory');
@@ -54,6 +55,9 @@ module.exports = (app) => {
       paths: ['v3/multi/messages']
     },
     defaults: {
+      schemaNames: {
+        list: (model) => `${model}_list`
+      },
       schemasGenerator (service, model, modelName) {
         // here you could transform an orm model to json schema for example
         // we simply reuse the schema

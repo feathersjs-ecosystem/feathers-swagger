@@ -2,7 +2,7 @@
   "name": "feathers-swagger",
   "description": "Add documentation to your Feathers services and feed them to Swagger UI.",
   "version": "2.0.0",
-  "homepage": "https://github.com/feathersjs-ecosystem/feathers-swagger",
+  "homepage": "https://feathersjs-ecosystem.github.io/feathers-swagger",
   "main": "lib/",
   "keywords": [
     "feathers",
@@ -43,7 +43,8 @@
     "coverage:ci:v4": "npm run coverage:ci:v4:install && npm run coverage:ci:v4:nyc",
     "coverage:ci:v4:install": "npm rm @feathersjs/koa @koa/router koa-mount koa-static && npm install @feathersjs/feathers@^4 @feathersjs/express@^4",
     "coverage:ci:v4:nyc": "nyc --silent --no-clean npm run mocha",
-    "start": "node example/app"
+    "start": "node example/app",
+    "dev:docs": "docsify serve docs"
   },
   "semistandard": {
     "sourceType": "module",
@@ -59,9 +60,11 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@feathersjs/express": "^5.0.0-pre.28",
-    "@feathersjs/feathers": "^5.0.0-pre.28",
-    "@feathersjs/koa": "^5.0.0-pre.28",
+    "@feathersjs/express": "^5.0.0-pre.31",
+    "@feathersjs/feathers": "^5.0.0-pre.31",
+    "@feathersjs/koa": "^5.0.0-pre.31",
+    "@feathersjs/schema": "^5.0.0-pre.31",
+    "@feathersjs/typebox": "^5.0.0-pre.31",
     "@koa/router": "^12.0.0",
     "@mairu/swagger-ui-apikey-auth-form": "^1.2.1",
     "@types/serve-static": "^1.13.10",

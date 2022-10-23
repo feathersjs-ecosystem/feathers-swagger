@@ -120,12 +120,51 @@ const app = express(feathers())
 
 ### Configure the documentation for a feathers service
 
-To customize the documentation of feathers service a docs property has to be added to a service before it is registered.
+To customize the documentation of feathers service a docs property has to be added. This can be done as property before the service is registered or as service path option.
 There are many options please check out the [examples](examples/index.md) and the [API documentation](api.md#servicedocs) to get more details.
 
 <!-- tabs:start -->
 
+#### **Service path option (TS)**
+The docs property can be set as [path service options](https://dove.feathersjs.com/api/application.html#use-path-service-options) introduced with feathers dove. 
+
+```typescript
+import type { createSwaggerServiceOptions } from 'feathers-swagger';
+import {
+  messageDataSchema,
+  messageQuerySchema,
+  messageSchema,
+} from './message.schema';
+
+// ...
+
+app.use('message', new MessageService(), {
+  methods: ['find', 'get', 'create', 'update', 'patch', 'remove'],
+  events: [],
+  docs: createSwaggerServiceOptions({
+    schemas: { messageDataSchema, messageQuerySchema, messageSchema },
+    docs: { description: 'My custom service description' }
+  })
+});
+```
+
+To be able to set the docs property on the service options, the interface has to be adjusted in the `declarations.ts` of the project.
+
+```typescript
+import { ServiceSwaggerOptions } from 'feathers-swagger';
+
+// ...
+
+declare module '@feathersjs/feathers' {
+  interface ServiceOptions {
+    docs?: ServiceSwaggerOptions;
+  }
+}
+```
+
 #### **Simple**
+The docs property can be set as property of a service instance before it is registered.
+
 
 ```js
 // definition of service
@@ -169,6 +208,7 @@ To resolve, either manually define your model schemas or consider automated alte
 
 * [Migrations for version 1](migrations/MIGRATIONS_v1.md)
 * [Migrations for version 2](migrations/MIGRATIONS_v2.md)
+* [Migrations for version 3](migrations/MIGRATIONS_v3.md)
 
 ## License
 
