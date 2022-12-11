@@ -30,6 +30,8 @@
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
     "release:major": "npm version major && npm publish",
+    "release:prerelease": "npm version prerelease && npm publish --tag pre",
+    "release:premajor": "npm version premajor && npm publish --tag pre",
     "changelog": "github_changelog_generator && git add docs/CHANGELOG.md && git commit -am \"chore: Update changelog\"",
     "lint": "semistandard --fix",
     "test:types": "tsd",

@@ -308,6 +308,8 @@ declare namespace feathersSwagger {
       [propName: string]: Schema | undefined;
     },
     docs?: ServiceSwaggerOptions,
-    sanitizeSchema?: (schema: Schema) => JSONSchemaDefinition,
+    sanitizeSchema?: (schema: Schema) => Record<string, any>,
   }): ServiceSwaggerOptions;
+
+  function defaultSanitizeSchema(schema: Schema): Record<string, any>;
 }

@@ -1,5 +1,6 @@
 import { expectType, expectError } from 'tsd';
 import { Service, Application } from '@feathersjs/feathers';
+import { TAnySchema } from '@feathersjs/typebox';
 import swagger, {
   ServiceSwaggerAddon,
   SwaggerService,
@@ -12,7 +13,10 @@ import swagger, {
   FnUiInit,
   customMethodsHandler,
   customMethod,
+  createSwaggerServiceOptions,
+  defaultSanitizeSchema,
 } from './index';
+
 
 // complete
 expectType<() => void>(swagger({
@@ -411,3 +415,40 @@ idPathParameters(12, ',');
 idPathParameters([12, 13], ',');
 // @ts-expect-error
 idPathParameters('id', 12);
+
+const schema = {} as TAnySchema;
+
+createSwaggerServiceOptions({
+  schemas: {
+    findResponse: schema,
+    getResponse: schema,
+    createRequest: schema,
+    createResponse: schema,
+    createMultiRequest: schema,
+    createMultiResponse: schema,
+    updateRequest: schema,
+    updateResponse: schema,
+    updateMultiRequest: schema,
+    updateMultiResponse: schema,
+    patchRequest: schema,
+    patchResponse: schema,
+    patchMultiRequest: schema,
+    patchMultiResponse: schema,
+    removeResponse: schema,
+    removeMultiResponse: schema,
+    queryParameters: schema,
+    sortParameter: schema,
+    filterParameter: schema,
+    customSchema: schema,
+  },
+  docs: { description: 'any docs props' },
+  sanitizeSchema: () => ({ 'description': 'content' }),
+});
+
+createSwaggerServiceOptions({
+  schemas: {}, // Schemas are optional
+  docs: { description: 'any docs props' },
+  sanitizeSchema: () => ({ 'description': 'content' }),
+});
+
+expectType<Record<string, any>>(defaultSanitizeSchema(schema));
