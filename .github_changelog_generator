@@ -5,3 +5,4 @@ release-branch=master
 issues-of-open-milestones=false
 unreleased=false
 output=docs/CHANGELOG.md
+exclude-tags-regex=.*-pre.*

@@ -39,10 +39,12 @@ __Options:__
 - `versionPrefix` (*optional*) - Used for automatic tag and name generation for services
 - `include` (*optional*) - Object to configure for which services documentation will be generated, empty means all will be included:
   - `tags` - Array of tags for that service documentation will be generated
-  - `paths` - Array of paths (string or regex) for that service documentation will be generated, Notice: paths don't start with /
+  - `paths` - Array of paths (string or regex) for that service documentation will be generated, __Notice:__ paths don't start with /
+  - `filter(service, path)` - Function to filter services for that documentation will be generated, __Notice:__ paths don't start with /
 - `ignore` (*optional*) - Object to configure  to ignore with the following keys:
   - `tags` - Array of tags for that no service documentation will be generated
   - `paths` - Array of paths (string or regex) for that no service documentation will be generated, Notice: paths don't start with /
+  - `filter(service, path)` - Function to filter services for that documentation won't be generated, __Notice:__ paths don't start with /
 - `appProperty` (*optional*, default: `docs`) - Property of the feathers app object that the generated specification will be saved to, allows custom post-processing; set empty to disable
 - `defaults` (*optional*) - Object to customize the defaults for generation of the specification
   - `getOperationArgs({ service, path, config, apiPath, version })` - Function to generate args that the methods for operations will consume, can also customize default tag and model generation

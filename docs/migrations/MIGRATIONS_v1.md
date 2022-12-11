@@ -108,7 +108,7 @@ swagger({
 ### Generate RFC3986-compliant percent-encoded URIs
 
 To generate valid specifications there may not be spaces in $ref links.
-Therefor concatenation is done with _ by default now. This applies to list and version refs of the previous version.
+Therefore concatenation is done with _ by default now. This applies to list and version refs of the previous version.
 
 #### Before
 ```js

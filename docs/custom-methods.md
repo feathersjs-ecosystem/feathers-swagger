@@ -109,6 +109,6 @@ Check out the [example](/examples/custom_methods.md) to see it in action.
 
 ## Limitations
 
-- In Feathers 4 the custom methods are registered after the default methods of a service and therefor
-  the /service/:id route will "win" over a /server/custom route for all methods but POST.
+- In Feathers 4 the custom methods are registered after the default methods of a service and therefore
+  the /service/:id route will "win" over a /service/custom route for all methods but POST.
 - At least one default method has to be existent in a service to be registered

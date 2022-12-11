@@ -23,7 +23,7 @@ module.exports = (app) => {
     customPost: swagger.customMethod('POST', '/do-post')((data, params) => {
       return Promise.resolve({ method: 'customPost', data, params });
     }),
-    customPatchWithId: swagger.customMethod('PUT', '/do-patch-with/:__feathersId')(
+    customUpdateWithId: swagger.customMethod('PUT', '/do-patch-with/:__feathersId')(
       (data, params, id) => {
         return Promise.resolve({ method: 'customPatchWithId', id, data, params });
       }
@@ -98,8 +98,8 @@ module.exports = (app) => {
     refs: {
       customPostRequest: 'custom_request',
       customPostResponse: 'custom_response',
-      customPatchWithIdRequest: 'custom_request',
-      customPatchWithIdResponse: 'custom_response'
+      customUpdateWithIdRequest: 'custom_request',
+      customUpdateWithIdResponse: 'custom_response'
     },
     operations: {
       find: {
@@ -190,6 +190,6 @@ module.exports = (app) => {
     .use(
       '/v3/custom-methods/:pathParamName/service',
       service,
-      { methods: ['find', 'customPost', 'customPatchWithId', 'customGetWithCustomIds'] }
+      { methods: ['find', 'customPost', 'customUpdateWithId', 'customGetWithCustomIds'] }
     );
 };

@@ -1,7 +1,7 @@
 ## Custom Methods <!-- {docsify-ignore} -->
 
 ### Code (from example app) <!-- {docsify-ignore} -->
-[filename](https://raw.githubusercontent.com/feathersjs-ecosystem/feathers-swagger/master/example/openapi-v3/customMethods.js ':include')
+[filename](https://raw.githubusercontent.com/feathersjs-ecosystem/feathers-swagger/{GITHUB_BRANCH}/example/openapi-v3/customMethods.js ':include')
 
 ### Preview in SwaggerUI <!-- {docsify-ignore} -->
 

@@ -8,6 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-changelog-plugin@latest/dist/style.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prismjs@1/plugins/line-highlight/prism-line-highlight.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prismjs@1/plugins/line-numbers/prism-line-numbers.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <style>
     #CHANGELOG_RENDERER {
@@ -17,6 +19,25 @@
 
     iframe.swui-preview {
       height: 80vh;
+    }
+
+    .line-highlight {
+      margin-top: 3.5em;
+    }
+
+    .markdown-section pre[data-line] {
+      overflow: hidden;
+    }
+
+    .markdown-section pre.line-numbers > code {
+      overflow: visible;
+    }
+
+    .markdown-section pre.line-numbers .line-numbers-rows {
+      margin-top: 2.2em;
+    }
+    .markdown-section pre.line-numbers .line-highlight {
+      margin-top: 1em;
     }
   </style>
 </head>
@@ -32,6 +53,12 @@
       subMaxLevel: 3,
       loadNavbar: false,
       changelog: 'CHANGELOG.md',
+      replacements: [
+        {
+          search: '{GITHUB_BRANCH}',
+          replace: 'next'
+        }
+      ],
     }
   </script>
   <!-- Docsify v4 -->
@@ -39,6 +66,10 @@
   <script src="//cdn.jsdelivr.net/npm/docsify-changelog-plugin@latest/dist/index.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/plugins/line-highlight/prism-line-highlight.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="/docsify/prism-lines.js"></script>
+  <script src="/docsify/replace.js"></script>
 </body>
 </html>

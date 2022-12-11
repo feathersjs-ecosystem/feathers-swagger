@@ -5,7 +5,7 @@
 
 Add [OpenAPI](https://swagger.io/resources/open-api/) documentation to your Feathers services and optionally show them in the [Swagger UI](https://swagger.io/tools/swagger-ui/).
 
-You can also add custom methods to feathers services that will be available as rest routes but not via the feathers client. 
+You can also add custom methods to feathers services that will be available as rest routes but not via feathers client. 
 
 This version is prepared to work with Swagger UI >= 4.9
 

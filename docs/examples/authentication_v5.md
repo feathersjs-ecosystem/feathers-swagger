@@ -30,7 +30,7 @@
 2. Add documentation to the authentication service (`src/authentication.ts`).
    This example shows local authentication.
 
-   ```typescript
+   ```typescript {"highlight": "12-16, 21-71", "lineNumbers": true}
    import { AuthenticationService, JWTStrategy } from '@feathersjs/authentication';
    import { LocalStrategy } from '@feathersjs/authentication-local';
    import type { Application } from './declarations';
@@ -117,10 +117,11 @@
 4. If you want to provide simple authentication usage on the SwaggerUI using Email/Username and Password,
    you can use the [Swagger UI Plugin ApiKeyAuthForm](https://github.com/Mairu/swagger-ui-apikey-auth-form).
 
-   Here is an example of an `openapi.ts` swagger configuration file, that can used with `api.configure()`;
+   Here is an example of an `openapi.ts` swagger configuration file, that can used with `api.configure();`
 
    ```typescript
-   import swagger, { FnSwaggerUiGetInitializerScript } from 'feathers-swagger';
+   import swagger from 'feathers-swagger';
+   import type { FnSwaggerUiGetInitializerScript } from 'feathers-swagger';
    import type { Application } from './declarations';
    
    const getSwaggerInitializerScript: FnSwaggerUiGetInitializerScript = ({ docsJsonPath, ctx }) => {

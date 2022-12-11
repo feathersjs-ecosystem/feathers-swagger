@@ -53,7 +53,7 @@ swagger({
 ### docsPath option is removed and a default value for docsJsonPath has been added
 
 As the uiIndex has been removed and the initialization of the ui has been extracted (to the swaggerUI initializer), the docsPath option has been removed / moved to the swaggerUI initializer.
-Therefor the docsJsonPath now has the default value of `/swagger.json`.
+Therefore the docsJsonPath now has the default value of `/swagger.json`.
 
 ### Default of openApiVersion option was changed from 2 to 3
 
