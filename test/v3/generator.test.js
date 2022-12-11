@@ -64,7 +64,7 @@ describe('openopi v3 generator', function () {
     expect(specs).to.deep.equal(require('./expected-memory-spec-multi-only.json'));
   });
 
-  it('should generate expected specification for service with enabled paginationof memory service', () => {
+  it('should generate expected specification for service with enabled pagination of memory service', () => {
     const specs = {};
     const gen = new OpenApi3Generator(app, specs, swaggerOptions);
     const service = memory({ paginate: { default: 10 } });
@@ -1370,6 +1370,34 @@ describe('openopi v3 generator', function () {
       gen.addService(service, 'message');
 
       expect(specs.paths['/message/custom']).to.be.undefined;
+    });
+
+    it('multiple custom methods should not interfere with original create', () => {
+      const service = {
+        create () {},
+        docs: {
+          schema: { type: 'object', properties: { id: { type: 'integer ' } } },
+          operations: {
+            create: { description: 'create description' },
+            customPost1: {
+              description: 'custom post 1',
+              'parameters[0]': {
+                description: 'custom post parameter 1'
+              }
+            }
+          }
+        }
+      };
+
+      addCustomMethod(service, { name: 'customPost1', path: '/customPost1' });
+
+      gen.addService(service, 'message');
+
+      expect(specs.paths['/message'].post.description).to.equal('create description');
+      expect(specs.paths['/message/customPost1'].post.description).to.equal('custom post 1');
+
+      expect(specs.paths['/message'].post.parameters).to.deep.equal([]);
+      expect(specs.paths['/message/customPost1'].post.parameters).to.deep.equal([{ description: 'custom post parameter 1' }]);
     });
   });
 });

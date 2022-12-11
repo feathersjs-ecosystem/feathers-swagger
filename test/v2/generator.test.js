@@ -79,7 +79,7 @@ describe('swagger v2 generator', function () {
     expect(specs).to.deep.equal(require('./expected-memory-spec-multi-only.json'));
   });
 
-  it('should generate expected specification for service with enabled paginationof memory service', () => {
+  it('should generate expected specification for service with enabled pagination of memory service', () => {
     const specs = {};
     const gen = new OpenApi2Generator(app, specs, swaggerOptions);
     const service = memory({ paginate: { default: 10 } });
