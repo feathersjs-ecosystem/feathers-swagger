@@ -1254,6 +1254,42 @@ describe('openopi v3 generator', function () {
         });
       });
     });
+
+    describe('serviceOptions (v5)', () => {
+      it('should consume consume docs from serviceOptions', () => {
+        delete service.docs;
+        gen.addService(service, 'message', {
+          methods: ['find', 'get'],
+          events: [],
+          docs: {
+            description: 'my custom description'
+          }
+        });
+
+        expect(specs.tags).to.deep.equal([
+          {
+            description: 'my custom description',
+            name: 'message'
+          }
+        ]);
+        expect(specs.paths['/message'].get).to.exist;
+        expect(specs.paths['/message/{id}'].get).to.exist;
+      });
+
+      it('should disable methods that are missing from methods array', () => {
+        delete service.docs;
+        gen.addService(service, 'message', {
+          methods: ['find'],
+          events: [],
+          docs: {
+            description: 'my custom description'
+          }
+        });
+
+        expect(specs.paths['/message'].get).to.exist;
+        expect(specs.paths['/message/{id}']).to.not.exist;
+      });
+    });
   });
 
   describe('custom methods', function () {
