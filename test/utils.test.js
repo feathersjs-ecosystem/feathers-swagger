@@ -175,15 +175,25 @@ describe('util tests', () => {
         querySyntax(messageSchema),
         Type.Object({})
       ]);
+      const messagePatchSchema = Type.Partial(messageDataSchema, {
+        $id: 'MessagePatch'
+      });
 
       it('with refs and list when all generated schemas are provided', () => {
-        const result = createSwaggerServiceOptions({ schemas: { messageDataSchema, messageSchema, messageQuerySchema } });
+        const result = createSwaggerServiceOptions({
+          schemas: {
+            messageDataSchema,
+            messageSchema,
+            messageQuerySchema,
+            messagePatchSchema
+          }
+        });
 
         expect(result).to.deep.equal({
           schemas: {
             Message: without$Id(messageSchema),
             MessageData: without$Id(messageDataSchema),
-            MessagePatchData: without$Id(Type.Partial(messageDataSchema)),
+            MessagePatch: without$Id(messagePatchSchema),
             MessageQuery: Type.Omit(messageQuerySchema, ['$limit', '$skip']),
             MessageList: {
               items: {
@@ -195,7 +205,31 @@ describe('util tests', () => {
           refs: {
             createRequest: 'MessageData',
             updateRequest: 'MessageData',
-            patchRequest: 'MessagePatchData',
+            patchRequest: 'MessagePatch',
+            queryParameters: 'MessageQuery'
+          },
+          model: 'Message'
+        });
+      });
+
+      it('with refs and list when some generated schemas are provided', () => {
+        const result = createSwaggerServiceOptions({ schemas: { messageDataSchema, messageSchema, messageQuerySchema } });
+
+        expect(result).to.deep.equal({
+          schemas: {
+            Message: without$Id(messageSchema),
+            MessageData: without$Id(messageDataSchema),
+            MessageQuery: Type.Omit(messageQuerySchema, ['$limit', '$skip']),
+            MessageList: {
+              items: {
+                $ref: '#/components/schemas/Message'
+              },
+              type: 'array'
+            }
+          },
+          refs: {
+            createRequest: 'MessageData',
+            updateRequest: 'MessageData',
             queryParameters: 'MessageQuery'
           },
           model: 'Message'

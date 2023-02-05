@@ -2,7 +2,7 @@
 
 1. Go into your `src/services/{$name}` folder, and open the service you want to edit `${name}.[tj]s`
 2. Import the helper function and import the schemas (example for user service):
-```js  {"highlight": "9-11", "lineNumbers": true}
+```js  {"highlight": "9-12", "lineNumbers": true}
   import { createSwaggerServiceOptions } from 'feathers-swagger';
   import {
       userDataValidator,
@@ -14,6 +14,7 @@
       userDataSchema,
       userQuerySchema,
       userSchema,
+      userPatchSchema,
   } from './users.schema';
 ```
 adjust the options when the service is generated
@@ -24,7 +25,7 @@ adjust the options when the service is generated
       // You can add additional custom events to be sent to clients here
       events: [],
       docs: createSwaggerServiceOptions({
-          schemas: { userDataSchema, userQuerySchema, userSchema },
+          schemas: { userDataSchema, userQuerySchema, userSchema, userPatchSchema },
           docs: {
               // any options for service.docs can be added here
               securities: ['find', 'get', 'update', 'patch', 'remove'],

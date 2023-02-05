@@ -62,11 +62,11 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@feathersjs/express": "^5.0.0-pre.31",
-    "@feathersjs/feathers": "^5.0.0-pre.31",
-    "@feathersjs/koa": "^5.0.0-pre.31",
-    "@feathersjs/schema": "^5.0.0-pre.31",
-    "@feathersjs/typebox": "^5.0.0-pre.31",
+    "@feathersjs/express": "^5.0.0-pre.36",
+    "@feathersjs/feathers": "^5.0.0-pre.36",
+    "@feathersjs/koa": "^5.0.0-pre.36",
+    "@feathersjs/schema": "^5.0.0-pre.36",
+    "@feathersjs/typebox": "^5.0.0-pre.36",
     "@koa/router": "^12.0.0",
     "@mairu/swagger-ui-apikey-auth-form": "^1.2.1",
     "@types/serve-static": "^1.13.10",
