@@ -1,7 +1,7 @@
 ### Example with feathers generated authentication on feathersjs v5 (dove) <!-- {docsify-ignore} -->
 
 1. When you have generated the app with authentication you have to add some things to the initial
-   specs when registering feathers swagger.
+   specs when registering feathers-swagger.
 
    ```typescript
    app.configure(

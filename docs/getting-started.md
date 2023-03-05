@@ -131,19 +131,24 @@ The docs property can be set as [path service options](https://dove.feathersjs.c
 ```typescript
 import type { createSwaggerServiceOptions } from 'feathers-swagger';
 import {
-  messageDataSchema,
-  messageQuerySchema,
+  // ...
   messageSchema,
-} from './message.schema';
+  messageDataSchema,
+  messagePatchSchema,
+  messageQuerySchema
+} from './messages.schema';
 
 // ...
 
 app.use('message', new MessageService(), {
-  methods: ['find', 'get', 'create', 'update', 'patch', 'remove'],
+  methods: messageMethods,
   events: [],
   docs: createSwaggerServiceOptions({
     schemas: { messageDataSchema, messageQuerySchema, messageSchema },
-    docs: { description: 'My custom service description' }
+    docs: { 
+      description: 'My custom service description',
+      securities: ['all'],
+    }
   })
 });
 ```

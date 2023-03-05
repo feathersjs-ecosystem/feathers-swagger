@@ -308,8 +308,8 @@ declare namespace feathersSwagger {
       [propName: string]: Schema | undefined;
     },
     docs?: ServiceSwaggerOptions,
-    sanitizeSchema?: (schema: Schema) => Record<string, any>,
+    transformSchema?: (schema: Schema) => Record<string, any>,
   }): ServiceSwaggerOptions;
 
-  function defaultSanitizeSchema(schema: Schema): Record<string, any>;
+  function defaultTransformSchema(schema: Schema): Record<string, any>;
 }

@@ -167,8 +167,8 @@ __Options:__
   - Provide any schema that has an `$id` with a ref as key, check `service.docs.refs` for allowed refs
     - This will add the schema and use it for the given ref
 - `docs` - Any service.docs options that will be merged into the resulting object and would overwrite anything that will be generated
-- `sanitizeSchema` - A function that sanitizes the schema from properties that are not allowed in an OpenApi specification.
-   If not provided a default implementation will be used. 
+- `transformSchema` - A function that transforms the schema to a valid OpenApi schema.
+     If not provided a default implementation will be used which removes unsupported properties and adjust references. 
 
 ### Path support to update nested structures
 

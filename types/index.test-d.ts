@@ -14,9 +14,8 @@ import swagger, {
   customMethodsHandler,
   customMethod,
   createSwaggerServiceOptions,
-  defaultSanitizeSchema,
+  defaultTransformSchema,
 } from './index';
-
 
 // complete
 expectType<() => void>(swagger({
@@ -442,13 +441,13 @@ createSwaggerServiceOptions({
     customSchema: schema,
   },
   docs: { description: 'any docs props' },
-  sanitizeSchema: () => ({ 'description': 'content' }),
+  transformSchema: () => ({ 'description': 'content' }),
 });
 
 createSwaggerServiceOptions({
   schemas: {}, // Schemas are optional
   docs: { description: 'any docs props' },
-  sanitizeSchema: () => ({ 'description': 'content' }),
+  transformSchema: () => ({ 'description': 'content' }),
 });
 
-expectType<Record<string, any>>(defaultSanitizeSchema(schema));
+expectType<Record<string, any>>(defaultTransformSchema(schema));

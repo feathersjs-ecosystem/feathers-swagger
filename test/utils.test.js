@@ -18,7 +18,10 @@ describe('util tests', () => {
     };
 
     it('should provide spec defaults for empty service.docs.operations[method] and defaults', () => {
-      expect(operation('find', { docs: {}, find () {} }, {})).to.deep.equal({
+      expect(operation('find', {
+        docs: {}, find() {
+        }
+      }, {})).to.deep.equal({
         parameters: [],
         responses: {},
         description: '',
@@ -31,7 +34,10 @@ describe('util tests', () => {
     });
 
     it('should consume defaults', () => {
-      expect(operation('find', { docs: {}, find () {} }, defaults)).to.deep.equal(defaults);
+      expect(operation('find', {
+        docs: {}, find() {
+        }
+      }, defaults)).to.deep.equal(defaults);
     });
 
     it('should prefer prefer method.docs over service.docs.operations[method] overservice.docs.operations.all ', () => {
@@ -48,7 +54,8 @@ describe('util tests', () => {
             }
           }
         },
-        find () {}
+        find() {
+        }
       };
       service.find.docs = {
         description: 'description of find.docs'
@@ -76,7 +83,8 @@ describe('util tests', () => {
             }
           }
         },
-        find () {}
+        find() {
+        }
       };
 
       expect(operation('find', service, {}, { nested: { object: 'value' } })).to.deep.equal({
@@ -179,6 +187,11 @@ describe('util tests', () => {
         $id: 'MessagePatch'
       });
 
+      const topicSchema = Type.Object(
+        { name: Type.String(), messages: Type.Array(Type.Ref(messageSchema)), stickyMessage: Type.Ref(messageSchema) },
+        { $id: 'Topic', additionalProperties: false }
+      );
+
       it('with refs and list when all generated schemas are provided', () => {
         const result = createSwaggerServiceOptions({
           schemas: {
@@ -213,7 +226,13 @@ describe('util tests', () => {
       });
 
       it('with refs and list when some generated schemas are provided', () => {
-        const result = createSwaggerServiceOptions({ schemas: { messageDataSchema, messageSchema, messageQuerySchema } });
+        const result = createSwaggerServiceOptions({
+          schemas: {
+            messageDataSchema,
+            messageSchema,
+            messageQuerySchema
+          }
+        });
 
         expect(result).to.deep.equal({
           schemas: {
@@ -267,6 +286,71 @@ describe('util tests', () => {
             patchRequest: 'MessageData'
           }
         });
+      });
+
+      it('with schema references', () => {
+        const result = createSwaggerServiceOptions({ schemas: { getResponse: topicSchema } });
+
+        expect(result).to.deep.equal({
+          schemas: {
+            Topic: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string'
+                },
+                stickyMessage: {
+                  $ref: '#/components/schemas/Message'
+                },
+                messages: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/components/schemas/Message'
+                  },
+                },
+              },
+              required: [
+                'name',
+                'messages',
+                'stickyMessage'
+              ],
+              additionalProperties: false,
+            }
+          },
+          refs: {
+            getResponse: 'Topic'
+          }
+        });
+      });
+    });
+
+    it('should use custom transformSchema function', () => {
+      const jsonSchema = {
+        $id: 'SimpleIdObject',
+        type: 'object',
+        additionalProperties: false,
+        required: ['id'],
+        properties: {
+          id: {
+            type: 'number',
+          }
+        }
+      };
+
+      const result = createSwaggerServiceOptions({
+        schemas: { getResponse: jsonSchema },
+        transformSchema: (schema) => ({ destroyed: true }),
+      });
+
+      expect(result).to.deep.equal({
+        schemas: {
+          SimpleIdObject: {
+            destroyed: true
+          }
+        },
+        refs: {
+          getResponse: 'SimpleIdObject'
+        }
       });
     });
   });
