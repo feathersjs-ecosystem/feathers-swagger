@@ -217,6 +217,6 @@ To resolve, either manually define your model schemas or consider automated alte
 
 ## License
 
-Copyright (c) 2016 - 2022
+Copyright (c) 2016 - 2023
 
 Licensed under the [MIT license](LICENSE).

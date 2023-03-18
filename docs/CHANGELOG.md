@@ -1,5 +1,25 @@
 # Changelog
 
+## [v3.0.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v3.0.0) (2023-03-18)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v2.0.0...v3.0.0)
+
+**Breaking changes:**
+
+- Feature: Create documentation for services with schemas of Feathersjs dove \(v5\) [\#244](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/244)
+
+**Implemented enhancements:**
+
+- Feature: Documentation is only generated for methods provided via service options [\#249](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/249)
+- Documentation: Use docify for documenation [\#245](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/245)
+- Feature: Support dove custom methods [\#243](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/243)
+- Feature: Support koa [\#242](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/242)
+- Feature: Respect x-forwarded-prefix header [\#239](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/239)
+
+**Fixed bugs:**
+
+- Bug: Custom method definitions are effecting other methods [\#248](https://github.com/feathersjs-ecosystem/feathers-swagger/issues/248)
+
 ## [v2.0.0](https://github.com/feathersjs-ecosystem/feathers-swagger/tree/v2.0.0) (2022-08-27)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-swagger/compare/v1.2.2...v2.0.0)

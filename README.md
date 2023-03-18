@@ -9,8 +9,10 @@ You can also add custom methods to feathers services that will be available as r
 
 Checkout the [Documentation](https://feathersjs-ecosystem.github.io/feathers-swagger) for further information.
 
+[Changelog](./docs/CHANGELOG.md)
+
 ## License
 
-Copyright (c) 2016 - 2022
+Copyright (c) 2016 - 2023
 
 Licensed under the [MIT license](LICENSE).
