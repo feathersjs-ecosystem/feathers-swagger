@@ -81,13 +81,13 @@ const app = express(feathers())
   // ...
   .configure(swagger({
     specs: {
-      ui: swagger.swaggerUI(),
       info: {
         title: 'A test',
         description: 'A description',
         version: '1.0.0',
       },
     },
+    ui: swagger.swaggerUI(),
   }))
   // later services can be registered
 ```
