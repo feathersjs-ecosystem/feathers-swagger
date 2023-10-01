@@ -103,6 +103,46 @@ app.use('some', new SomeService(options), {
 
 <!-- tabs:end -->
 
+<!-- tabs:start -->
+### **How to document custom methods**
+
+`feathers-swagger` allows you to pass a `Request` and `Response` schema to document what your custom method expects and returns. 
+
+```typescript
+export const userApproveRequest = Type.Object(
+  {
+    userMessage: Type.String({
+      description: 'A message by the user'
+    })
+  },
+  {
+    $id: 'userApproveRequest',
+    additionalProperties: false
+  }
+)
+
+export const userApproveResponse = Type.Object(
+  {
+   successMessage: Type.String()
+  },
+  {
+    $id: 'userApproveResponse',
+    additionalProperties: false
+  }
+)
+```
+
+In `createSwaggerServiceOptions` you can pass these new schemas 
+
+```typescript
+ docs: createSwaggerServiceOptions({
+	schemas: {..., userApproveRequest, userApproveResponse},
+    ...
+ })
+```
+
+<!-- tabs:end -->
+
 ## Example
 
 Check out the [example](/examples/custom_methods.md) to see it in action. 
