@@ -19,6 +19,7 @@
       "messagePagination": {
         "title": "message pagination result",
         "type": "object",
+        "required": true,
         "properties": {
           "total": {
             "type": "integer"

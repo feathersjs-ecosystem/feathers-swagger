@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
 const { Type, querySyntax } = require('@feathersjs/typebox');
 
+const { isPlainObject } = require('lodash');
 const { expect } = require('chai');
 const { operation, tag, security, idPathParameters, createSwaggerServiceOptions } = require('../lib/utils');
 
@@ -19,7 +20,8 @@ describe('util tests', () => {
 
     it('should provide spec defaults for empty service.docs.operations[method] and defaults', () => {
       expect(operation('find', {
-        docs: {}, find() {
+        docs: {},
+        find () {
         }
       }, {})).to.deep.equal({
         parameters: [],
@@ -35,7 +37,8 @@ describe('util tests', () => {
 
     it('should consume defaults', () => {
       expect(operation('find', {
-        docs: {}, find() {
+        docs: {},
+        find () {
         }
       }, defaults)).to.deep.equal(defaults);
     });
@@ -54,7 +57,7 @@ describe('util tests', () => {
             }
           }
         },
-        find() {
+        find () {
         }
       };
       service.find.docs = {
@@ -83,7 +86,7 @@ describe('util tests', () => {
             }
           }
         },
-        find() {
+        find () {
         }
       };
 
@@ -161,9 +164,16 @@ describe('util tests', () => {
   });
 
   describe('createSwaggerServiceOptions', () => {
-    const without$Id = (schema) => {
+    const without$IdAndTypeBoxProperties = (schema) => {
       const { $id, ...rest } = schema;
-      return rest;
+      const resultObject = {};
+      Object.entries(rest).forEach(([key, value]) => {
+        if (typeof key === 'string') { // Filter out symbol properties of TypeBox
+          resultObject[key] = isPlainObject(value) ? without$IdAndTypeBoxProperties(value) : value;
+        }
+      });
+
+      return resultObject;
     };
 
     describe('should create swaggerServiceOptions for TypeBox (or json) schemas', () => {
@@ -204,10 +214,10 @@ describe('util tests', () => {
 
         expect(result).to.deep.equal({
           schemas: {
-            Message: without$Id(messageSchema),
-            MessageData: without$Id(messageDataSchema),
-            MessagePatch: without$Id(messagePatchSchema),
-            MessageQuery: Type.Omit(messageQuerySchema, ['$limit', '$skip']),
+            Message: without$IdAndTypeBoxProperties(messageSchema),
+            MessageData: without$IdAndTypeBoxProperties(messageDataSchema),
+            MessagePatch: without$IdAndTypeBoxProperties(messagePatchSchema),
+            MessageQuery: without$IdAndTypeBoxProperties(Type.Omit(messageQuerySchema, ['$limit', '$skip'])),
             MessageList: {
               items: {
                 $ref: '#/components/schemas/Message'
@@ -236,9 +246,9 @@ describe('util tests', () => {
 
         expect(result).to.deep.equal({
           schemas: {
-            Message: without$Id(messageSchema),
-            MessageData: without$Id(messageDataSchema),
-            MessageQuery: Type.Omit(messageQuerySchema, ['$limit', '$skip']),
+            Message: without$IdAndTypeBoxProperties(messageSchema),
+            MessageData: without$IdAndTypeBoxProperties(messageDataSchema),
+            MessageQuery: without$IdAndTypeBoxProperties(Type.Omit(messageQuerySchema, ['$limit', '$skip'])),
             MessageList: {
               items: {
                 $ref: '#/components/schemas/Message'
@@ -269,7 +279,7 @@ describe('util tests', () => {
           description: 'My description',
           refs: { createResponse: 'MySchema' },
           schemas: {
-            MessageData: without$Id(messageDataSchema),
+            MessageData: without$IdAndTypeBoxProperties(messageDataSchema),
             MySchema: {}
           }
         });
@@ -280,7 +290,7 @@ describe('util tests', () => {
 
         expect(result).to.deep.equal({
           schemas: {
-            MessageData: without$Id(messageDataSchema)
+            MessageData: without$IdAndTypeBoxProperties(messageDataSchema)
           },
           refs: {
             patchRequest: 'MessageData'
@@ -306,15 +316,15 @@ describe('util tests', () => {
                   type: 'array',
                   items: {
                     $ref: '#/components/schemas/Message'
-                  },
-                },
+                  }
+                }
               },
               required: [
                 'name',
                 'messages',
                 'stickyMessage'
               ],
-              additionalProperties: false,
+              additionalProperties: false
             }
           },
           refs: {
@@ -332,14 +342,14 @@ describe('util tests', () => {
         required: ['id'],
         properties: {
           id: {
-            type: 'number',
+            type: 'number'
           }
         }
       };
 
       const result = createSwaggerServiceOptions({
         schemas: { getResponse: jsonSchema },
-        transformSchema: (schema) => ({ destroyed: true }),
+        transformSchema: (schema) => ({ destroyed: true })
       });
 
       expect(result).to.deep.equal({
