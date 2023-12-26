@@ -25,11 +25,11 @@ describe('feathers-swagger.swaggerUI', () => {
 
     const { initApp } = options;
     describe(`when using ${type}`, () => {
-      let server;
+      let app;
       let messageService;
 
       const startServiceWithUi = (ui) => {
-        const app = initApp()
+        app = initApp()
           .configure(
             swagger({
               docsPath: '/docs',
@@ -45,7 +45,7 @@ describe('feathers-swagger.swaggerUI', () => {
           )
           .use('/messages', messageService);
 
-        return startFeathersApp(app, 6776).then(res => { server = res; });
+        return startFeathersApp(app, 6776);
       };
 
       before(done => {
@@ -73,7 +73,12 @@ describe('feathers-swagger.swaggerUI', () => {
         done();
       });
 
-      afterEach(done => server.close(done));
+      afterEach(function (done) {
+        this.timeout(50000);
+        app.teardown().then(() => {
+          done();
+        });
+      });
 
       ['/docs', '/docs/'].forEach((requestPath) => {
         it(`should serve default SwaggerUI under ${requestPath}`, async () => {
