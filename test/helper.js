@@ -14,13 +14,13 @@ if (feathers.version && feathers.version[0] >= '5') {
    * Start feathers app (compatibility layer to support feathers 4 and 5)
    * @param {object} app
    * @param {number} port
-   * @param {Function} [done]
-   * @return {Promise<object>} server
+   * @return {Promise<function>} appShutdown
    */
-  exports.startFeathersApp = async function (app, port, done) {
-    const server = await app.listen(port);
-    if (done) { done(); }
-    return server;
+  exports.startFeathersApp = async function (app, port) {
+    await app.listen(port);
+    return (done) => {
+      app.teardown().then(done);
+    };
   };
 
   const { SERVICE } = feathers;
@@ -59,16 +59,13 @@ if (feathers.version && feathers.version[0] >= '5') {
    * Start feathers app (compatibility layer to support feathers 4 and 5)
    * @param {object} app
    * @param {number} port
-   * @param {Function} [done]
-   * @return {Promise<object>} server
+   * @return {Promise<Function>} server
    */
-  exports.startFeathersApp = function (app, port, done) {
-    let server;
+  exports.startFeathersApp = async function (app, port) {
     return new Promise(resolve => {
-      server = app.listen(port, () => resolve());
-    }).then(() => {
-      if (done) { done(); }
-      return server;
+      const server = app.listen(port, () => resolve((done) => {
+        server.close(() => { done(); });
+      }));
     });
   };
 

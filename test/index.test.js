@@ -19,7 +19,7 @@ describe('feathers-swagger', () => {
     const { initApp } = options;
 
     describe(`should serve openapi json file with ${type}`, () => {
-      let server;
+      let appTeardown;
       let app;
 
       const startApp = (swaggerConfig) => {
@@ -36,10 +36,10 @@ describe('feathers-swagger', () => {
           ...swaggerConfig
         }));
 
-        return startFeathersApp(app, 6776).then((res) => { server = res; });
+        return startFeathersApp(app, 6776).then((res) => { appTeardown = res; });
       };
 
-      afterEach(done => server.close(done));
+      afterEach(done => appTeardown(() => { done(); appTeardown = undefined; }));
 
       it('default as /swagger.json', async () => {
         await startApp({});

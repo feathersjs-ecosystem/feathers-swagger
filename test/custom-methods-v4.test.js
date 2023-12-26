@@ -10,7 +10,7 @@ describe('feathers 4 custom http methods', () => {
     return; // only valid with feathers 4
   }
 
-  let server;
+  let appTeardown;
 
   const startFeathersWithService = (service) => {
     const app = express(feathers())
@@ -21,10 +21,10 @@ describe('feathers 4 custom http methods', () => {
       .configure(express.rest())
       .use('/service', service);
 
-    return startFeathersApp(app, 6776).then((res) => { server = res; });
+    return startFeathersApp(app, 6776).then((res) => { appTeardown = res; });
   };
 
-  afterEach(done => server.close(done));
+  afterEach(done => appTeardown(() => done()));
 
   it('handle simple post method', async () => {
     const customService = {

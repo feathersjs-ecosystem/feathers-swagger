@@ -26,6 +26,7 @@ describe('feathers-swagger.swaggerUI', () => {
     const { initApp } = options;
     describe(`when using ${type}`, () => {
       let app;
+      let appTeardown;
       let messageService;
 
       const startServiceWithUi = (ui) => {
@@ -45,7 +46,7 @@ describe('feathers-swagger.swaggerUI', () => {
           )
           .use('/messages', messageService);
 
-        return startFeathersApp(app, 6776);
+        return startFeathersApp(app, 6776).then(teardown => { appTeardown = teardown; });
       };
 
       before(done => {
@@ -74,10 +75,8 @@ describe('feathers-swagger.swaggerUI', () => {
       });
 
       afterEach(function (done) {
-        this.timeout(50000);
-        app.teardown().then(() => {
-          done();
-        });
+        this.timeout(10000);
+        appTeardown(() => done());
       });
 
       ['/docs', '/docs/'].forEach((requestPath) => {

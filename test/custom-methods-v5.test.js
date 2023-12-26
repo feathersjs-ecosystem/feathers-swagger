@@ -60,9 +60,9 @@ describe('feathers 5 custom methods', () => {
     describe(`using customMethodsHandler with ${type}`, () => {
       const { initApp } = options;
 
-      let server;
+      let appTeardown;
 
-      afterEach(done => server.close(done));
+      afterEach(done => appTeardown(() => done()));
 
       it('should handle simple post method', async () => {
         const customService = {
@@ -74,7 +74,7 @@ describe('feathers 5 custom methods', () => {
           })
         };
 
-        server = await startFeathersWithService(initApp, customService, ['find', 'getVersion']);
+        appTeardown = await startFeathersWithService(initApp, customService, ['find', 'getVersion']);
 
         const { data: responseContent } = await axios.post(
           'http://localhost:6776/service/getVersion?param=abc',
@@ -101,7 +101,7 @@ describe('feathers 5 custom methods', () => {
           })
         };
 
-        server = await startFeathersWithService(initApp, customService, ['find', 'getVersion']);
+        appTeardown = await startFeathersWithService(initApp, customService, ['find', 'getVersion']);
 
         const { data: responseContent } = await axios.get('http://localhost:6776/service/5/version?param=abc');
 
@@ -124,7 +124,7 @@ describe('feathers 5 custom methods', () => {
           })
         };
 
-        server = await startFeathersWithService(initApp, customService, ['find', 'getVersion']);
+        appTeardown = await startFeathersWithService(initApp, customService, ['find', 'getVersion']);
 
         const { data: responseContent } = await axios.get('http://localhost:6776/service/5/version?param=abc');
 
@@ -146,7 +146,7 @@ describe('feathers 5 custom methods', () => {
           })
         };
 
-        server = await startFeathersWithService(initApp, customService, ['find', 'setVersion']);
+        appTeardown = await startFeathersWithService(initApp, customService, ['find', 'setVersion']);
 
         const { data: responseContent } = await axios.put(
           'http://localhost:6776/service/5/version?param=abc',
@@ -171,7 +171,7 @@ describe('feathers 5 custom methods', () => {
           })
         };
 
-        server = await startFeathersWithService(initApp, customService, ['find', 'setVersion']);
+        appTeardown = await startFeathersWithService(initApp, customService, ['find', 'setVersion']);
 
         const { data: responseContent } = await axios.patch(
           'http://localhost:6776/service/5/version?param=abc',
@@ -196,7 +196,7 @@ describe('feathers 5 custom methods', () => {
           })
         };
 
-        server = await startFeathersWithService(initApp, customService, ['find', 'removeVersion']);
+        appTeardown = await startFeathersWithService(initApp, customService, ['find', 'removeVersion']);
 
         const { data: responseContent } = await axios.delete(
           'http://localhost:6776/service/5/version?param=abc'
@@ -226,7 +226,7 @@ describe('feathers 5 custom methods', () => {
   });
 
   describe('without customMethodsHandler', () => {
-    let server;
+    let appTeardown;
     let app;
 
     const initApp = () => {
@@ -236,7 +236,7 @@ describe('feathers 5 custom methods', () => {
       });
     };
 
-    afterEach(done => { server.close(done); app = undefined; });
+    afterEach(done => { appTeardown(() => { done(); app = undefined; }); });
 
     it('should not fail and don\'t add custom methods to open api specs', async () => {
       const customService = {
@@ -248,7 +248,7 @@ describe('feathers 5 custom methods', () => {
         })
       };
 
-      server = await startFeathersWithService(initApp, customService, ['find', 'getVersion']);
+      appTeardown = await startFeathersWithService(initApp, customService, ['find', 'getVersion']);
 
       try {
         await axios.post(
