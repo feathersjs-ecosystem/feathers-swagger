@@ -6,7 +6,7 @@
   "paths": {
     "/message": {
       "post": {
-        "description": "Creates a new resource with data.",
+        "description": "Creates one or multiple resources.",
         "parameters": [],
         "requestBody": {
           "content": {
