@@ -150,7 +150,6 @@ declare namespace feathersSwagger {
         update?: FnOperationSpecsGenerator;
         patch?: FnOperationSpecsGenerator;
         remove?: FnOperationSpecsGenerator;
-        createMulti?: FnOperationSpecsGenerator;
         updateMulti?: FnOperationSpecsGenerator;
         patchMulti?: FnOperationSpecsGenerator;
         removeMulti?: FnOperationSpecsGenerator;
@@ -163,7 +162,6 @@ declare namespace feathersSwagger {
         update?: OperationConfig;
         patch?: OperationConfig;
         remove?: OperationConfig;
-        createMulti?: OperationConfig;
         updateMulti?: OperationConfig;
         patchMulti?: OperationConfig;
         removeMulti?: OperationConfig;
