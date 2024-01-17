@@ -309,6 +309,7 @@ declare namespace feathersSwagger {
     },
     docs?: ServiceSwaggerOptions,
     transformSchema?: (schema: Schema) => Record<string, any>,
+    multipart?: boolean
   }): ServiceSwaggerOptions;
 
   function defaultTransformSchema(schema: Schema): Record<string, any>;

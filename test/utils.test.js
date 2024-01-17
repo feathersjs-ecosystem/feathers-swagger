@@ -213,6 +213,7 @@ describe('util tests', () => {
         });
 
         expect(result).to.deep.equal({
+          multipart: false,
           schemas: {
             Message: without$IdAndTypeBoxProperties(messageSchema),
             MessageData: without$IdAndTypeBoxProperties(messageDataSchema),
@@ -245,6 +246,7 @@ describe('util tests', () => {
         });
 
         expect(result).to.deep.equal({
+          multipart: false,
           schemas: {
             Message: without$IdAndTypeBoxProperties(messageSchema),
             MessageData: without$IdAndTypeBoxProperties(messageDataSchema),
@@ -276,6 +278,7 @@ describe('util tests', () => {
         });
 
         expect(result).to.deep.equal({
+          multipart: false,
           description: 'My description',
           refs: { createResponse: 'MySchema' },
           schemas: {
@@ -289,6 +292,7 @@ describe('util tests', () => {
         const result = createSwaggerServiceOptions({ schemas: { patchRequest: messageDataSchema } });
 
         expect(result).to.deep.equal({
+          multipart: false,
           schemas: {
             MessageData: without$IdAndTypeBoxProperties(messageDataSchema)
           },
@@ -302,6 +306,7 @@ describe('util tests', () => {
         const result = createSwaggerServiceOptions({ schemas: { getResponse: topicSchema } });
 
         expect(result).to.deep.equal({
+          multipart: false,
           schemas: {
             Topic: {
               type: 'object',
@@ -353,6 +358,7 @@ describe('util tests', () => {
       });
 
       expect(result).to.deep.equal({
+        multipart: false,
         schemas: {
           SimpleIdObject: {
             destroyed: true
