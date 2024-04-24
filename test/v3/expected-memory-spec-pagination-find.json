@@ -17,6 +17,7 @@
         "type": "array"
       },
       "messagePagination": {
+        "required": true,
         "title": "message pagination result",
         "type": "object",
         "required": true,
