@@ -59,7 +59,7 @@
   },
   "types": "types/index.d.ts",
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.23"
   },
   "peerDependencies": {
     "swagger-ui-dist": ">=4.9.0",
